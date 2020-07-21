@@ -5,15 +5,7 @@ from tkinter import *
 from tkinter import ttk
 import urllib
 from urllib import request
-from reportlab.pdfgen import canvas
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase import pdfmetrics
-from reportlab.lib import colors
-from reportlab.lib.enums import TA_RIGHT
-from reportlab.lib.pagesizes import A4
 import requests
-import reportlab
-import os
 import socket
 import json
 #######################################################################################################################
