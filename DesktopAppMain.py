@@ -119,7 +119,7 @@ class all() :
         sabt.config(height=1, width=20)
         delete = Button(airplansRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
         delete.config(height=1, width=20)
-        edit = Button(airplansRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit = Button(airplansRoot, text="ثبت هواپیما از مدل موجود", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteAirplane3)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -191,6 +191,45 @@ class all() :
               }
         data1=json.dumps(data)
         r=requests.post(url, data=data1)
+        print(r.text)
+        print(data)
+
+    def sabteAirplane3(self):
+        self.sabteAirplane3PageRoot = Tk()
+        self.sabteAirplane3PageRoot.title("ثبت هواپیما")
+        self.sabteAirplane3PageRoot.configure(bg='orange')
+        title = Label(self.sabteAirplane3PageRoot, text="ثبت هواپیما", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
+        self.number2 = Entry(self.sabteAirplane3PageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.number2.insert(0, "شماره هوایما")
+        self.model2 = Entry(self.sabteAirplane3PageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.model2.insert(0, "مدل هواپیما")
+        sabt = Button(self.sabteAirplane3PageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '20'),
+                      command=self.sabteAirplane4)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        space2.pack()
+        self.number2.pack()
+        self.model2.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def sabteAirplane4(self):
+        url = 'http://www.rownaghsh.ir/airplanes.php'
+        data = {"num_airplane": int(self.number2.get()),
+                "model": str(self.model2.get())
+                }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
         print(r.text)
         print(data)
 
