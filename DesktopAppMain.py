@@ -4,6 +4,9 @@
 from tkinter import *
 from tkinter import ttk
 import requests
+import socket
+import os
+import urllib
 import json
 #######################################################################################################################
 #                                                  Global Variables                                                   #
@@ -644,7 +647,7 @@ class all() :
                 "lname": str(self.felname.get()),
                 "gender": x,
                 "mellicode": str(self.femellicode.get()),
-                "num_FlightEngineer": str(self.fecono.get()),
+                "num_flight_engineer": str(self.fecono.get()),
                 "phone": str(self.fephno.get()),
                 "birthdate": str(self.febd.get()),
                 "partner": str(self.fewn.get()),
