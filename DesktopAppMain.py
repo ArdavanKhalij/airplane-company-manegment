@@ -3,18 +3,7 @@
 #######################################################################################################################
 from tkinter import *
 from tkinter import ttk
-import urllib
-from urllib import request
-from reportlab.pdfgen import canvas
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase import pdfmetrics
-from reportlab.lib import colors
-from reportlab.lib.enums import TA_RIGHT
-from reportlab.lib.pagesizes import A4
 import requests
-import reportlab
-import os
-import socket
 import json
 #######################################################################################################################
 #                                                  Global Variables                                                   #
@@ -465,7 +454,7 @@ class all() :
         space.pack()
         title.pack()
         space1.pack()
-        space2.pack()
+        # space2.pack()
         self.name.pack()
         self.lname.pack()
         self.gender.pack()
@@ -526,43 +515,153 @@ class all() :
         space3 = Label(FlightEngineerRoot, text=" ", bg='orange')
         space4 = Label(FlightEngineerRoot, text=" ", bg='orange')
         space5 = Label(FlightEngineerRoot, text=" ", bg='orange')
-        title = Label(FlightEngineerRoot, text="مهندسین پرواز", font=('IRANSans', '22'), fg="Blue", bg='orange')
-        cols = ('تعداد فرزندان','شماره تلفن همسر','کد ملی همسر','نام همسر','تاریخ تولد','شماره تلفن' ,'شماره مهندس پرواز','کد ملی', 'جنسیت', 'نام خانوادگی', 'نام')
-        listBox3 = ttk.Treeview(FlightEngineerRoot, columns=cols, show='headings')
-        vsb = ttk.Scrollbar(orient="vertical", command=listBox3.yview)
-        listBox3.configure(yscrollcommand=vsb.set)
-        listBox3.column("0", width=125, anchor="c")
-        listBox3.column("1", width=125, anchor="c")
-        listBox3.column("2", width=125, anchor="c")
-        listBox3.column("3", width=125, anchor="c")
-        listBox3.column("4", width=125, anchor="c")
-        listBox3.column("5", width=125, anchor="c")
-        listBox3.column("6", width=125, anchor="c")
-        listBox3.column("7", width=125, anchor="c")
-        listBox3.column("8", width=125, anchor="c")
-        listBox3.column("9", width=125, anchor="c")
-        listBox3.column("10", width=125, anchor="c")
-        listBox3.config(height=28)
+        title = Label(FlightEngineerRoot, text="مهندسین پرواز", font=('IRANSans', '22'), bg='orange')
+        cols = (
+            'تلفن 3', 'نام آشنا 3', 'تلفن 2', 'نام آشنا 2', 'تلفن 1', 'نام آشنا1', 'تعداد فرزندان', 'شماره تلفن همسر',
+            'کد ملی همسر', 'نام همسر', 'تاریخ تولد', 'شماره تلفن', 'شماره مهندس پرواز', 'کد ملی', 'جنسیت', 'نام خانوادگی',
+            'نام')
+        listBox2 = ttk.Treeview(FlightEngineerRoot, columns=cols, show='headings')
+        vsb = ttk.Scrollbar(orient="vertical", command=listBox2.yview)
+        listBox2.configure(yscrollcommand=vsb.set)
+        listBox2.column("0", width=80, anchor="c")
+        listBox2.column("1", width=80, anchor="c")
+        listBox2.column("2", width=80, anchor="c")
+        listBox2.column("3", width=80, anchor="c")
+        listBox2.column("4", width=80, anchor="c")
+        listBox2.column("5", width=80, anchor="c")
+        listBox2.column("6", width=80, anchor="c")
+        listBox2.column("7", width=80, anchor="c")
+        listBox2.column("8", width=80, anchor="c")
+        listBox2.column("9", width=80, anchor="c")
+        listBox2.column("10", width=80, anchor="c")
+        listBox2.column("11", width=80, anchor="c")
+        listBox2.column("12", width=80, anchor="c")
+        listBox2.column("13", width=80, anchor="c")
+        listBox2.column("14", width=80, anchor="c")
+        listBox2.column("15", width=80, anchor="c")
+        listBox2.column("16", width=80, anchor="c")
+        listBox2.config(height=20)
         for col in cols:
-            listBox3.heading(col, text=col)
-        sabt = Button(FlightEngineerRoot, text="ثبت مهندس پرواز", font=('IRANSans', '20'))
-        sabt.config(height=2, width=18)
-        delete = Button(FlightEngineerRoot, text="حذف", font=('IRANSans', '20'))
-        delete.config(height=2, width=18)
-        edit = Button(FlightEngineerRoot, text="ویرایش", font=('IRANSans', '20'))
-        edit.config(height=2, width=18)
-        tozih = Button(FlightEngineerRoot, text="آشنایان", font=('IRANSans', '20'), command=self.tozih1)
-        tozih.config(height=2, width=18)
+            listBox2.heading(col, text=col)
+        sabt = Button(FlightEngineerRoot, text="ثبت مهندس پرواز", font=('IRANSans', '13'), fg='white', bg='blue',
+                      command=self.sabteFlightEngineer)
+        sabt.config(height=1, width=20)
+        delete = Button(FlightEngineerRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
+        delete.config(height=1, width=20)
+        edit = Button(FlightEngineerRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit.config(height=1, width=20)
         space.pack()
         title.pack()
         space1.pack()
-        listBox3.pack()
+        listBox2.pack()
         space2.pack()
         sabt.pack()
         edit.pack()
         delete.pack()
-        tozih.pack()
         space3.pack()
+
+    def sabteFlightEngineer(self):
+        self.sabteّFlightEngineerPageRoot = Tk()
+        self.sabteّFlightEngineerPageRoot.title("ثبت مهندس پرواز")
+        self.sabteّFlightEngineerPageRoot.configure(bg='orange')
+        title = Label(self.sabteّFlightEngineerPageRoot, text="ثبت مهندس پرواز", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        self.fename = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fename.insert(0, "نام")
+        self.felname = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.felname.insert(0, "نام خانوادگی")
+        self.fegender = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fegender.insert(0, "جنسیت")
+        self.femellicode = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.femellicode.insert(0, "کدملی")
+        self.fecono = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fecono.insert(0, "شماره مهندس پرواز")
+        self.fephno = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fephno.insert(0, "شماره تلفن")
+        self.febd = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.febd.insert(0, "تاریخ تولد")
+        self.fewn = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fewn.insert(0, "نام همسر")
+        self.femcw = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.femcw.insert(0, "کد ملی همسر")
+        self.fewphno = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fewphno.insert(0, "شماره تلفن همسر")
+        self.fecn = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fecn.insert(0, "تعداد فرزندان")
+        self.fef1 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fef1.insert(0, "نام آشنا 1")
+        self.fefph1 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fefph1.insert(0, "تلفن 1")
+        self.fef2 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fef2.insert(0, "نام آشنا 2")
+        self.fefph2 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fefph2.insert(0, "تلفن 2")
+        self.fef3 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fef3.insert(0, "نام آشنا 3")
+        self.fefph3 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fefph3.insert(0, "تلفن 3")
+        sabt = Button(self.sabteّFlightEngineerPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+                      command=self.sabteFlightEngineer2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        # space2.pack()
+        self.fename.pack()
+        self.felname.pack()
+        self.fegender.pack()
+        self.femellicode.pack()
+        self.fecono.pack()
+        self.fephno.pack()
+        self.febd.pack()
+        self.fewn.pack()
+        self.femcw.pack()
+        self.fewphno.pack()
+        self.fecn.pack()
+        self.fef1.pack()
+        self.fefph1.pack()
+        self.fef2.pack()
+        self.fefph2.pack()
+        self.fef3.pack()
+        self.fefph3.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def sabteFlightEngineer2(self):
+        url = 'http://www.rownaghsh.ir/flight_engineer.php'
+        if self.fegender=="مرد":
+            x=1
+        else:
+            x=0
+        data = {"fname": str(self.fename.get()),
+                "lname": str(self.felname.get()),
+                "gender": x,
+                "mellicode": str(self.femellicode.get()),
+                "num_FlightEngineer": str(self.fecono.get()),
+                "phone": str(self.fephno.get()),
+                "birthdate": str(self.febd.get()),
+                "partner": str(self.fewn.get()),
+                "partner_mellicode": str(self.femcw.get()),
+                "partner_phone": str(self.fewphno.get()),
+                "child": int(self.fecn.get()),
+                "fname1": str(self.fef1.get()),
+                "phon1": str(self.fefph1.get()),
+                "fname2": str(self.fef2.get()),
+                "phon2": str(self.fefph2.get()),
+                "fname3": str(self.fef3.get()),
+                "phon3": str(self.fefph3.get()),
+                }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        print(r.text)
+        print(data1)
 
     def StewardsRootFunc(self):
         StewardsRoot = Tk()
