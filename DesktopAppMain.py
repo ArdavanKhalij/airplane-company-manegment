@@ -102,19 +102,16 @@ class all() :
         space4 = Label(airplansRoot, text=" ", bg='orange')
         space5 = Label(airplansRoot, text=" ", bg='orange')
         title = Label(airplansRoot, text="هواپیما ها", font=('IRANSans', '22'), fg="black", bg='orange')
-        cols = ('آخرین قیمت Economy class','آخرین قیمت Business class','آخرین قیمت First class','ظرفیت بار' ,'تعداد Economy class','تعداد Business class', 'تعداد First class', 'مدل', 'شماره هواپیما')
+        cols = ('ظرفیت بار' ,'تعداد Economy class','تعداد Business class', 'تعداد First class', 'مدل', 'شماره هواپیما')
         listBox = ttk.Treeview(airplansRoot, columns=cols, show='headings')
         vsb = ttk.Scrollbar(orient="vertical", command=listBox.yview)
         listBox.configure(yscrollcommand=vsb.set)
-        listBox.column("0", width=150, anchor="c")
-        listBox.column("1", width=150, anchor="c")
-        listBox.column("2", width=150, anchor="c")
-        listBox.column("3", width=150, anchor="c")
-        listBox.column("4", width=150, anchor="c")
-        listBox.column("5", width=150, anchor="c")
-        listBox.column("6", width=150, anchor="c")
-        listBox.column("7", width=150, anchor="c")
-        listBox.column("8", width=150, anchor="c")
+        listBox.column("0", width=220, anchor="c")
+        listBox.column("1", width=220, anchor="c")
+        listBox.column("2", width=220, anchor="c")
+        listBox.column("3", width=220, anchor="c")
+        listBox.column("4", width=220, anchor="c")
+        listBox.column("5", width=220, anchor="c")
         listBox.config(height=20)
         for col in cols:
             listBox.heading(col, text=col)
@@ -168,7 +165,7 @@ class all() :
         sabt.config(height=1, width=20)
         space.pack()
         title.pack()
-        # space1.pack()
+        space1.pack()
         space2.pack()
         self.number.pack()
         self.model.pack()
@@ -176,16 +173,17 @@ class all() :
         self.tedadBusinessClass.pack()
         self.tedadEconomyClass.pack()
         self.bar.pack()
-        self.priceFirstClass.pack()
-        self.priceBusinessClass.pack()
-        self.priceEconomyClass.pack()
+        # self.priceFirstClass.pack()
+        # self.priceBusinessClass.pack()
+        # self.priceEconomyClass.pack()
         space3.pack()
         sabt.pack()
         space4.pack()
 
     def sabteAirplane2(self):
-        url='http://www.rownaghsh.ir/api.php'
-        data={"model":str(self.model.get()),
+        url='http://www.rownaghsh.ir/airplane.php'
+        data={"num_airplanes":int(self.number.get()),
+              "model":str(self.model.get()),
               "first_class":int(self.tedadFirstClass.get()),
               "bisness":int(self.tedadBusinessClass.get()),
               "bar":int(self.bar.get()),
@@ -327,7 +325,7 @@ class all() :
 
     def sabtePilot2(self):
         url = 'http://www.rownaghsh.ir/pilot.php'
-        if self.pgender=="مرد":
+        if self.pgender.get()=="مرد":
             x=1
         else:
             x=0
@@ -481,7 +479,7 @@ class all() :
 
     def sabteCopilot2(self):
         url = 'http://www.rownaghsh.ir/co_pilot.php'
-        if self.gender=="مرد":
+        if self.gender.get()=="مرد":
             x=1
         else:
             x=0
@@ -639,7 +637,7 @@ class all() :
 
     def sabteFlightEngineer2(self):
         url = 'http://www.rownaghsh.ir/flight_engineer.php'
-        if self.fegender=="مرد":
+        if self.fegender.get()=="مرد":
             x=1
         else:
             x=0
@@ -677,43 +675,161 @@ class all() :
         space4 = Label(StewardsRoot, text=" ", bg='orange')
         space5 = Label(StewardsRoot, text=" ", bg='orange')
         title = Label(StewardsRoot, text="مهمانداران", font=('IRANSans', '22'), fg="Blue", bg='orange')
-        cols = ('تعداد فرزندان','شماره تلفن همسر','کد ملی همسر','نام همسر','تاریخ تولد','شماره تلفن' ,'وضعیت فعال','شماره مهماندار','کد ملی', 'جنسیت', 'نام خانوادگی', 'نام')
-        listBox4 = ttk.Treeview(StewardsRoot, columns=cols, show='headings')
-        vsb = ttk.Scrollbar(orient="vertical", command=listBox4.yview)
-        listBox4.configure(yscrollcommand=vsb.set)
-        listBox4.column("0", width=116, anchor="c")
-        listBox4.column("1", width=115, anchor="c")
-        listBox4.column("2", width=116, anchor="c")
-        listBox4.column("3", width=115, anchor="c")
-        listBox4.column("4", width=116, anchor="c")
-        listBox4.column("5", width=115, anchor="c")
-        listBox4.column("6", width=116, anchor="c")
-        listBox4.column("7", width=115, anchor="c")
-        listBox4.column("8", width=116, anchor="c")
-        listBox4.column("9", width=115, anchor="c")
-        listBox4.column("10", width=116, anchor="c")
-        listBox4.column("11", width=115, anchor="c")
-        listBox4.config(height=28)
+        cols = (
+        'تلفن 3', 'نام آشنا 3', 'تلفن 2', 'نام آشنا 2', 'تلفن 1', 'نام آشنا1','وضعیت', 'تعداد فرزندان', 'شماره تلفن همسر',
+        'کد ملی همسر', 'نام همسر', 'تاریخ تولد', 'شماره تلفن', 'شماره کمک خلبان', 'کد ملی', 'جنسیت', 'نام خانوادگی',
+        'نام')
+        listBox2 = ttk.Treeview(StewardsRoot, columns=cols, show='headings')
+        vsb = ttk.Scrollbar(orient="vertical", command=listBox2.yview)
+        listBox2.configure(yscrollcommand=vsb.set)
+        listBox2.column("0", width=75, anchor="c")
+        listBox2.column("1", width=75, anchor="c")
+        listBox2.column("2", width=75, anchor="c")
+        listBox2.column("3", width=75, anchor="c")
+        listBox2.column("4", width=75, anchor="c")
+        listBox2.column("5", width=75, anchor="c")
+        listBox2.column("6", width=75, anchor="c")
+        listBox2.column("7", width=75, anchor="c")
+        listBox2.column("8", width=75, anchor="c")
+        listBox2.column("9", width=75, anchor="c")
+        listBox2.column("10", width=75, anchor="c")
+        listBox2.column("11", width=75, anchor="c")
+        listBox2.column("12", width=75, anchor="c")
+        listBox2.column("13", width=75, anchor="c")
+        listBox2.column("14", width=75, anchor="c")
+        listBox2.column("15", width=75, anchor="c")
+        listBox2.column("16", width=75,anchor="c")
+        listBox2.column("17", width=75, anchor="c")
+        listBox2.config(height=20)
         for col in cols:
-            listBox4.heading(col, text=col)
-        sabt = Button(StewardsRoot, text="ثبت مهماندار", font=('IRANSans', '20'))
-        sabt.config(height=2, width=18)
-        delete = Button(StewardsRoot, text="حذف", font=('IRANSans', '20'))
-        delete.config(height=2, width=18)
-        edit = Button(StewardsRoot, text="ویرایش", font=('IRANSans', '20'))
-        edit.config(height=2, width=18)
-        tozih = Button(StewardsRoot, text="آشنایان", font=('IRANSans', '20'), command=self.tozih1)
-        tozih.config(height=2, width=18)
+            listBox2.heading(col, text=col)
+        sabt = Button(StewardsRoot, text="ثبت مهماندار", font=('IRANSans', '13'), fg='white', bg='blue',
+                      command=self.sabteSteward)
+        sabt.config(height=1, width=20)
+        delete = Button(StewardsRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
+        delete.config(height=1, width=20)
+        edit = Button(StewardsRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit.config(height=1, width=20)
         space.pack()
         title.pack()
         space1.pack()
-        listBox4.pack()
+        listBox2.pack()
         space2.pack()
         sabt.pack()
         edit.pack()
         delete.pack()
-        tozih.pack()
         space3.pack()
+
+    def sabteSteward(self):
+        self.sabteStewardPageRoot = Tk()
+        self.sabteStewardPageRoot.title("ثبت مهماندار")
+        self.sabteStewardPageRoot.configure(bg='orange')
+        title = Label(self.sabteStewardPageRoot, text="ثبت مهماندار", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        self.sname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sname.insert(0, "نام")
+        self.slname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.slname.insert(0, "نام خانوادگی")
+        self.sgender = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sgender.insert(0, "جنسیت")
+        self.smellicode = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.smellicode.insert(0, "کدملی")
+        self.scono = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.scono.insert(0, "شماره مهماندار")
+        self.sphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sphno.insert(0, "شماره تلفن")
+        self.sbd = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sbd.insert(0, "تاریخ تولد")
+        self.swn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.swn.insert(0, "نام همسر")
+        self.smcw = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.smcw.insert(0, "کد ملی همسر")
+        self.swphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.swphno.insert(0, "شماره تلفن همسر")
+        self.scn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.scn.insert(0, "تعداد فرزندان")
+        self.s = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.s.insert(0, "وضعیت")
+        self.sf1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf1.insert(0, "نام آشنا 1")
+        self.sfph1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph1.insert(0, "تلفن 1")
+        self.sf2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf2.insert(0, "نام آشنا 2")
+        self.sfph2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph2.insert(0, "تلفن 2")
+        self.sf3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf3.insert(0, "نام آشنا 3")
+        self.sfph3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph3.insert(0, "تلفن 3")
+        sabt = Button(self.sabteStewardPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+                      command=self.sabteSteward2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        # space2.pack()
+        self.sname.pack()
+        self.slname.pack()
+        self.sgender.pack()
+        self.smellicode.pack()
+        self.scono.pack()
+        self.sphno.pack()
+        self.sbd.pack()
+        self.swn.pack()
+        self.smcw.pack()
+        self.swphno.pack()
+        self.scn.pack()
+        self.s.pack()
+        self.sf1.pack()
+        self.sfph1.pack()
+        self.sf2.pack()
+        self.sfph2.pack()
+        self.sf3.pack()
+        self.sfph3.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def sabteSteward2(self):
+        url = 'http://www.rownaghsh.ir/stewardess.php'
+        if self.sgender.get()=="مرد":
+            x=1
+        else:
+            x=0
+        if self.s.get()=="فعال":
+            y=1
+        else:
+            y=0
+        data = {"fname": str(self.sname.get()),
+                "lname": str(self.slname.get()),
+                "gender": x,
+                "mellicode": str(self.smellicode.get()),
+                "num_stewardess": str(self.scono.get()),
+                "active": y,
+                "phone": str(self.sphno.get()),
+                "birthdate": str(self.sbd.get()),
+                "partner": str(self.swn.get()),
+                "partner_mellicode": str(self.smcw.get()),
+                "partner_phone": str(self.swphno.get()),
+                "child": int(self.scn.get()),
+                "fname1": str(self.sf1.get()),
+                "phon1": str(self.sfph1.get()),
+                "fname2": str(self.sf2.get()),
+                "phon2": str(self.sfph2.get()),
+                "fname3": str(self.sf3.get()),
+                "phon3": str(self.sfph3.get()),
+                }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        print(r.text)
+        print(data1)
 
     def FlightsRootFunc(self):
         FlightsRoot = Tk()
