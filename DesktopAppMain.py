@@ -5,7 +5,15 @@ from tkinter import *
 from tkinter import ttk
 import urllib
 from urllib import request
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_RIGHT
+from reportlab.lib.pagesizes import A4
 import requests
+import reportlab
+import os
 import socket
 import json
 #######################################################################################################################
@@ -168,7 +176,7 @@ class all() :
         sabt.config(height=1, width=20)
         space.pack()
         title.pack()
-        space1.pack()
+        # space1.pack()
         space2.pack()
         self.number.pack()
         self.model.pack()
@@ -206,43 +214,153 @@ class all() :
         space3 = Label(PilotRoot, text=" ", bg='orange')
         space4 = Label(PilotRoot, text=" ", bg='orange')
         space5 = Label(PilotRoot, text=" ", bg='orange')
-        title = Label(PilotRoot, text="خلبان ها", font=('IRANSans', '22'), fg="Blue", bg='orange')
-        cols = ('تعداد فرزندان','شماره تلفن همسر','کد ملی همسر','نام همسر','تاریخ تولد','شماره تلفن' ,'شماره خلبان','کد ملی', 'جنسیت', 'نام خانوادگی', 'نام')
-        listBox1 = ttk.Treeview(PilotRoot, columns=cols, show='headings')
-        vsb = ttk.Scrollbar(orient="vertical", command=listBox1.yview)
-        listBox1.configure(yscrollcommand=vsb.set)
-        listBox1.column("0", width=125, anchor="c")
-        listBox1.column("1", width=125, anchor="c")
-        listBox1.column("2", width=125, anchor="c")
-        listBox1.column("3", width=125, anchor="c")
-        listBox1.column("4", width=125, anchor="c")
-        listBox1.column("5", width=125, anchor="c")
-        listBox1.column("6", width=125, anchor="c")
-        listBox1.column("7", width=125, anchor="c")
-        listBox1.column("8", width=125, anchor="c")
-        listBox1.column("9", width=125, anchor="c")
-        listBox1.column("10", width=125, anchor="c")
-        listBox1.config(height=28)
+        title = Label(PilotRoot, text="خلبان ها", font=('IRANSans', '22'), bg='orange')
+        cols = (
+        'تلفن 3', 'نام آشنا 3', 'تلفن 2', 'نام آشنا 2', 'تلفن 1', 'نام آشنا1', 'تعداد فرزندان', 'شماره تلفن همسر',
+        'کد ملی همسر', 'نام همسر', 'تاریخ تولد', 'شماره تلفن', 'شماره خلبان', 'کد ملی', 'جنسیت', 'نام خانوادگی',
+        'نام')
+        listBox2 = ttk.Treeview(PilotRoot, columns=cols, show='headings')
+        vsb = ttk.Scrollbar(orient="vertical", command=listBox2.yview)
+        listBox2.configure(yscrollcommand=vsb.set)
+        listBox2.column("0", width=80, anchor="c")
+        listBox2.column("1", width=80, anchor="c")
+        listBox2.column("2", width=80, anchor="c")
+        listBox2.column("3", width=80, anchor="c")
+        listBox2.column("4", width=80, anchor="c")
+        listBox2.column("5", width=80, anchor="c")
+        listBox2.column("6", width=80, anchor="c")
+        listBox2.column("7", width=80, anchor="c")
+        listBox2.column("8", width=80, anchor="c")
+        listBox2.column("9", width=80, anchor="c")
+        listBox2.column("10", width=80, anchor="c")
+        listBox2.column("11", width=80, anchor="c")
+        listBox2.column("12", width=80, anchor="c")
+        listBox2.column("13", width=80, anchor="c")
+        listBox2.column("14", width=80, anchor="c")
+        listBox2.column("15", width=80, anchor="c")
+        listBox2.column("16", width=80, anchor="c")
+        listBox2.config(height=20)
         for col in cols:
-            listBox1.heading(col, text=col)
-        sabt = Button(PilotRoot, text="ثبت خلبان", font=('IRANSans', '20'))
-        sabt.config(height=2, width=18)
-        delete = Button(PilotRoot, text="حذف", font=('IRANSans', '20'))
-        delete.config(height=2, width=18)
-        edit = Button(PilotRoot, text="ویرایش", font=('IRANSans', '20'))
-        edit.config(height=2, width=18)
-        tozih = Button(PilotRoot, text="آشنایان", font=('IRANSans', '20'), command=self.tozih1)
-        tozih.config(height=2, width=18)
+            listBox2.heading(col, text=col)
+        sabt = Button(PilotRoot, text="ثبت خلبان", font=('IRANSans', '13'), fg='white', bg='blue',
+                      command=self.sabtePilot)
+        sabt.config(height=1, width=20)
+        delete = Button(PilotRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
+        delete.config(height=1, width=20)
+        edit = Button(PilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit.config(height=1, width=20)
         space.pack()
         title.pack()
         space1.pack()
-        listBox1.pack()
+        listBox2.pack()
         space2.pack()
         sabt.pack()
         edit.pack()
         delete.pack()
-        tozih.pack()
         space3.pack()
+
+    def sabtePilot(self):
+        self.sabtepilotPageRoot = Tk()
+        self.sabtepilotPageRoot.title("ثبت خلبان")
+        self.sabtepilotPageRoot.configure(bg='orange')
+        title = Label(self.sabtepilotPageRoot, text="ثبت خلبان", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        self.pname = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pname.insert(0, "نام")
+        self.plname = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.plname.insert(0, "نام خانوادگی")
+        self.pgender = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pgender.insert(0, "جنسیت")
+        self.pmellicode = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pmellicode.insert(0, "کدملی")
+        self.pcono = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pcono.insert(0, "شماره خلبان")
+        self.pphno = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pphno.insert(0, "شماره تلفن")
+        self.pbd = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pbd.insert(0, "تاریخ تولد")
+        self.pwn = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pwn.insert(0, "نام همسر")
+        self.pmcw = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pmcw.insert(0, "کد ملی همسر")
+        self.pwphno = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pwphno.insert(0, "شماره تلفن همسر")
+        self.pcn = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pcn.insert(0, "تعداد فرزندان")
+        self.pf1 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pf1.insert(0, "نام آشنا 1")
+        self.pfph1 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pfph1.insert(0, "تلفن 1")
+        self.pf2 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pf2.insert(0, "نام آشنا 2")
+        self.pfph2 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pfph2.insert(0, "تلفن 2")
+        self.pf3 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pf3.insert(0, "نام آشنا 3")
+        self.pfph3 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pfph3.insert(0, "تلفن 3")
+        sabt = Button(self.sabtepilotPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+                      command=self.sabtePilot2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        # space2.pack()
+        self.pname.pack()
+        self.plname.pack()
+        self.pgender.pack()
+        self.pmellicode.pack()
+        self.pcono.pack()
+        self.pphno.pack()
+        self.pbd.pack()
+        self.pwn.pack()
+        self.pmcw.pack()
+        self.pwphno.pack()
+        self.pcn.pack()
+        self.pf1.pack()
+        self.pfph1.pack()
+        self.pf2.pack()
+        self.pfph2.pack()
+        self.pf3.pack()
+        self.pfph3.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def sabtePilot2(self):
+        url = 'http://www.rownaghsh.ir/pilot.php'
+        if self.pgender=="مرد":
+            x=1
+        else:
+            x=0
+        data =  {"fname": str(self.pname.get()),
+                "lname": str(self.plname.get()),
+                "gender": x,
+                "mellicode": str(self.pmellicode.get()),
+                "num_pilot": str(self.pcono.get()),
+                "phone": str(self.pphno.get()),
+                "birthdate": str(self.pbd.get()),
+                "partner": str(self.pwn.get()),
+                "partner_mellicode": str(self.pmcw.get()),
+                "partner_phone": str(self.pwphno.get()),
+                "child": int(self.pcn.get()),
+                "fname1": str(self.pf1.get()),
+                "phon1": str(self.pfph1.get()),
+                "fname2": str(self.pf2.get()),
+                "phon2": str(self.pfph2.get()),
+                "fname3": str(self.pf3.get()),
+                "phon3": str(self.pfph3.get()),
+                }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        print(r.text)
+        print(data1)
 
     def CoPilotRootFunc(self):
         CoPilotRoot = Tk()
