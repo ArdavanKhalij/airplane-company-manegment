@@ -19,77 +19,6 @@ NameOfUser = "ADMIN"
 #                                                       Pages                                                         #
 #######################################################################################################################
 class all() :
-    # def menu(self):
-    #     addToNames = name2.get()
-    #     myname2 = addToNames
-    #     myname1 = name.get()
-    #     isItInThere = False
-    #     for i in valuelistForNamesOfComboBox:
-    #         if i==addToNames:
-    #             isItInThere = True
-    #             break
-    #         else:
-    #             isItInThere = False
-    #     if not isItInThere:
-    #         valuelistForNamesOfComboBox.append(addToNames)
-    #     with open('listfile.txt', 'w') as filehandle:
-    #         for listitem in valuelistForNamesOfComboBox:
-    #             if listitem!="" and listitem!= "  نام و نام خانوادگی":
-    #                 filehandle.write('%s\n' % listitem)
-    #     Menu = Tk()
-    #     Menu.attributes("-fullscreen", True)
-    #     Menu.title("شرکت هواپیمایی")
-    #     Menu['bg'] = 'orange'
-    #     space = Label(Menu, text=" ", bg='orange')
-    #     space1 = Label(Menu, text=" ", bg='orange')
-    #     space2 = Label(Menu, text=" ", bg='orange')
-    #     space3 = Label(Menu, text=" ", bg='orange')
-    #     title = Label(Menu, text="شرکت هواپیمایی", font=('IRANSans', '22', 'bold'))
-    #
-    #     airplans = Button(Menu, text="هواپیما ها", font=('IRANSans', '20'), command=self.airplansRootFunc, )
-    #     pilots = Button(Menu, text="خلبان ها", font=('IRANSans', '20'), command=self.PilotRootFunc)
-    #     co_pilots = Button(Menu, text="کمک خلبان ها", font=('IRANSans', '20'), command=self.CoPilotRootFunc)
-    #     flight_engineers = Button(Menu, text="مهندسین پرواز", font=('IRANSans', '20'), command=self.FlightEngineerRootFunc)
-    #     stewardess = Button(Menu, text="مهمانداران", font=('IRANSans', '20'), command=self.StewardsRootFunc)
-    #     flight_schedule = Button(Menu, text="برنامه ‌پرواز های آخرین هفته", font=('IRANSans', '20'), command=self.FlightSkechuleRootFunc) #show 2 airports and airplane flight
-    #     flights = Button(Menu, text="برنامه ‌پرواز ها", font=('IRANSans', '20'), command=self.FlightsRootFunc) #show 2 airports and airplane flight passengers
-    #     airports = Button(Menu, text="فرودگاه ها", font=('IRANSans', '20'), command=self.AirportsRootFunc)
-    #     stewardess_group = Button(Menu, text="گروه های مهمانداری", font=('IRANSans', '20'), command=self.stewartsGroupRootFunc) #etelaate mehmandaran
-    #     wages = Button(Menu, text="سمت ها و شغل ها", font=('IRANSans', '20'), command=self.WagesGroupRootFunc)
-    #     prices = Button(Menu, text="قیمت ها", font=('IRANSans', '20'), command=self.pricesRootFunc)
-    #
-    #     airplans.config(height=3, width=80)
-    #     pilots.config(height=3, width=80)
-    #     co_pilots.config(height=3, width=80)
-    #     flight_engineers.config(height=3, width=80)
-    #     stewardess.config(height=3, width=80)
-    #     flight_schedule.config(height=3, width=80)
-    #     airports.config(height=3, width=80)
-    #     stewardess_group.config(height=3, width=80)
-    #     wages.config(height=3, width=80)
-    #     flights.config(height=3, width=80)
-    #     prices.config(height=3, width=80)
-    #
-    #     space.pack()
-    #     airplans.pack()
-    #     pilots.pack()
-    #     co_pilots.pack()
-    #     flight_engineers.pack()
-    #     stewardess.pack()
-    #     flights.pack()
-    #     flight_schedule.pack()
-    #     airports.pack()
-    #     stewardess_group.pack()
-    #     wages.pack()
-    #     prices.pack()
-    #     space1.pack()
-    #
-    #     if myname1 != "  نام و نام خانوادگی" or myname1 != " ":
-    #         global NameOfUser
-    #         NameOfUser = myname1
-    #     else:
-    #         NameOfUser = myname2
-    #     root.destroy()
 
     def airplansRootFunc(self):
         airplansRoot = Tk()
@@ -115,6 +44,20 @@ class all() :
         listBox.config(height=20)
         for col in cols:
             listBox.heading(col, text=col)
+        url = 'http://www.rownaghsh.ir/req.php'
+        data={'table':'airplane'}
+        data1=json.dumps(data)
+        r=requests.post(url, data=data1)
+        l=json.loads(r.text)
+        for i in range(0, len(l)):
+            listBox.insert("", "end", values=(
+                str(l[i]['bar']),
+                str(l[i]['economi']),
+                str(l[i]['bisness']),
+                str(l[i]['first_class']),
+                str(l[i]['model'])
+                # str(l[i]['num_airplanes'])
+            ))
         sabt = Button(airplansRoot, text="ثبت هواپیما", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteAirplane)
         sabt.config(height=1, width=20)
         delete = Button(airplansRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
@@ -1128,6 +1071,28 @@ class all() :
         listBox7.config(height=20)
         for col in cols:
             listBox7.heading(col, text=col)
+        url = 'http://www.rownaghsh.ir/req.php'
+        data = {'table': 'origin_destination'}
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        l = json.loads(r.text)
+        print(l)
+        for i in range(0, len(l)):
+            if l[i]['internal']==1:
+                x='داخلی'
+            else:
+                x='خارجی'
+            listBox7.insert("", "end", values=(
+                x,
+                str(l[i]['addresses']),
+                str(l[i]['latitude']),
+                str(l[i]['longitude']),
+                str(l[i]['country']),
+                str(l[i]['city']),
+                str(l[i]['num_airport']),
+                str(l[i]['name_airport'])
+                # str(l[i]['num_airplanes'])
+            ))
         sabt = Button(AirportsRoot, text="ثبت فرودگاه", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteAirport)
         sabt.config(height=1, width=20)
         delete = Button(AirportsRoot, text="حذف", font=('IRANSans', '13'),fg='white', bg='blue')
@@ -1351,6 +1316,20 @@ class all() :
         listBox9.config(height=20)
         for col in cols:
             listBox9.heading(col, text=col)
+        url = 'http://www.rownaghsh.ir/req.php'
+        data = {'table': 'wages'}
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        l = json.loads(r.text)
+        print(l)
+        for i in range(0, len(l)):
+            listBox9.insert("", "end", values=(
+                str(l[i]['descript']),
+                str(l[i]['Advantages']),
+                str(l[i]['wage']),
+                str(l[i]['job'])
+                # str(l[i]['num_airplanes'])
+            ))
         sabt = Button(WagesGroupRoot, text="ثبت شغل", font=('IRANSans', '13'), bg='blue', fg='white', command=self.sabteWage)
         sabt.config(height=1, width=20)
         delete = Button(WagesGroupRoot, text="حذف", font=('IRANSans', '13'), bg='blue', fg='white')
@@ -1439,6 +1418,23 @@ class all() :
         listBox9.config(height=22)
         for col in cols:
             listBox9.heading(col, text=col)
+        url = 'http://www.rownaghsh.ir/req.php'
+        data = {'table': 'price'}
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        l = json.loads(r.text)
+        print(l)
+        for i in range(0, len(l)):
+            listBox9.insert("", "end", values=(
+                str(l[i]['date_price']),
+                str(l[i]['price_economi']),
+                str(l[i]['price_bisness']),
+                str(l[i]['price_first_class']),
+                str(l[i]['model']),
+                str(l[i]['num_airport_destination']),
+                str(l[i]['num_airport_origin'])
+                # str(l[i]['num_airplanes'])
+            ))
         sabt = Button(pricesRoot, text="ثبت قیمت", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabtePrice)
         sabt.config(height=1, width=20)
         delete = Button(pricesRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
