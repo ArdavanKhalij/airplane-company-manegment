@@ -874,7 +874,7 @@ class all() :
         self.q1 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.q1.insert(0, "شماره پروار")
         self.q2 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
-        self.q2.insert(0, "شماره هواپیما")
+        self.q2.insert(0, "شماره خلبان")
         self.q3 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.q3.insert(0, "شماره کمک خلبان")
         self.q4 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
@@ -925,9 +925,9 @@ class all() :
                 "num_copilot": str(self.q3.get()),
                 "num_flight_engineer": str(self.q4.get()),
                 "num_group": str(self.q5.get()),
-                "normal_passenger": int(self.q6.get()),
+                "normal_passenger": int(self.q8.get()),
                 "bisness_passenger": int(self.q7.get()),
-                "first_class_passenger": int(self.q8.get()),
+                "first_class_passenger": int(self.q6.get()),
                 "all_weight_bar": int(self.q9.get()),
                 "Flight_status": str(self.q10.get()),
                 "internal": x
