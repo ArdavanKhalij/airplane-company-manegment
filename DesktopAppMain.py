@@ -21,58 +21,81 @@ NameOfUser = "ADMIN"
 class all() :
 
     def airplansRootFunc(self):
-        airplansRoot = Tk()
-        airplansRoot.title("هواپیما ها")
-        airplansRoot['bg'] = 'orange'
-        space = Label(airplansRoot, text=" ", bg='orange')
-        space1 = Label(airplansRoot, text=" ", bg='orange')
-        space2 = Label(airplansRoot, text=" ", bg='orange')
-        space3 = Label(airplansRoot, text=" ", bg='orange')
-        space4 = Label(airplansRoot, text=" ", bg='orange')
-        space5 = Label(airplansRoot, text=" ", bg='orange')
-        title = Label(airplansRoot, text="هواپیما ها", font=('IRANSans', '22'), fg="black", bg='orange')
+        self.airplansRoot = Tk()
+        self.airplansRoot.title("هواپیما ها")
+        self.airplansRoot['bg'] = 'orange'
+        space = Label(self.airplansRoot, text=" ", bg='orange')
+        space1 = Label(self.airplansRoot, text=" ", bg='orange')
+        space2 = Label(self.airplansRoot, text=" ", bg='orange')
+        space3 = Label(self.airplansRoot, text=" ", bg='orange')
+        space4 = Label(self.airplansRoot, text=" ", bg='orange')
+        space5 = Label(self.airplansRoot, text=" ", bg='orange')
+        title = Label(self.airplansRoot, text="هواپیما ها", font=('IRANSans', '22'), fg="black", bg='orange')
         cols = ('ظرفیت بار' ,'تعداد Economy class','تعداد Business class', 'تعداد First class', 'مدل', 'شماره هواپیما')
-        listBox = ttk.Treeview(airplansRoot, columns=cols, show='headings')
-        vsb = ttk.Scrollbar(orient="vertical", command=listBox.yview)
-        listBox.configure(yscrollcommand=vsb.set)
-        listBox.column("0", width=220, anchor="c")
-        listBox.column("1", width=220, anchor="c")
-        listBox.column("2", width=220, anchor="c")
-        listBox.column("3", width=220, anchor="c")
-        listBox.column("4", width=220, anchor="c")
-        listBox.column("5", width=220, anchor="c")
-        listBox.config(height=20)
+        self.listBoxAirplane = ttk.Treeview(self.airplansRoot, columns=cols, show='headings')
+        vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxAirplane.yview)
+        self.listBoxAirplane.configure(yscrollcommand=vsb.set)
+        self.listBoxAirplane.column("0", width=220, anchor="c")
+        self.listBoxAirplane.column("1", width=220, anchor="c")
+        self.listBoxAirplane.column("2", width=220, anchor="c")
+        self.listBoxAirplane.column("3", width=220, anchor="c")
+        self.listBoxAirplane.column("4", width=220, anchor="c")
+        self.listBoxAirplane.column("5", width=220, anchor="c")
+        self.listBoxAirplane.config(height=20)
         for col in cols:
-            listBox.heading(col, text=col)
-        url = 'http://www.rownaghsh.ir/req.php'
+            self.listBoxAirplane.heading(col, text=col)
+        url = 'http://www.rownaghsh.ir/req_airplanes.php'
         data={'table':'airplane'}
         data1=json.dumps(data)
         r=requests.post(url, data=data1)
         l=json.loads(r.text)
+        print(l)
         for i in range(0, len(l)):
-            listBox.insert("", "end", values=(
+            self.listBoxAirplane.insert("", "end", values=(
                 str(l[i]['bar']),
                 str(l[i]['economi']),
                 str(l[i]['bisness']),
                 str(l[i]['first_class']),
-                str(l[i]['model'])
-                # str(l[i]['num_airplanes'])
+                str(l[i]['model']),
+                str(l[i]['num_airplane'])
             ))
-        sabt = Button(airplansRoot, text="ثبت هواپیما", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteAirplane)
+        sabt = Button(self.airplansRoot, text="ثبت هواپیما", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteAirplane)
         sabt.config(height=1, width=20)
-        delete = Button(airplansRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
+        delete = Button(self.airplansRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteAirplane)
         delete.config(height=1, width=20)
-        edit = Button(airplansRoot, text="ثبت هواپیما از مدل موجود", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteAirplane3)
+        edit = Button(self.airplansRoot, text="ثبت هواپیما از مدل موجود", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteAirplane3)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
         space1.pack()
-        listBox.pack()
+        self.listBoxAirplane.pack()
         space2.pack()
         sabt.pack()
         edit.pack()
         delete.pack()
         space3.pack()
+
+    def deleteAirplane(self):
+        self.listBoxAirplane.bind('<Button-1>', self.listBoxAirplane)
+        curItem = self.listBoxAirplane.focus()
+        k = self.listBoxAirplane.item(curItem)
+        url='http://www.rownaghsh.ir/del.php'
+        data = {
+            "table":"airplanes",
+            "key":"num_airplane",
+            "value":str(k['values'][5])
+        }
+        data1=json.dumps(data)
+        r=requests.post(url, data=data1)
+        data2 = {
+            "table": "airplane",
+            "key": "model",
+            "value": str(k['values'][4])
+        }
+        data3 = json.dumps(data2)
+        r = requests.post(url, data=data3)
+        self.airplansRoot.destroy()
+        self.airplansRootFunc()
 
     def sabteAirplane(self):
         self.sabteAirplanePageRoot = Tk()
@@ -134,8 +157,9 @@ class all() :
               }
         data1=json.dumps(data)
         r=requests.post(url, data=data1)
-        print(r.text)
-        print(data)
+        self.sabteAirplanePageRoot.destroy()
+        self.airplansRoot.destroy()
+        self.airplansRootFunc()
 
     def sabteAirplane3(self):
         self.sabteAirplane3PageRoot = Tk()
@@ -173,63 +197,108 @@ class all() :
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
-        print(r.text)
-        print(data)
+        self.sabteAirplane3PageRoot.destroy()
+        self.airplansRoot.destroy()
+        self.airplansRootFunc()
 
     def PilotRootFunc(self):
-        PilotRoot = Tk()
-        PilotRoot.title("خلبان ها")
-        PilotRoot['bg'] = 'orange'
-        space = Label(PilotRoot, text=" ", bg='orange')
-        space1 = Label(PilotRoot, text=" ", bg='orange')
-        space2 = Label(PilotRoot, text=" ", bg='orange')
-        space3 = Label(PilotRoot, text=" ", bg='orange')
-        space4 = Label(PilotRoot, text=" ", bg='orange')
-        space5 = Label(PilotRoot, text=" ", bg='orange')
-        title = Label(PilotRoot, text="خلبان ها", font=('IRANSans', '22'), bg='orange')
+        self.PilotRoot = Tk()
+        self.PilotRoot.title("خلبان ها")
+        self.PilotRoot['bg'] = 'orange'
+        space = Label(self.PilotRoot, text=" ", bg='orange')
+        space1 = Label(self.PilotRoot, text=" ", bg='orange')
+        space2 = Label(self.PilotRoot, text=" ", bg='orange')
+        space3 = Label(self.PilotRoot, text=" ", bg='orange')
+        space4 = Label(self.PilotRoot, text=" ", bg='orange')
+        space5 = Label(self.PilotRoot, text=" ", bg='orange')
+        title = Label(self.PilotRoot, text="خلبان ها", font=('IRANSans', '22'), bg='orange')
         cols = (
         'تلفن 3', 'نام آشنا 3', 'تلفن 2', 'نام آشنا 2', 'تلفن 1', 'نام آشنا1', 'تعداد فرزندان', 'شماره تلفن همسر',
         'کد ملی همسر', 'نام همسر', 'تاریخ تولد', 'شماره تلفن', 'شماره خلبان', 'کد ملی', 'جنسیت', 'نام خانوادگی',
         'نام')
-        listBox2 = ttk.Treeview(PilotRoot, columns=cols, show='headings')
-        vsb = ttk.Scrollbar(orient="vertical", command=listBox2.yview)
-        listBox2.configure(yscrollcommand=vsb.set)
-        listBox2.column("0", width=80, anchor="c")
-        listBox2.column("1", width=80, anchor="c")
-        listBox2.column("2", width=80, anchor="c")
-        listBox2.column("3", width=80, anchor="c")
-        listBox2.column("4", width=80, anchor="c")
-        listBox2.column("5", width=80, anchor="c")
-        listBox2.column("6", width=80, anchor="c")
-        listBox2.column("7", width=80, anchor="c")
-        listBox2.column("8", width=80, anchor="c")
-        listBox2.column("9", width=80, anchor="c")
-        listBox2.column("10", width=80, anchor="c")
-        listBox2.column("11", width=80, anchor="c")
-        listBox2.column("12", width=80, anchor="c")
-        listBox2.column("13", width=80, anchor="c")
-        listBox2.column("14", width=80, anchor="c")
-        listBox2.column("15", width=80, anchor="c")
-        listBox2.column("16", width=80, anchor="c")
-        listBox2.config(height=20)
+        self.listBoxPilot = ttk.Treeview(self.PilotRoot, columns=cols, show='headings')
+        vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxPilot.yview)
+        self.listBoxPilot.configure(yscrollcommand=vsb.set)
+        self.listBoxPilot.column("0", width=80, anchor="c")
+        self.listBoxPilot.column("1", width=80, anchor="c")
+        self.listBoxPilot.column("2", width=80, anchor="c")
+        self.listBoxPilot.column("3", width=80, anchor="c")
+        self.listBoxPilot.column("4", width=80, anchor="c")
+        self.listBoxPilot.column("5", width=80, anchor="c")
+        self.listBoxPilot.column("6", width=80, anchor="c")
+        self.listBoxPilot.column("7", width=80, anchor="c")
+        self.listBoxPilot.column("8", width=80, anchor="c")
+        self.listBoxPilot.column("9", width=80, anchor="c")
+        self.listBoxPilot.column("10", width=80, anchor="c")
+        self.listBoxPilot.column("11", width=80, anchor="c")
+        self.listBoxPilot.column("12", width=80, anchor="c")
+        self.listBoxPilot.column("13", width=80, anchor="c")
+        self.listBoxPilot.column("14", width=80, anchor="c")
+        self.listBoxPilot.column("15", width=80, anchor="c")
+        self.listBoxPilot.column("16", width=80, anchor="c")
+        self.listBoxPilot.config(height=20)
         for col in cols:
-            listBox2.heading(col, text=col)
-        sabt = Button(PilotRoot, text="ثبت خلبان", font=('IRANSans', '13'), fg='white', bg='blue',
+            self.listBoxPilot.heading(col, text=col)
+        url = 'http://www.rownaghsh.ir/req_personel.php'
+        data = {'table': 'pilot'}
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        l = json.loads(r.text)
+        for i in range(0, len(l)):
+            if l[i]['gender']=='1':
+                x='مرد'
+            else:
+                x='زن'
+            self.listBoxPilot.insert("", "end", values=(
+                str(l[i]['phon3']),
+                str(l[i]['fname3']),
+                str(l[i]['phon2']),
+                str(l[i]['fname2']),
+                str(l[i]['phon1']),
+                str(l[i]['fname1']),
+                str(l[i]['child']),
+                str(l[i]['partner_phone']),
+                str(l[i]['partner_mellicode']),
+                str(l[i]['partner']),
+                str(l[i]['birthdate']),
+                str(l[i]['phone']),
+                str(l[i]['num_pilot']),
+                str(l[i]['mellicode']),
+                x,
+                str(l[i]['lname']),
+                str(l[i]['fname'])
+            ))
+        sabt = Button(self.PilotRoot, text="ثبت خلبان", font=('IRANSans', '13'), fg='white', bg='blue',
                       command=self.sabtePilot)
         sabt.config(height=1, width=20)
-        delete = Button(PilotRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
+        delete = Button(self.PilotRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deletePilot)
         delete.config(height=1, width=20)
-        edit = Button(PilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit = Button(self.PilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
         space1.pack()
-        listBox2.pack()
+        self.listBoxPilot.pack()
         space2.pack()
         sabt.pack()
         edit.pack()
         delete.pack()
         space3.pack()
+
+    def deletePilot(self):
+        self.listBoxPilot.bind('<Button-1>', self.listBoxPilot)
+        curItem = self.listBoxPilot.focus()
+        k = self.listBoxPilot.item(curItem)
+        url = 'http://www.rownaghsh.ir/del.php'
+        data = {
+            "table": "pilot",
+            "key": "num_pilot",
+            "value": str(k['values'][12])
+        }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        self.PilotRoot.destroy()
+        self.PilotRootFunc()
 
     def sabtePilot(self):
         self.sabtepilotPageRoot = Tk()
@@ -333,57 +402,104 @@ class all() :
         r = requests.post(url, data=data1)
         print(r.text)
         print(data1)
+        self.sabtepilotPageRoot.destroy()
+        self.PilotRoot.destroy()
+        self.PilotRootFunc()
 
     def CoPilotRootFunc(self):
-        CoPilotRoot = Tk()
-        CoPilotRoot.title("کمک خلبان ها")
-        CoPilotRoot['bg'] = 'orange'
-        space = Label(CoPilotRoot, text=" ", bg='orange')
-        space1 = Label(CoPilotRoot, text=" ", bg='orange')
-        space2 = Label(CoPilotRoot, text=" ", bg='orange')
-        space3 = Label(CoPilotRoot, text=" ", bg='orange')
-        space4 = Label(CoPilotRoot, text=" ", bg='orange')
-        space5 = Label(CoPilotRoot, text=" ", bg='orange')
-        title = Label(CoPilotRoot, text="کمک خلبان ها", font=('IRANSans', '22'), bg='orange')
+        self.CoPilotRoot = Tk()
+        self.CoPilotRoot.title("کمک خلبان ها")
+        self.CoPilotRoot['bg'] = 'orange'
+        space = Label(self.CoPilotRoot, text=" ", bg='orange')
+        space1 = Label(self.CoPilotRoot, text=" ", bg='orange')
+        space2 = Label(self.CoPilotRoot, text=" ", bg='orange')
+        space3 = Label(self.CoPilotRoot, text=" ", bg='orange')
+        space4 = Label(self.CoPilotRoot, text=" ", bg='orange')
+        space5 = Label(self.CoPilotRoot, text=" ", bg='orange')
+        title = Label(self.CoPilotRoot, text="کمک خلبان ها", font=('IRANSans', '22'), bg='orange')
         cols = ('تلفن 3','نام آشنا 3','تلفن 2','نام آشنا 2','تلفن 1','نام آشنا1','تعداد فرزندان','شماره تلفن همسر','کد ملی همسر','نام همسر','تاریخ تولد','شماره تلفن' ,'شماره کمک خلبان','کد ملی', 'جنسیت', 'نام خانوادگی', 'نام')
-        listBox2 = ttk.Treeview(CoPilotRoot, columns=cols, show='headings')
-        vsb = ttk.Scrollbar(orient="vertical", command=listBox2.yview)
-        listBox2.configure(yscrollcommand=vsb.set)
-        listBox2.column("0", width=80, anchor="c")
-        listBox2.column("1", width=80, anchor="c")
-        listBox2.column("2", width=80, anchor="c")
-        listBox2.column("3", width=80, anchor="c")
-        listBox2.column("4", width=80, anchor="c")
-        listBox2.column("5", width=80, anchor="c")
-        listBox2.column("6", width=80, anchor="c")
-        listBox2.column("7", width=80, anchor="c")
-        listBox2.column("8", width=80, anchor="c")
-        listBox2.column("9", width=80, anchor="c")
-        listBox2.column("10", width=80, anchor="c")
-        listBox2.column("11", width=80, anchor="c")
-        listBox2.column("12", width=80, anchor="c")
-        listBox2.column("13", width=80, anchor="c")
-        listBox2.column("14", width=80, anchor="c")
-        listBox2.column("15", width=80, anchor="c")
-        listBox2.column("16", width=80, anchor="c")
-        listBox2.config(height=20)
+        self.listBoxCopilot = ttk.Treeview(self.CoPilotRoot, columns=cols, show='headings')
+        vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxCopilot.yview)
+        self.listBoxCopilot.configure(yscrollcommand=vsb.set)
+        self.listBoxCopilot.column("0", width=80, anchor="c")
+        self.listBoxCopilot.column("1", width=80, anchor="c")
+        self.listBoxCopilot.column("2", width=80, anchor="c")
+        self.listBoxCopilot.column("3", width=80, anchor="c")
+        self.listBoxCopilot.column("4", width=80, anchor="c")
+        self.listBoxCopilot.column("5", width=80, anchor="c")
+        self.listBoxCopilot.column("6", width=80, anchor="c")
+        self.listBoxCopilot.column("7", width=80, anchor="c")
+        self.listBoxCopilot.column("8", width=80, anchor="c")
+        self.listBoxCopilot.column("9", width=80, anchor="c")
+        self.listBoxCopilot.column("10", width=80, anchor="c")
+        self.listBoxCopilot.column("11", width=80, anchor="c")
+        self.listBoxCopilot.column("12", width=80, anchor="c")
+        self.listBoxCopilot.column("13", width=80, anchor="c")
+        self.listBoxCopilot.column("14", width=80, anchor="c")
+        self.listBoxCopilot.column("15", width=80, anchor="c")
+        self.listBoxCopilot.column("16", width=80, anchor="c")
+        self.listBoxCopilot.config(height=20)
         for col in cols:
-            listBox2.heading(col, text=col)
-        sabt = Button(CoPilotRoot, text="ثبت کمک خلبان", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteCopilot)
+            self.listBoxCopilot.heading(col, text=col)
+        url = 'http://www.rownaghsh.ir/req_personel.php'
+        data = {'table': 'co_pilot'}
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        l=json.loads(r.text)
+        for i in range(0, len(l)):
+            if l[i]['gender'] == '1':
+                x = 'مرد'
+            else:
+                x = 'زن'
+            self.listBoxCopilot.insert("", "end", values=(
+                str(l[i]['phon3']),
+                str(l[i]['fname3']),
+                str(l[i]['phon2']),
+                str(l[i]['fname2']),
+                str(l[i]['phon1']),
+                str(l[i]['fname1']),
+                str(l[i]['child']),
+                str(l[i]['partner_phone']),
+                str(l[i]['partner_mellicode']),
+                str(l[i]['partner']),
+                str(l[i]['birthdate']),
+                str(l[i]['phone']),
+                str(l[i]['num_copilot']),
+                str(l[i]['mellicode']),
+                x,
+                str(l[i]['lname']),
+                str(l[i]['fname'])
+            ))
+        sabt = Button(self.CoPilotRoot, text="ثبت کمک خلبان", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteCopilot)
         sabt.config(height=1, width=20)
-        delete = Button(CoPilotRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
+        delete = Button(self.CoPilotRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteCopilot)
         delete.config(height=1, width=20)
-        edit = Button(CoPilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit = Button(self.CoPilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
         space1.pack()
-        listBox2.pack()
+        self.listBoxCopilot.pack()
         space2.pack()
         sabt.pack()
         edit.pack()
         delete.pack()
         space3.pack()
+
+    def deleteCopilot(self):
+        self.listBoxCopilot.bind('<Button-1>', self.listBoxCopilot)
+        curItem = self.listBoxCopilot.focus()
+        k = self.listBoxCopilot.item(curItem)
+        url = 'http://www.rownaghsh.ir/del.php'
+        data = {
+            "table": "co_pilot",
+            "key": "num_copilot",
+            "value": str(k['values'][12])
+        }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        self.CoPilotRoot.destroy()
+        self.CoPilotRootFunc()
 
     def sabteCopilot(self):
         self.sabteCopilotPageRoot = Tk()
@@ -487,6 +603,9 @@ class all() :
         r = requests.post(url, data=data1)
         print(r.text)
         print(data1)
+        self.sabteCopilotPageRoot.destroy()
+        self.CoPilotRoot.destroy()
+        self.CoPilotRootFunc()
 
     def FlightEngineerRootFunc(self):
         FlightEngineerRoot = Tk()
@@ -526,6 +645,35 @@ class all() :
         listBox2.config(height=20)
         for col in cols:
             listBox2.heading(col, text=col)
+        url = 'http://www.rownaghsh.ir/req_personel.php'
+        data = {'table': 'flight_engineer'}
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        l = json.loads(r.text)
+        for i in range(0, len(l)):
+            if l[i]['gender'] == '1':
+                x = 'مرد'
+            else:
+                x = 'زن'
+            listBox2.insert("", "end", values=(
+                str(l[i]['phon3']),
+                str(l[i]['fname3']),
+                str(l[i]['phon2']),
+                str(l[i]['fname2']),
+                str(l[i]['phon1']),
+                str(l[i]['fname1']),
+                str(l[i]['child']),
+                str(l[i]['partner_phone']),
+                str(l[i]['partner_mellicode']),
+                str(l[i]['partner']),
+                str(l[i]['birthdate']),
+                str(l[i]['phone']),
+                str(l[i]['num_flight_engineer']),
+                str(l[i]['mellicode']),
+                x,
+                str(l[i]['lname']),
+                str(l[i]['fname'])
+            ))
         sabt = Button(FlightEngineerRoot, text="ثبت مهندس پرواز", font=('IRANSans', '13'), fg='white', bg='blue',
                       command=self.sabteFlightEngineer)
         sabt.config(height=1, width=20)
@@ -685,6 +833,41 @@ class all() :
         listBox2.config(height=20)
         for col in cols:
             listBox2.heading(col, text=col)
+        url = 'http://www.rownaghsh.ir/req_personel.php'
+        data = {'table': 'stewardess'}
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        l = json.loads(r.text)
+        print(l)
+        for i in range(0, len(l)):
+            if l[i]['gender'] == '1':
+                x = 'مرد'
+            else:
+                x = 'زن'
+            if l[i]['active'] == '1':
+                y = 'فعال'
+            else:
+                y = 'آزاد'
+            listBox2.insert("", "end", values=(
+                str(l[i]['phon3']),
+                str(l[i]['fname3']),
+                str(l[i]['phon2']),
+                str(l[i]['fname2']),
+                str(l[i]['phon1']),
+                str(l[i]['fname1']),
+                y,
+                str(l[i]['child']),
+                str(l[i]['partner_phone']),
+                str(l[i]['partner_mellicode']),
+                str(l[i]['partner']),
+                str(l[i]['birthdate']),
+                str(l[i]['phone']),
+                str(l[i]['num_stewardess']),
+                str(l[i]['mellicode']),
+                x,
+                str(l[i]['lname']),
+                str(l[i]['fname'])
+            ))
         sabt = Button(StewardsRoot, text="ثبت مهماندار", font=('IRANSans', '13'), fg='white', bg='blue',
                       command=self.sabteSteward)
         sabt.config(height=1, width=20)
@@ -843,6 +1026,30 @@ class all() :
         listBox5.config(height=20)
         for col in cols:
             listBox5.heading(col, text=col)
+        url = 'http://www.rownaghsh.ir/req_flight.php'
+        data = {'table': 'flight'}
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        l = json.loads(r.text)
+        print(l)
+        for i in range(0, len(l)):
+            if l[i]['internal']=='1':
+                x='داخلی'
+            else:
+                x='خارجی'
+            listBox5.insert("", "end", values=(
+                x,
+                str(l[i]['Flight_status']),
+                str(l[i]['all_weight_bar']),
+                str(l[i]['first_class_passenger']),
+                str(l[i]['bisness_passenger']),
+                str(l[i]['normal_passenger']),
+                str(l[i]['num_group']),
+                str(l[i]['num_flight_engineer']),
+                str(l[i]['num_copilot']),
+                str(l[i]['num_pilot']),
+                str(l[i]['num_flight'])
+            ))
         sabt = Button(FlightsRoot, text="ثبت پرواز", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteFlight)
         sabt.config(height=1, width=18)
         delete = Button(FlightsRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
@@ -963,6 +1170,23 @@ class all() :
         listBox6.config(height=20)
         for col in cols:
             listBox6.heading(col, text=col)
+        url = 'http://www.rownaghsh.ir/req_flight.php'
+        data = {'table': 'flight'}
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        l = json.loads(r.text)
+        print(l)
+        for i in range(0, len(l)):
+            listBox6.insert("", "end", values=(
+                str(l[i]['date_up']),
+                str(l[i]['date_down']),
+                str(l[i]['timer_up']),
+                str(l[i]['timer_down']),
+                str(l[i]['num_flight']),
+                str(l[i]['destination']),
+                str(l[i]['origin']),
+                str(l[i]['num_airplane'])
+            ))
         sabt = Button(FlightSkechuleRoot, text="ثبت پرواز", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteFS)
         sabt.config(height=1, width=18)
         delete = Button(FlightSkechuleRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
