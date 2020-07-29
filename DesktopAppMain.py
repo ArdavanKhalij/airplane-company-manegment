@@ -1253,6 +1253,12 @@ class all() :
         delete.pack()
         space3.pack()
 
+    def editFS(self):
+        pass
+    
+    def editFS2(self):
+        pass
+
     def deleteFlightSkedule(self):
         self.listBoxFS.bind('<Button-1>', self.listBoxFS)
         curItem = self.listBoxFS.focus()
@@ -1387,7 +1393,7 @@ class all() :
         sabt.config(height=1, width=20)
         delete = Button(self.AirportsRoot, text="حذف", font=('IRANSans', '13'),fg='white', bg='blue', command=self.deleteAirport)
         delete.config(height=1, width=20)
-        edit = Button(self.AirportsRoot, text="ویرایش", font=('IRANSans', '13'),fg='white', bg='blue')
+        edit = Button(self.AirportsRoot, text="ویرایش", font=('IRANSans', '13'),fg='white', bg='blue', command=self.editAirport)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -1398,6 +1404,86 @@ class all() :
         edit.pack()
         delete.pack()
         space3.pack()
+
+    def editAirport(self):
+        self.listBoxAirport.bind('<Button-1>', self.listBoxAirport)
+        curItem = self.listBoxAirport.focus()
+        k = self.listBoxAirport.item(curItem)
+        self.sabteAirportPageRoot = Tk()
+        self.sabteAirportPageRoot.title("ویرایش فرودگاه")
+        self.sabteAirportPageRoot.configure(bg='orange')
+        title = Label(self.sabteAirportPageRoot, text="ویرایش فرودگاه", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
+        self.APN = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.APN.insert(0, k['values'][7])
+        self.APNO = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.APNO.insert(0, k['values'][6])
+        self.APNO.config(state=DISABLED)
+        self.city = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.city.insert(0, k['values'][5])
+        self.country = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.country.insert(0, k['values'][4])
+        self.lon = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.lon.insert(0, k['values'][3])
+        self.lat = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.lat.insert(0, k['values'][2])
+        self.address = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.address.insert(0, k['values'][1])
+        self.inorout = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.inorout.insert(0, k['values'][0])
+        sabt = Button(self.sabteAirportPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+                      command=self.editAirport2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        # space2.pack()
+        self.APN.pack()
+        self.APNO.pack()
+        self.city.pack()
+        self.country.pack()
+        self.lon.pack()
+        self.lat.pack()
+        self.address.pack()
+        self.inorout.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def editAirport2(self):
+        url = 'http://www.rownaghsh.ir/upd.php'
+        if self.inorout.get() == "داخلی":
+            x = 1
+        else:
+            x = 0
+        data2 = {"name_airport": str(self.APN.get()),
+                "num_airport": str(self.APNO.get()),
+                "city": str(self.city.get()),
+                "country": str(self.country.get()),
+                "latitude": float(self.lat.get()),
+                "longitude": float(self.lon.get()),
+                "addresses": str(self.address.get()),
+                "internal": x
+                }
+        data3 = json.dumps(data2)
+        data = {"table": "origin_destination",
+                "key": "num_airport",
+                "value": self.APNO.get(),
+                "columns": data2
+                }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        print(r.text)
+        print(data1)
+        self.sabteAirportPageRoot.destroy()
+        self.AirportsRoot.destroy()
+        self.AirportsRootFunc()
 
     def deleteAirport(self):
         self.listBoxAirport.bind('<Button-1>', self.listBoxAirport)
@@ -1463,7 +1549,7 @@ class all() :
 
     def sabteAirport2(self):
         url = 'http://www.rownaghsh.ir/origin_destination.php'
-        if self.inorout.get()=="داخلی":
+        if self.inorout.get()=='داخلی':
             x=1
         else:
             x=0
@@ -1485,35 +1571,35 @@ class all() :
         self.AirportsRootFunc()
 
     def stewartsGroupRootFunc(self):
-        stewartsGroupRoot = Tk()
-        stewartsGroupRoot.title("گروه های مهمانداری")
-        stewartsGroupRoot['bg'] = 'orange'
-        space = Label(stewartsGroupRoot, text=" ", bg='orange')
-        space1 = Label(stewartsGroupRoot, text=" ", bg='orange')
-        space2 = Label(stewartsGroupRoot, text=" ", bg='orange')
-        space3 = Label(stewartsGroupRoot, text=" ", bg='orange')
-        space4 = Label(stewartsGroupRoot, text=" ", bg='orange')
-        space5 = Label(stewartsGroupRoot, text=" ", bg='orange')
-        title = Label(stewartsGroupRoot, text="گروه های مهمانداری", font=('IRANSans', '22'), bg='orange')
+        self.stewartsGroupRoot = Tk()
+        self.stewartsGroupRoot.title("گروه های مهمانداری")
+        self.stewartsGroupRoot['bg'] = 'orange'
+        space = Label(self.stewartsGroupRoot, text=" ", bg='orange')
+        space1 = Label(self.stewartsGroupRoot, text=" ", bg='orange')
+        space2 = Label(self.stewartsGroupRoot, text=" ", bg='orange')
+        space3 = Label(self.stewartsGroupRoot, text=" ", bg='orange')
+        space4 = Label(self.stewartsGroupRoot, text=" ", bg='orange')
+        space5 = Label(self.stewartsGroupRoot, text=" ", bg='orange')
+        title = Label(self.stewartsGroupRoot, text="گروه های مهمانداری", font=('IRANSans', '22'), bg='orange')
         cols = ('شماره مهماندار 6','شماره مهماندار 5','شماره مهماندار 4','شماره مهماندار 3','شماره مهماندار 2','شماره مهماندار 1','مدل هواپیما', 'تعداد مهمانداران Economy class',
                 'تعداد مهمانداران Business class', 'تعداد مهمانداران First class', 'شماره گروه')
-        listBox8 = ttk.Treeview(stewartsGroupRoot, columns=cols, show='headings')
-        vsb = ttk.Scrollbar(orient="vertical", command=listBox8.yview)
-        listBox8.configure(yscrollcommand=vsb.set)
-        listBox8.column("0", width=122, anchor="c")
-        listBox8.column("1", width=122, anchor="c")
-        listBox8.column("2", width=122, anchor="c")
-        listBox8.column("3", width=122, anchor="c")
-        listBox8.column("4", width=122, anchor="c")
-        listBox8.column("5", width=122, anchor="c")
-        listBox8.column("6", width=122, anchor="c")
-        listBox8.column("7", width=122, anchor="c")
-        listBox8.column("8", width=122, anchor="c")
-        listBox8.column("9", width=122, anchor="c")
-        listBox8.column("10", width=122, anchor="c")
-        listBox8.config(height=20)
+        self.listBoxSTG = ttk.Treeview(self.stewartsGroupRoot, columns=cols, show='headings')
+        vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxSTG.yview)
+        self.listBoxSTG.configure(yscrollcommand=vsb.set)
+        self.listBoxSTG.column("0", width=122, anchor="c")
+        self.listBoxSTG.column("1", width=122, anchor="c")
+        self.listBoxSTG.column("2", width=122, anchor="c")
+        self.listBoxSTG.column("3", width=122, anchor="c")
+        self.listBoxSTG.column("4", width=122, anchor="c")
+        self.listBoxSTG.column("5", width=122, anchor="c")
+        self.listBoxSTG.column("6", width=122, anchor="c")
+        self.listBoxSTG.column("7", width=122, anchor="c")
+        self.listBoxSTG.column("8", width=122, anchor="c")
+        self.listBoxSTG.column("9", width=122, anchor="c")
+        self.listBoxSTG.column("10", width=122, anchor="c")
+        self.listBoxSTG.config(height=23)
         for col in cols:
-            listBox8.heading(col, text=col)
+            self.listBoxSTG.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/memandaran.php'
         data = {'table': 'stewardess_group'}
         data1 = json.dumps(data)
@@ -1522,7 +1608,7 @@ class all() :
         print(l[1]['7'])
         for i in range(0, len(l)):
             if(len(l[i]['7'])==0):
-                listBox8.insert("", "end", values=(
+                self.listBoxSTG.insert("", "end", values=(
                     '',
                     '',
                     '',
@@ -1536,7 +1622,7 @@ class all() :
                     str(l[i]['num_group'])
                 ))
             elif(len(l[i]['7'])==1):
-                listBox8.insert("", "end", values=(
+                self.listBoxSTG.insert("", "end", values=(
                     '',
                     '',
                     '',
@@ -1550,7 +1636,7 @@ class all() :
                     str(l[i]['num_group'])
                 ))
             elif(len(l[i]['7']) == 2):
-                listBox8.insert("", "end", values=(
+                self.listBoxSTG.insert("", "end", values=(
                     '',
                     '',
                     '',
@@ -1564,7 +1650,7 @@ class all() :
                     str(l[i]['num_group'])
                 ))
             elif(len(l[i]['7']) == 3):
-                listBox8.insert("", "end", values=(
+                self.listBoxSTG.insert("", "end", values=(
                     '',
                     '',
                     str(l[i]['7'][2]),
@@ -1578,7 +1664,7 @@ class all() :
                     str(l[i]['num_group'])
                 ))
             elif(len(l[i]['7']) == 4):
-                listBox8.insert("", "end", values=(
+                self.listBoxSTG.insert("", "end", values=(
                     '',
                     str(l[i]['7'][3]),
                     str(l[i]['7'][2]),
@@ -1592,7 +1678,7 @@ class all() :
                     str(l[i]['num_group'])
                 ))
             else:
-                listBox8.insert("", "end", values=(
+                self.listBoxSTG.insert("", "end", values=(
                     str(l[i]['7'][4]),
                     str(l[i]['7'][3]),
                     str(l[i]['7'][2]),
@@ -1605,21 +1691,36 @@ class all() :
                     str(l[i]['stewardess_first_class']),
                     str(l[i]['num_group'])
                 ))
-        sabt = Button(stewartsGroupRoot, text="ثبت گروه مهمانداری", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteStG)
+        sabt = Button(self.stewartsGroupRoot, text="ثبت گروه مهمانداری", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteStG)
         sabt.config(height=1, width=18)
-        delete = Button(stewartsGroupRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
+        delete = Button(self.stewartsGroupRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteSTG)
         delete.config(height=1, width=18)
-        edit = Button(stewartsGroupRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
-        edit.config(height=1, width=18)
+        # edit = Button(self.stewartsGroupRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        # edit.config(height=1, width=18)
         space.pack()
         title.pack()
         space1.pack()
-        listBox8.pack()
+        self.listBoxSTG.pack()
         space2.pack()
         sabt.pack()
-        edit.pack()
+        # edit.pack()
         delete.pack()
         space3.pack()
+
+    def deleteSTG(self):
+        self.listBoxSTG.bind('<Button-1>', self.listBoxSTG)
+        curItem = self.listBoxSTG.focus()
+        k = self.listBoxSTG.item(curItem)
+        url = 'http://www.rownaghsh.ir/del.php'
+        data = {
+            "table": "detail_stewardess_group",
+            "key": "num_group",
+            "value": str(k['values'][10])
+        }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        self.stewartsGroupRoot.destroy()
+        self.stewartsGroupRootFunc()
 
     def sabteStG(self):
         self.sabteSTGPageRoot = Tk()
@@ -1716,6 +1817,9 @@ class all() :
         r = requests.post(url, data=data1)
         print(r.text)
         print(data1)
+        self.sabteSTGPageRoot.destroy()
+        self.stewartsGroupRoot.destroy()
+        self.stewartsGroupRootFunc()
 
     def WagesGroupRootFunc(self):
         self.WagesGroupRoot = Tk()
@@ -1755,7 +1859,7 @@ class all() :
         sabt.config(height=1, width=20)
         delete = Button(self.WagesGroupRoot, text="حذف", font=('IRANSans', '13'), bg='blue', fg='white', command=self.deleteWage)
         delete.config(height=1, width=20)
-        edit = Button(self.WagesGroupRoot, text="ویرایش", font=('IRANSans', '13'), bg='blue', fg='white')
+        edit = Button(self.WagesGroupRoot, text="ویرایش", font=('IRANSans', '13'), bg='blue', fg='white', command=self.editWage)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -1766,6 +1870,66 @@ class all() :
         edit.pack()
         delete.pack()
         space3.pack()
+
+    def editWage(self):
+        self.listBoxWage.bind('<Button-1>', self.listBoxWage)
+        curItem = self.listBoxWage.focus()
+        k = self.listBoxWage.item(curItem)
+        self.sabteWagesPageRoot = Tk()
+        self.sabteWagesPageRoot.title("ویرایش شفل")
+        self.sabteWagesPageRoot.configure(bg='orange')
+        title = Label(self.sabteWagesPageRoot, text="ویرایش شغل", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
+        self.jobn = Entry(self.sabteWagesPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.jobn.insert(0, k['values'][3])
+        self.jobn.config(state=DISABLED)
+        self.salary = Entry(self.sabteWagesPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.salary.insert(0, k['values'][2])
+        self.benef = Entry(self.sabteWagesPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.benef.insert(0, k['values'][1])
+        self.tozi = Entry(self.sabteWagesPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.tozi.insert(0, k['values'][0])
+        sabt = Button(self.sabteWagesPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+                      command=self.editWage2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        space2.pack()
+        self.jobn.pack()
+        self.salary.pack()
+        self.benef.pack()
+        self.tozi.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def editWage2(self):
+        url = 'http://www.rownaghsh.ir/upd.php'
+        data2 = {"job": str(self.jobn.get()),
+                "wage": int(self.salary.get()),
+                "Advantages": str(self.benef.get()),
+                "descript": str(self.tozi.get())
+                }
+        data3= json.dumps(data2)
+        data = {"table": "wages",
+                "key": "job",
+                "value": self.jobn.get(),
+                "columns": data2
+                }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        print(r.text)
+        print(data1)
+        self.sabteWagesPageRoot.destroy()
+        self.WagesGroupRoot.destroy()
+        self.WagesGroupRootFunc()
 
     def deleteWage(self):
         self.listBoxWage.bind('<Button-1>', self.listBoxWage)
