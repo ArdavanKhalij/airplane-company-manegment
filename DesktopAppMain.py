@@ -11,8 +11,6 @@ import json
 #######################################################################################################################
 #                                                  Global Variables                                                   #
 #######################################################################################################################
-MyUsername=''
-MyPassword=''
 #######################################################################################################################
 #                                                       Pages                                                         #
 #######################################################################################################################
@@ -53,7 +51,7 @@ class all() :
         #         str(l[i]['model']),
         #         str(l[i]['num_airplane'])
         #     ))
-        sabt = Button(self.usersRoot, text="ثبت کاربر", font=('IRANSans', '13'), fg='white', bg='blue')
+        sabt = Button(self.usersRoot, text="ثبت کاربر", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabtUser)
         sabt.config(height=1, width=20)
         delete = Button(self.usersRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
         delete.config(height=1, width=20)
@@ -68,6 +66,77 @@ class all() :
         edit.pack()
         delete.pack()
         space3.pack()
+
+    def editUser(self):
+        pass
+
+    def editUser2(self):
+        pass
+
+    def deleteUser(self):
+        pass
+
+    def sabtUser(self):
+        self.sabteUserPageRoot = Tk()
+        self.sabteUserPageRoot.title("ثبت هواپیما")
+        self.sabteUserPageRoot.configure(bg='orange')
+        title = Label(self.sabteUserPageRoot, text="ثبت هواپیما", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        self.usern = Entry(self.sabteUserPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.usern.insert(0, "نام کاربری")
+        self.passwd = Entry(self.sabteUserPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.passwd.insert(0, "رمز عبور")
+        sabt = Button(self.sabteUserPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '20'),
+                      command=self.sabtUser2)
+        self.userclass = ttk.Combobox(self.sabteUserPageRoot, width=69, justify='right', font=('IRANSans', 16))
+        self.userclass['values'] = ('مدریت اصلی',
+                                  'مدریت',
+                                  'مشاهده کننده',
+                                  'دسترسی جدید')
+        self.userclass.current(2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        space2.pack()
+        self.usern.pack()
+        self.passwd.pack()
+        self.userclass.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def sabtUser2(self):
+        if self.userclass.get()=='مدریت اصلی':
+            x=0
+        elif self.userclass.get()=='مدریت':
+            x=1
+        elif self.userclass.get()=='مشاهده کننده':
+            x=2
+        else:
+            x=3
+        url='http://www.rownaghsh.ir/add_user.php'
+        data={
+            "add_users":self.usern.get(),
+            "add_pass":self.passwd.get(),
+            "levele":x,
+            "name":MyUsername,
+            "password":MyPassword
+        }
+        data1=json.dumps(data)
+        r=requests.post(url, data1)
+        print(r.text)
+        print(MyUsername)
+        print(MyPassword)
+        self.sabteUserPageRoot.destroy()
+        self.usersRoot.destroy()
+        self.users()
 
     def airplansRootFunc(self):
         self.airplansRoot = Tk()
@@ -94,7 +163,8 @@ class all() :
         for col in cols:
             self.listBoxAirplane.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/req_airplanes.php'
-        data={'table':'airplane'}
+        data={'table':'airplane',"name_for_user":MyUsername,
+"password_for_user":MyPassword}
         data1=json.dumps(data)
         r=requests.post(url, data=data1)
         l=json.loads(r.text)
@@ -131,14 +201,18 @@ class all() :
         data = {
             "table":"airplanes",
             "key":"num_airplane",
-            "value":str(k['values'][5])
+            "value":str(k['values'][5]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data1=json.dumps(data)
         r=requests.post(url, data=data1)
         data2 = {
             "table": "airplane",
             "key": "model",
-            "value": str(k['values'][4])
+            "value": str(k['values'][4]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data3 = json.dumps(data2)
         r = requests.post(url, data=data3)
@@ -201,7 +275,9 @@ class all() :
               "first_class":int(self.tedadFirstClass.get()),
               "bisness":int(self.tedadBusinessClass.get()),
               "bar":int(self.bar.get()),
-              "economi":int(self.tedadEconomyClass.get())
+              "economi":int(self.tedadEconomyClass.get()),
+              "name_for_user": MyUsername,
+              "password_for_user": MyPassword
               }
         data1=json.dumps(data)
         r=requests.post(url, data=data1)
@@ -241,7 +317,9 @@ class all() :
     def sabteAirplane4(self):
         url = 'http://www.rownaghsh.ir/airplanes.php'
         data = {"num_airplane": int(self.number2.get()),
-                "model": str(self.model2.get())
+                "model": str(self.model2.get()),
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -288,7 +366,10 @@ class all() :
         for col in cols:
             self.listBoxPilot.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/req_personel.php'
-        data = {'table': 'pilot'}
+        data = {'table': 'pilot',
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+                }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
@@ -439,14 +520,18 @@ class all() :
         data = {"table": "pilot",
                 "key": "num_pilot",
                 "value": self.pcono.get(),
-                "columns": data2
+                "columns": data2,
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         data4 = {
             "table": "acquaintances_pilot",
             "key": "code_personel",
             "value": self.pcono.get(),
-            "columns": data3
+            "columns": data3,
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data5 = json.dumps(data4)
         r = requests.post(url, data=data1)
@@ -465,7 +550,9 @@ class all() :
         data = {
             "table": "pilot",
             "key": "num_pilot",
-            "value": str(k['values'][12])
+            "value": str(k['values'][12]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -569,6 +656,8 @@ class all() :
                 "phon2": str(self.pfph2.get()),
                 "fname3": str(self.pf3.get()),
                 "phon3": str(self.pfph3.get()),
+                 "name_for_user": MyUsername,
+                 "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -614,7 +703,10 @@ class all() :
         for col in cols:
             self.listBoxCopilot.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/req_personel.php'
-        data = {'table': 'co_pilot'}
+        data = {'table': 'co_pilot',
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+                }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l=json.loads(r.text)
@@ -764,14 +856,18 @@ class all() :
         data = {"table": "co_pilot",
                 "key": "num_copilot",
                 "value": self.cono.get(),
-                "columns": data2
+                "columns": data2,
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         data4 = {
             "table": "acquaintances_co_pilot",
             "key": "code_personel",
             "value": self.cono.get(),
-            "columns": data3
+            "columns": data3,
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data5 = json.dumps(data4)
         r = requests.post(url, data=data1)
@@ -790,7 +886,9 @@ class all() :
         data = {
             "table": "co_pilot",
             "key": "num_copilot",
-            "value": str(k['values'][12])
+            "value": str(k['values'][12]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -894,6 +992,8 @@ class all() :
                 "phon2": str(self.fph2.get()),
                 "fname3": str(self.f3.get()),
                 "phon3": str(self.fph3.get()),
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -942,7 +1042,10 @@ class all() :
         for col in cols:
             self.listBoxFlightEngineer.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/req_personel.php'
-        data = {'table': 'flight_engineer'}
+        data = {'table': 'flight_engineer',
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+                }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
@@ -1095,14 +1198,18 @@ class all() :
         data = {"table": "flight_engineer",
                 "key": "num_flight_engineer",
                 "value": self.fecono.get(),
-                "columns": data2
+                "columns": data2,
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         data4 = {
             "table": "acquaintances_flight_engineer",
             "key": "code_personel",
             "value": self.fecono.get(),
-            "columns": data3
+            "columns": data3,
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data5 = json.dumps(data4)
         r = requests.post(url, data=data1)
@@ -1121,7 +1228,9 @@ class all() :
         data = {
             "table": "flight_engineer",
             "key": "num_flight_engineer",
-            "value": str(k['values'][12])
+            "value": str(k['values'][12]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -1224,7 +1333,9 @@ class all() :
                 "fname2": str(self.fef2.get()),
                 "phon2": str(self.fefph2.get()),
                 "fname3": str(self.fef3.get()),
-                "phon3": str(self.fefph3.get())
+                "phon3": str(self.fefph3.get()),
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -1274,7 +1385,10 @@ class all() :
         for col in cols:
             self.listBoxStewartss.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/req_personel.php'
-        data = {'table': 'stewardess'}
+        data = {'table': 'stewardess',
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+                }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
@@ -1441,14 +1555,18 @@ class all() :
         data = {"table": "stewardess",
                 "key": "num_stewardess",
                 "value": self.scono.get(),
-                "columns": data2
+                "columns": data2,
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         data4 = {
             "table":"acquaintances_stewardess",
             "key":"code_personel",
             "value":self.scono.get(),
-            "columns":data3
+            "columns":data3,
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data5=json.dumps(data4)
         r = requests.post(url, data=data1)
@@ -1467,7 +1585,9 @@ class all() :
         data = {
             "table": "stewardess",
             "key": "num_stewardess",
-            "value": str(k['values'][13])
+            "value": str(k['values'][13]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -1579,6 +1699,8 @@ class all() :
                 "phon2": str(self.sfph2.get()),
                 "fname3": str(self.sf3.get()),
                 "phon3": str(self.sfph3.get()),
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -1619,7 +1741,10 @@ class all() :
         for col in cols:
             self.listBoxFlight.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/req_flight.php'
-        data = {'table': 'flight'}
+        data = {'table': 'flight',
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+                }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
@@ -1737,7 +1862,9 @@ class all() :
         data = {"table": "flight",
                 "key": "num_flight",
                 "value": self.q1.get(),
-                "columns": data2
+                "columns": data2,
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -1755,7 +1882,9 @@ class all() :
         data = {
             "table": "flight",
             "key": "num_flight",
-            "value": str(k['values'][10])
+            "value": str(k['values'][10]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -1833,7 +1962,9 @@ class all() :
                 "first_class_passenger": int(self.q6.get()),
                 "all_weight_bar": int(self.q9.get()),
                 "Flight_status": str(self.q10.get()),
-                "internal": x
+                "internal": x,
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -1870,7 +2001,10 @@ class all() :
         for col in cols:
             self.listBoxFS.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/req_flight.php'
-        data = {'table': 'flight'}
+        data = {'table': 'flight',
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+                }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
@@ -1966,7 +2100,9 @@ class all() :
         data = {"table": "flight_schedule",
                 "key": "num_flight",
                 "value": self.fnum.get(),
-                "columns": data2
+                "columns": data2,
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -1984,7 +2120,9 @@ class all() :
         data = {
             "table": "flight",
             "key": "num_flight",
-            "value": str(k['values'][4])
+            "value": str(k['values'][4]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2047,7 +2185,9 @@ class all() :
                 "timer_up": str(self.jt.get()),
                 "timer_down": str(self.lt.get()),
                 "date_up": str(self.jd.get()),
-                "date_down": str(self.ld.get())
+                "date_down": str(self.ld.get()),
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2084,7 +2224,10 @@ class all() :
         for col in cols:
             self.listBoxAirport.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/req.php'
-        data = {'table': 'origin_destination'}
+        data = {'table': 'origin_destination',
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+                }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
@@ -2188,7 +2331,9 @@ class all() :
         data = {"table": "origin_destination",
                 "key": "num_airport",
                 "value": self.APNO.get(),
-                "columns": data2
+                "columns": data2,
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2206,7 +2351,9 @@ class all() :
         data = {
             "table": "origin_destination",
             "key": "num_airport",
-            "value": str(k['values'][6])
+            "value": str(k['values'][6]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2273,7 +2420,9 @@ class all() :
                 "latitude": float(self.lat.get()),
                 "longitude": float(self.lon.get()),
                 "addresses": str(self.address.get()),
-                "internal": x
+                "internal": x,
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2314,7 +2463,10 @@ class all() :
         for col in cols:
             self.listBoxSTG.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/memandaran.php'
-        data = {'table': 'stewardess_group'}
+        data = {'table': 'stewardess_group',
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+                }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
@@ -2428,7 +2580,9 @@ class all() :
         data = {
             "table": "detail_stewardess_group",
             "key": "num_group",
-            "value": str(k['values'][10])
+            "value": str(k['values'][10]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2524,7 +2678,9 @@ class all() :
                 "model": str(self.apmost.get()),
                 "stewardess": [str(x1), str(x2),
                                str(x3), str(x4),
-                               str(x5), str(x6)]
+                               str(x5), str(x6)],
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2557,7 +2713,10 @@ class all() :
         for col in cols:
             self.listBoxWage.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/req.php'
-        data = {'table': 'wages'}
+        data = {'table': 'wages',
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+                }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
@@ -2633,7 +2792,9 @@ class all() :
         data = {"table": "wages",
                 "key": "job",
                 "value": self.jobn.get(),
-                "columns": data2
+                "columns": data2,
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2651,7 +2812,9 @@ class all() :
         data = {
             "table": "wages",
             "key": "job",
-            "value": str(k['values'][3])
+            "value": str(k['values'][3]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2698,7 +2861,9 @@ class all() :
         data = {"job": str(self.jobn.get()),
                 "wage": int(self.salary.get()),
                 "Advantages": str(self.benef.get()),
-                "descript": str(self.tozi.get())
+                "descript": str(self.tozi.get()),
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2734,7 +2899,10 @@ class all() :
         for col in cols:
             self.listBoxPrice.heading(col, text=col)
         url = 'http://www.rownaghsh.ir/req.php'
-        data = {'table': 'price'}
+        data = {'table': 'price',
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+                }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
@@ -2770,7 +2938,9 @@ class all() :
             "num_airport_origin": str(k['values'][6]),
             "num_airport_destination": str(k['values'][5]),
             "model": str(k['values'][4]),
-            "date_price": str(k['values'][0])
+            "date_price": str(k['values'][0]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
         }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2829,7 +2999,9 @@ class all() :
                 "date_price": str(self.dateop.get()),
                 "price_bisness": int(self.bcp.get()),
                 "price_first_class": int(self.fcp.get()),
-                "price_economi": int(self.ecp.get())
+                "price_economi": int(self.ecp.get()),
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -2922,8 +3094,10 @@ def checkuser():
     r=requests.post(url, data=data1)
     l=json.loads(r.text)
     if l['ok']=='ok':
-        MyUsername=username.get()
-        MyPassword=password.get()
+        global MyUsername
+        MyUsername = username.get()
+        global MyPassword
+        MyPassword = password.get()
         MENU()
         root.destroy()
     else:
@@ -2955,17 +3129,6 @@ username = Entry(root, width=60, justify='right', font=('IRANSans', 12))
 username.insert(0, "نام کاربری")
 password = Entry(root, width=60, justify='right', font=('IRANSans', 12))
 password.insert(0, "رمزعبور")
-# name = ttk.Combobox(root, width=60, justify='right', font=('IRANSans', 12))
-# valuelistForNamesOfComboBox.clear()
-#
-# with open('listfile.txt', 'r') as filehandle:
-#     for line in filehandle:
-#         currentPlace = line[:-1]
-#         if currentPlace!="" and currentPlace!= "  نام و نام خانوادگی":
-#             valuelistForNamesOfComboBox.append(currentPlace)
-#
-# name['values'] = valuelistForNamesOfComboBox
-# name.insert(0, "  نام و نام خانوادگی")
 
 sabtname = Button(root, text="ورود", bg='blue', fg='white', font=('IRANSans', '14'), command=checkuser)
 sabtname.config(height=1, width=20)
