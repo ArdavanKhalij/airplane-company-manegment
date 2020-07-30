@@ -11,14 +11,63 @@ import json
 #######################################################################################################################
 #                                                  Global Variables                                                   #
 #######################################################################################################################
-valuelistForNamesOfComboBox = []
-myname1 = " "
-myname2 = " "
-NameOfUser = "ADMIN"
+MyUsername=''
+MyPassword=''
 #######################################################################################################################
 #                                                       Pages                                                         #
 #######################################################################################################################
 class all() :
+
+    def users(self):
+        self.usersRoot = Tk()
+        self.usersRoot.title("کاربر ها")
+        self.usersRoot['bg'] = 'orange'
+        space = Label(self.usersRoot, text=" ", bg='orange')
+        space1 = Label(self.usersRoot, text=" ", bg='orange')
+        space2 = Label(self.usersRoot, text=" ", bg='orange')
+        space3 = Label(self.usersRoot, text=" ", bg='orange')
+        space4 = Label(self.usersRoot, text=" ", bg='orange')
+        space5 = Label(self.usersRoot, text=" ", bg='orange')
+        title = Label(self.usersRoot, text="کاربر ها", font=('IRANSans', '22'), fg="black", bg='orange')
+        cols = ('سطح دسترسی', 'رمز عبور', 'نام کاربری')
+        self.listBoxUser = ttk.Treeview(self.usersRoot, columns=cols, show='headings')
+        vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxUser.yview)
+        self.listBoxUser.configure(yscrollcommand=vsb.set)
+        self.listBoxUser.column("0", width=450, anchor="c")
+        self.listBoxUser.column("1", width=450, anchor="c")
+        self.listBoxUser.column("2", width=450, anchor="c")
+        self.listBoxUser.config(height=20)
+        for col in cols:
+            self.listBoxUser.heading(col, text=col)
+        # url = 'http://www.rownaghsh.ir/req_airplanes.php'
+        # data = {'table': 'airplane'}
+        # data1 = json.dumps(data)
+        # r = requests.post(url, data=data1)
+        # l = json.loads(r.text)
+        # for i in range(0, len(l)):
+        #     self.listBoxUser.insert("", "end", values=(
+        #         str(l[i]['bar']),
+        #         str(l[i]['economi']),
+        #         str(l[i]['bisness']),
+        #         str(l[i]['first_class']),
+        #         str(l[i]['model']),
+        #         str(l[i]['num_airplane'])
+        #     ))
+        sabt = Button(self.usersRoot, text="ثبت کاربر", font=('IRANSans', '13'), fg='white', bg='blue')
+        sabt.config(height=1, width=20)
+        delete = Button(self.usersRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
+        delete.config(height=1, width=20)
+        edit = Button(self.usersRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        self.listBoxUser.pack()
+        space2.pack()
+        sabt.pack()
+        edit.pack()
+        delete.pack()
+        space3.pack()
 
     def airplansRootFunc(self):
         self.airplansRoot = Tk()
@@ -2797,55 +2846,151 @@ ALLPAGES = all()
 #######################################################################################################################
 #                                                          Root                                                       #
 #######################################################################################################################
-Menu = Tk()
-Menu.state('zoomed')
-Menu.title("شرکت هواپیمایی")
-Menu['bg'] = 'orange'
-space = Label(Menu, text=" ", bg='orange')
-space1 = Label(Menu, text=" ", bg='orange')
-space2 = Label(Menu, text=" ", bg='orange')
-space3 = Label(Menu, text=" ", bg='orange')
-title = Label(Menu, text="شرکت هواپیمایی", font=('IRANSans', '22', 'bold'), bg='orange')
+def MENU():
+    Menu = Tk()
+    Menu.state('zoomed')
+    Menu.title("شرکت هواپیمایی")
+    Menu['bg'] = 'orange'
+    space = Label(Menu, text=" ", bg='orange')
+    space1 = Label(Menu, text=" ", bg='orange')
+    space2 = Label(Menu, text=" ", bg='orange')
+    space3 = Label(Menu, text=" ", bg='orange')
+    title = Label(Menu, text="شرکت هواپیمایی", font=('IRANSans', '22', 'bold'), bg='orange')
 
-airplans = Button(Menu, text="هواپیما ها", font=('IRANSans', '14'), command=ALLPAGES.airplansRootFunc, bg='Blue', fg='white')
-pilots = Button(Menu, text="خلبان ها", font=('IRANSans', '14'), command=ALLPAGES.PilotRootFunc, bg='Blue', fg='white')
-co_pilots = Button(Menu, text="کمک خلبان ها", font=('IRANSans', '14'), command=ALLPAGES.CoPilotRootFunc, bg='Blue', fg='white')
-flight_engineers = Button(Menu, text="مهندسین پرواز", font=('IRANSans', '14'), command=ALLPAGES.FlightEngineerRootFunc, bg='Blue', fg='white')
-stewardess = Button(Menu, text="مهمانداران", font=('IRANSans', '14'), command=ALLPAGES.StewardsRootFunc, bg='Blue', fg='white')
-flight_schedule = Button(Menu, text="برنامه ‌پرواز های آخرین هفته", font=('IRANSans', '14'), command=ALLPAGES.FlightSkechuleRootFunc, bg='Blue', fg='white') #show 2 airports and airplane flight
-flights = Button(Menu, text="برنامه ‌پرواز ها", font=('IRANSans', '14'), command=ALLPAGES.FlightsRootFunc, bg='Blue', fg='white') #show 2 airports and airplane flight passengers
-airports = Button(Menu, text="فرودگاه ها", font=('IRANSans', '14'), command=ALLPAGES.AirportsRootFunc, bg='Blue', fg='white')
-stewardess_group = Button(Menu, text="گروه های مهمانداری", font=('IRANSans', '14'), command=ALLPAGES.stewartsGroupRootFunc, bg='Blue', fg='white') #etelaate mehmandaran
-wages = Button(Menu, text="سمت ها و شغل ها", font=('IRANSans', '14'), command=ALLPAGES.WagesGroupRootFunc, bg='Blue', fg='white')
-prices = Button(Menu, text="قیمت ها", font=('IRANSans', '14'), command=ALLPAGES.pricesRootFunc, bg='Blue', fg='white')
+    users = Button(Menu, text="کاربر ها", font=('IRANSans', '13'), bg='Blue', fg='white', command=ALLPAGES.users)
+    airplans = Button(Menu, text="هواپیما ها", font=('IRANSans', '13'), command=ALLPAGES.airplansRootFunc, bg='Blue',
+                      fg='white')
+    pilots = Button(Menu, text="خلبان ها", font=('IRANSans', '13'), command=ALLPAGES.PilotRootFunc, bg='Blue',
+                    fg='white')
+    co_pilots = Button(Menu, text="کمک خلبان ها", font=('IRANSans', '13'), command=ALLPAGES.CoPilotRootFunc, bg='Blue',
+                       fg='white')
+    flight_engineers = Button(Menu, text="مهندسین پرواز", font=('IRANSans', '13'),
+                              command=ALLPAGES.FlightEngineerRootFunc, bg='Blue', fg='white')
+    stewardess = Button(Menu, text="مهمانداران", font=('IRANSans', '13'), command=ALLPAGES.StewardsRootFunc, bg='Blue',
+                        fg='white')
+    flight_schedule = Button(Menu, text="برنامه ‌پرواز ها", font=('IRANSans', '13'),
+                             command=ALLPAGES.FlightSkechuleRootFunc, bg='Blue',
+                             fg='white')  # show 2 airports and airplane flight
+    flights = Button(Menu, text="پرواز ها", font=('IRANSans', '13'), command=ALLPAGES.FlightsRootFunc, bg='Blue',
+                     fg='white')  # show 2 airports and airplane flight passengers
+    airports = Button(Menu, text="فرودگاه ها", font=('IRANSans', '13'), command=ALLPAGES.AirportsRootFunc, bg='Blue',
+                      fg='white')
+    stewardess_group = Button(Menu, text="گروه های مهمانداری", font=('IRANSans', '13'),
+                              command=ALLPAGES.stewartsGroupRootFunc, bg='Blue', fg='white')  # etelaate mehmandaran
+    wages = Button(Menu, text="سمت ها و شغل ها", font=('IRANSans', '13'), command=ALLPAGES.WagesGroupRootFunc,
+                   bg='Blue', fg='white')
+    prices = Button(Menu, text="قیمت ها", font=('IRANSans', '13'), command=ALLPAGES.pricesRootFunc, bg='Blue',
+                    fg='white')
 
-airplans.config(height=1, width=80)
-pilots.config(height=1, width=80)
-co_pilots.config(height=1, width=80)
-flight_engineers.config(height=1, width=80)
-stewardess.config(height=1, width=80)
-flight_schedule.config(height=1, width=80)
-airports.config(height=1, width=80)
-stewardess_group.config(height=1, width=80)
-wages.config(height=1, width=80)
-flights.config(height=1, width=80)
-prices.config(height=1, width=80)
+    users.config(height=1, width=80)
+    airplans.config(height=1, width=80)
+    pilots.config(height=1, width=80)
+    co_pilots.config(height=1, width=80)
+    flight_engineers.config(height=1, width=80)
+    stewardess.config(height=1, width=80)
+    flight_schedule.config(height=1, width=80)
+    airports.config(height=1, width=80)
+    stewardess_group.config(height=1, width=80)
+    wages.config(height=1, width=80)
+    flights.config(height=1, width=80)
+    prices.config(height=1, width=80)
 
-# space.pack()
+    space.pack()
+    title.pack()
+    space2.pack()
+    users.pack()
+    airplans.pack()
+    pilots.pack()
+    co_pilots.pack()
+    flight_engineers.pack()
+    stewardess.pack()
+    flights.pack()
+    flight_schedule.pack()
+    airports.pack()
+    stewardess_group.pack()
+    wages.pack()
+    prices.pack()
+    space1.pack()
+
+def checkuser():
+    url='http://www.rownaghsh.ir/login.php'
+    data={
+        "name":username.get(),
+        "password":password.get()
+    }
+    data1=json.dumps(data)
+    r=requests.post(url, data=data1)
+    l=json.loads(r.text)
+    if l['ok']=='ok':
+        MyUsername=username.get()
+        MyPassword=password.get()
+        MENU()
+        root.destroy()
+    else:
+        warning.config(text="!نام کاربری و یا رمز عبور اشتباه است")
+
+root = Tk()
+root.state('zoomed')
+root['bg'] = 'orange'
+root.title(" شرکت هواپیمایی")
+space = Label(root, text=" ", bg='orange')
+space1 = Label(root, text=" ", bg='orange')
+space2 = Label(root, text=" ", bg='orange')
+space3 = Label(root, text=" ", bg='orange')
+space4 = Label(root, text=" ", bg='orange')
+space5 = Label(root, text=" ", bg='orange')
+space6 = Label(root, text=" ", bg='orange')
+space7 = Label(root, text=" ", bg='orange')
+space8 = Label(root, text=" ", bg='orange')
+space9 = Label(root, text=" ", bg='orange')
+space10 = Label(root, text=" ", bg='orange')
+space11 = Label(root, text=" ", bg='orange')
+space12 = Label(root, text=" ", bg='orange')
+space13 = Label(root, text=" ", bg='orange')
+space14 = Label(root, text=" ", bg='orange')
+title = Label(root, text=".سلام، خوش آمدید", font=('IRANSans', '20', 'bold'), bg='orange')
+title1 = Label(root, text=".لطفاً نام کاربری و رمز عبور خود را وارد کنید", font=('IRANSans', '18'), bg='Orange')
+warning = Label(root, font=('IRANSans', '18'), bg='Orange', fg='red')
+username = Entry(root, width=60, justify='right', font=('IRANSans', 12))
+username.insert(0, "نام کاربری")
+password = Entry(root, width=60, justify='right', font=('IRANSans', 12))
+password.insert(0, "رمزعبور")
+# name = ttk.Combobox(root, width=60, justify='right', font=('IRANSans', 12))
+# valuelistForNamesOfComboBox.clear()
+#
+# with open('listfile.txt', 'r') as filehandle:
+#     for line in filehandle:
+#         currentPlace = line[:-1]
+#         if currentPlace!="" and currentPlace!= "  نام و نام خانوادگی":
+#             valuelistForNamesOfComboBox.append(currentPlace)
+#
+# name['values'] = valuelistForNamesOfComboBox
+# name.insert(0, "  نام و نام خانوادگی")
+
+sabtname = Button(root, text="ورود", bg='blue', fg='white', font=('IRANSans', '14'), command=checkuser)
+sabtname.config(height=1, width=20)
+space.pack()
 title.pack()
-airplans.pack()
-pilots.pack()
-co_pilots.pack()
-flight_engineers.pack()
-stewardess.pack()
-flights.pack()
-flight_schedule.pack()
-airports.pack()
-stewardess_group.pack()
-wages.pack()
-prices.pack()
 space1.pack()
-Menu.mainloop()
+space2.pack()
+space3.pack()
+space4.pack()
+space5.pack()
+space6.pack()
+title1.pack()
+space7.pack()
+space8.pack()
+username.pack()
+space9.pack()
+password.pack()
+space10.pack()
+space11.pack()
+sabtname.pack()
+space12.pack()
+space13.pack()
+space14.pack()
+warning.pack()
+root.mainloop()
 #######################################################################################################################
 #                                                         End                                                         #
 #######################################################################################################################
