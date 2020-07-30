@@ -272,7 +272,7 @@ class all() :
         sabt.config(height=1, width=20)
         delete = Button(self.PilotRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deletePilot)
         delete.config(height=1, width=20)
-        edit = Button(self.PilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit = Button(self.PilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editPilot)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -283,6 +283,130 @@ class all() :
         edit.pack()
         delete.pack()
         space3.pack()
+
+    def editPilot(self):
+        self.listBoxPilot.bind('<Button-1>', self.listBoxPilot)
+        curItem = self.listBoxPilot.focus()
+        k = self.listBoxPilot.item(curItem)
+        self.sabtepilotPageRoot = Tk()
+        self.sabtepilotPageRoot.title("ویرایش خلبان")
+        self.sabtepilotPageRoot.configure(bg='orange')
+        title = Label(self.sabtepilotPageRoot, text="ویرایش خلبان", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        self.pname = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pname.insert(0, k['values'][16])
+        self.plname = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.plname.insert(0, k['values'][15])
+        self.pgender = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pgender.insert(0, k['values'][14])
+        self.pmellicode = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pmellicode.insert(0, k['values'][13])
+        self.pcono = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pcono.insert(0, k['values'][12])
+        self.pcono.config(state=DISABLED)
+        self.pphno = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pphno.insert(0, k['values'][11])
+        self.pbd = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pbd.insert(0, k['values'][10])
+        self.pwn = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pwn.insert(0, k['values'][9])
+        self.pmcw = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pmcw.insert(0, k['values'][8])
+        self.pwphno = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pwphno.insert(0, k['values'][7])
+        self.pcn = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pcn.insert(0, k['values'][6])
+        self.pf1 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pf1.insert(0, k['values'][5])
+        self.pfph1 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pfph1.insert(0, k['values'][4])
+        self.pf2 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pf2.insert(0, k['values'][3])
+        self.pfph2 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pfph2.insert(0, k['values'][2])
+        self.pf3 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pf3.insert(0, k['values'][1])
+        self.pfph3 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.pfph3.insert(0, k['values'][0])
+        sabt = Button(self.sabtepilotPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+                      command=self.editPilot2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        self.pname.pack()
+        self.plname.pack()
+        self.pgender.pack()
+        self.pmellicode.pack()
+        self.pcono.pack()
+        self.pphno.pack()
+        self.pbd.pack()
+        self.pwn.pack()
+        self.pmcw.pack()
+        self.pwphno.pack()
+        self.pcn.pack()
+        self.pf1.pack()
+        self.pfph1.pack()
+        self.pf2.pack()
+        self.pfph2.pack()
+        self.pf3.pack()
+        self.pfph3.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def editPilot2(self):
+        url = 'http://www.rownaghsh.ir/upd.php'
+        if self.pgender.get() == "مرد":
+            x = 1
+        else:
+            x = 0
+        data2= {"fname": str(self.pname.get()),
+                "lname": str(self.plname.get()),
+                "gender": x,
+                "mellicode": str(self.pmellicode.get()),
+                "num_pilot": str(self.pcono.get()),
+                "phone": str(self.pphno.get()),
+                "birthdate": str(self.pbd.get()),
+                "partner": str(self.pwn.get()),
+                "partner_mellicode": str(self.pmcw.get()),
+                "partner_phone": str(self.pwphno.get()),
+                "child": int(self.pcn.get())
+                }
+        data3 = {
+            "fname1": str(self.pf1.get()),
+                "phon1": str(self.pfph1.get()),
+                "fname2": str(self.pf2.get()),
+                "phon2": str(self.pfph2.get()),
+                "fname3": str(self.pf3.get()),
+                "phon3": str(self.pfph3.get())
+        }
+        data = {"table": "pilot",
+                "key": "num_pilot",
+                "value": self.pcono.get(),
+                "columns": data2
+                }
+        data1 = json.dumps(data)
+        data4 = {
+            "table": "acquaintances_pilot",
+            "key": "code_personel",
+            "value": self.pcono.get(),
+            "columns": data3
+        }
+        data5 = json.dumps(data4)
+        r = requests.post(url, data=data1)
+        r = requests.post(url, data=data5)
+        print(r.text)
+        print(data1)
+        self.sabtepilotPageRoot.destroy()
+        self.PilotRoot.destroy()
+        self.PilotRootFunc()
 
     def deletePilot(self):
         self.listBoxPilot.bind('<Button-1>', self.listBoxPilot)
@@ -473,7 +597,7 @@ class all() :
         sabt.config(height=1, width=20)
         delete = Button(self.CoPilotRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteCopilot)
         delete.config(height=1, width=20)
-        edit = Button(self.CoPilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit = Button(self.CoPilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editCopilot)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -484,6 +608,130 @@ class all() :
         edit.pack()
         delete.pack()
         space3.pack()
+
+    def editCopilot(self):
+        self.listBoxCopilot.bind('<Button-1>', self.listBoxCopilot)
+        curItem = self.listBoxCopilot.focus()
+        k = self.listBoxCopilot.item(curItem)
+        self.sabteCopilotPageRoot = Tk()
+        self.sabteCopilotPageRoot.title("ویرایش کمک خلبان")
+        self.sabteCopilotPageRoot.configure(bg='orange')
+        title = Label(self.sabteCopilotPageRoot, text="ویرایش کمک خلبان", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
+        self.name = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.name.insert(0, k['values'][16])
+        self.lname = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.lname.insert(0, k['values'][15])
+        self.gender = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.gender.insert(0, k['values'][14])
+        self.mellicode = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.mellicode.insert(0, k['values'][13])
+        self.cono = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.cono.insert(0, k['values'][12])
+        self.cono.config(state=DISABLED)
+        self.phno = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.phno.insert(0, k['values'][11])
+        self.bd = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.bd.insert(0, k['values'][10])
+        self.wn = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.wn.insert(0, k['values'][9])
+        self.mcw = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.mcw.insert(0, k['values'][8])
+        self.wphno = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.wphno.insert(0, k['values'][7])
+        self.cn = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.cn.insert(0, k['values'][6])
+        self.f1 = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.f1.insert(0, k['values'][5])
+        self.fph1 = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fph1.insert(0, k['values'][4])
+        self.f2 = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.f2.insert(0, k['values'][3])
+        self.fph2 = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fph2.insert(0, k['values'][2])
+        self.f3 = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.f3.insert(0, k['values'][1])
+        self.fph3 = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fph3.insert(0, k['values'][0])
+        sabt = Button(self.sabteCopilotPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+                      command=self.editCopilot2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        self.name.pack()
+        self.lname.pack()
+        self.gender.pack()
+        self.mellicode.pack()
+        self.cono.pack()
+        self.phno.pack()
+        self.bd.pack()
+        self.wn.pack()
+        self.mcw.pack()
+        self.wphno.pack()
+        self.cn.pack()
+        self.f1.pack()
+        self.fph1.pack()
+        self.f2.pack()
+        self.fph2.pack()
+        self.f3.pack()
+        self.fph3.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def editCopilot2(self):
+        url = 'http://www.rownaghsh.ir/upd.php'
+        if self.gender.get() == "مرد":
+            x = 1
+        else:
+            x = 0
+        data2 = {"fname": str(self.name.get()),
+                "lname": str(self.lname.get()),
+                "gender": x,
+                "mellicode": str(self.mellicode.get()),
+                "num_copilot": str(self.cono.get()),
+                "phone": str(self.phno.get()),
+                "birthdate": str(self.bd.get()),
+                "partner": str(self.wn.get()),
+                "partner_mellicode": str(self.mcw.get()),
+                "partner_phone": str(self.wphno.get()),
+                "child": int(self.cn.get()),
+                }
+        data3 = {
+            "fname1": str(self.f1.get()),
+                "phon1": str(self.fph1.get()),
+                "fname2": str(self.f2.get()),
+                "phon2": str(self.fph2.get()),
+                "fname3": str(self.f3.get()),
+                "phon3": str(self.fph3.get())
+        }
+        data = {"table": "co_pilot",
+                "key": "num_copilot",
+                "value": self.cono.get(),
+                "columns": data2
+                }
+        data1 = json.dumps(data)
+        data4 = {
+            "table": "acquaintances_co_pilot",
+            "key": "code_personel",
+            "value": self.cono.get(),
+            "columns": data3
+        }
+        data5 = json.dumps(data4)
+        r = requests.post(url, data=data1)
+        r = requests.post(url, data=data5)
+        print(r.text)
+        print(data1)
+        self.sabteCopilotPageRoot.destroy()
+        self.CoPilotRoot.destroy()
+        self.CoPilotRootFunc()
 
     def deleteCopilot(self):
         self.listBoxCopilot.bind('<Button-1>', self.listBoxCopilot)
@@ -676,9 +924,10 @@ class all() :
         sabt = Button(self.FlightEngineerRoot, text="ثبت مهندس پرواز", font=('IRANSans', '13'), fg='white', bg='blue',
                       command=self.sabteFlightEngineer)
         sabt.config(height=1, width=20)
-        delete = Button(self.FlightEngineerRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteFlightEngineer)
+        delete = Button(self.FlightEngineerRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue',
+                        command=self.deleteFlightEngineer)
         delete.config(height=1, width=20)
-        edit = Button(self.FlightEngineerRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit = Button(self.FlightEngineerRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editFlightEngineer)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -689,6 +938,131 @@ class all() :
         edit.pack()
         delete.pack()
         space3.pack()
+
+    def editFlightEngineer(self):
+        self.listBoxFlightEngineer.bind('<Button-1>', self.listBoxFlightEngineer)
+        curItem = self.listBoxFlightEngineer.focus()
+        k = self.listBoxFlightEngineer.item(curItem)
+        self.sabteّFlightEngineerPageRoot = Tk()
+        self.sabteّFlightEngineerPageRoot.title("ویرایش مهندس پرواز")
+        self.sabteّFlightEngineerPageRoot.configure(bg='orange')
+        title = Label(self.sabteّFlightEngineerPageRoot, text="ویرایش مهندس پرواز", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        self.fename = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fename.insert(0, k['values'][16])
+        self.felname = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.felname.insert(0, k['values'][15])
+        self.fegender = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fegender.insert(0, k['values'][14])
+        self.femellicode = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.femellicode.insert(0, k['values'][13])
+        self.fecono = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fecono.insert(0, k['values'][12])
+        self.fecono.config(state=DISABLED)
+        self.fephno = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fephno.insert(0, k['values'][11])
+        self.febd = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.febd.insert(0, k['values'][10])
+        self.fewn = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fewn.insert(0, k['values'][9])
+        self.femcw = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.femcw.insert(0, k['values'][8])
+        self.fewphno = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fewphno.insert(0, k['values'][7])
+        self.fecn = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fecn.insert(0, k['values'][6])
+        self.fef1 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fef1.insert(0, k['values'][5])
+        self.fefph1 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fefph1.insert(0, k['values'][4])
+        self.fef2 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fef2.insert(0, k['values'][3])
+        self.fefph2 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fefph2.insert(0, k['values'][2])
+        self.fef3 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fef3.insert(0, k['values'][1])
+        self.fefph3 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.fefph3.insert(0, k['values'][0])
+        sabt = Button(self.sabteّFlightEngineerPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+                      command=self.editFlightEngineer2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        # space2.pack()
+        self.fename.pack()
+        self.felname.pack()
+        self.fegender.pack()
+        self.femellicode.pack()
+        self.fecono.pack()
+        self.fephno.pack()
+        self.febd.pack()
+        self.fewn.pack()
+        self.femcw.pack()
+        self.fewphno.pack()
+        self.fecn.pack()
+        self.fef1.pack()
+        self.fefph1.pack()
+        self.fef2.pack()
+        self.fefph2.pack()
+        self.fef3.pack()
+        self.fefph3.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def editFlightEngineer2(self):
+        url = 'http://www.rownaghsh.ir/upd.php'
+        if self.fegender.get() == "مرد":
+            x = 1
+        else:
+            x = 0
+        data2 = {"fname": str(self.fename.get()),
+                "lname": str(self.felname.get()),
+                "gender": x,
+                "mellicode": str(self.femellicode.get()),
+                "num_flight_engineer": str(self.fecono.get()),
+                "phone": str(self.fephno.get()),
+                "birthdate": str(self.febd.get()),
+                "partner": str(self.fewn.get()),
+                "partner_mellicode": str(self.femcw.get()),
+                "partner_phone": str(self.fewphno.get()),
+                "child": int(self.fecn.get())
+                }
+        data3 = {
+            "fname1": str(self.fef1.get()),
+            "phon1": str(self.fefph1.get()),
+            "fname2": str(self.fef2.get()),
+            "phon2": str(self.fefph2.get()),
+            "fname3": str(self.fef3.get()),
+            "phon3": str(self.fefph3.get())
+        }
+        data = {"table": "flight_engineer",
+                "key": "num_flight_engineer",
+                "value": self.fecono.get(),
+                "columns": data2
+                }
+        data1 = json.dumps(data)
+        data4 = {
+            "table": "acquaintances_flight_engineer",
+            "key": "code_personel",
+            "value": self.fecono.get(),
+            "columns": data3
+        }
+        data5 = json.dumps(data4)
+        r = requests.post(url, data=data1)
+        r = requests.post(url, data=data5)
+        print(r.text)
+        print(data1)
+        self.sabteّFlightEngineerPageRoot.destroy()
+        self.FlightEngineerRoot.destroy()
+        self.FlightEngineerRootFunc()
 
     def deleteFlightEngineer(self):
         self.listBoxFlightEngineer.bind('<Button-1>', self.listBoxFlightEngineer)
@@ -801,7 +1175,7 @@ class all() :
                 "fname2": str(self.fef2.get()),
                 "phon2": str(self.fefph2.get()),
                 "fname3": str(self.fef3.get()),
-                "phon3": str(self.fefph3.get()),
+                "phon3": str(self.fefph3.get())
                 }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
