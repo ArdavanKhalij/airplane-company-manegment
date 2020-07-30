@@ -821,7 +821,7 @@ class all() :
         space3 = Label(self.StewardsRoot, text=" ", bg='orange')
         space4 = Label(self.StewardsRoot, text=" ", bg='orange')
         space5 = Label(self.StewardsRoot, text=" ", bg='orange')
-        title = Label(self.StewardsRoot, text="مهمانداران", font=('IRANSans', '22'), fg="Blue", bg='orange')
+        title = Label(self.StewardsRoot, text="مهمانداران", font=('IRANSans', '22'), bg='orange')
         cols = (
         'تلفن 3', 'نام آشنا 3', 'تلفن 2', 'نام آشنا 2', 'تلفن 1', 'نام آشنا1','وضعیت', 'تعداد فرزندان', 'شماره تلفن همسر',
         'کد ملی همسر', 'نام همسر', 'تاریخ تولد', 'شماره تلفن', 'شماره کمک خلبان', 'کد ملی', 'جنسیت', 'نام خانوادگی',
@@ -887,9 +887,11 @@ class all() :
         sabt = Button(self.StewardsRoot, text="ثبت مهماندار", font=('IRANSans', '13'), fg='white', bg='blue',
                       command=self.sabteSteward)
         sabt.config(height=1, width=20)
-        delete = Button(self.StewardsRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteStewardss)
+        delete = Button(self.StewardsRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue',
+                      command=self.deleteStewardss)
         delete.config(height=1, width=20)
-        edit = Button(self.StewardsRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit = Button(self.StewardsRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue',
+                      command=self.editStewardss)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -900,6 +902,139 @@ class all() :
         edit.pack()
         delete.pack()
         space3.pack()
+
+    def editStewardss(self):
+        self.listBoxStewartss.bind('<Button-1>', self.listBoxStewartss)
+        curItem = self.listBoxStewartss.focus()
+        k = self.listBoxStewartss.item(curItem)
+        self.sabteStewardPageRoot = Tk()
+        self.sabteStewardPageRoot.title("ویرایش مهماندار")
+        self.sabteStewardPageRoot.configure(bg='orange')
+        title = Label(self.sabteStewardPageRoot, text="ویرایش مهماندار", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        self.sname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sname.insert(0, k['values'][17])
+        self.slname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.slname.insert(0, k['values'][16])
+        self.sgender = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sgender.insert(0, k['values'][15])
+        self.smellicode = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.smellicode.insert(0, k['values'][14])
+        self.scono = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.scono.insert(0, k['values'][13])
+        self.scono.config(state=DISABLED)
+        self.sphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sphno.insert(0, k['values'][12])
+        self.sbd = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sbd.insert(0, k['values'][11])
+        self.swn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.swn.insert(0, k['values'][10])
+        self.smcw = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.smcw.insert(0, k['values'][9])
+        self.swphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.swphno.insert(0, k['values'][8])
+        self.scn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.scn.insert(0, k['values'][7])
+        self.s = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.s.insert(0, k['values'][6])
+        self.sf1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf1.insert(0, k['values'][5])
+        self.sfph1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph1.insert(0, k['values'][4])
+        self.sf2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf2.insert(0, k['values'][3])
+        self.sfph2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph2.insert(0, k['values'][2])
+        self.sf3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf3.insert(0, k['values'][1])
+        self.sfph3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph3.insert(0, k['values'][0])
+        sabt = Button(self.sabteStewardPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+                      command=self.editStewardss2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        # space2.pack()
+        self.sname.pack()
+        self.slname.pack()
+        self.sgender.pack()
+        self.smellicode.pack()
+        self.scono.pack()
+        self.sphno.pack()
+        self.sbd.pack()
+        self.swn.pack()
+        self.smcw.pack()
+        self.swphno.pack()
+        self.scn.pack()
+        self.s.pack()
+        self.sf1.pack()
+        self.sfph1.pack()
+        self.sf2.pack()
+        self.sfph2.pack()
+        self.sf3.pack()
+        self.sfph3.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def editStewardss2(self):
+        url = 'http://www.rownaghsh.ir/upd.php'
+        if self.sgender.get() == "مرد":
+            x = 1
+        else:
+            x = 0
+        if self.s.get() == "فعال":
+            y = 1
+        else:
+            y = 0
+        data2 = {"fname": str(self.sname.get()),
+                "lname": str(self.slname.get()),
+                "gender": x,
+                "mellicode": str(self.smellicode.get()),
+                "num_stewardess": str(self.scono.get()),
+                "active": y,
+                "phone": str(self.sphno.get()),
+                "birthdate": str(self.sbd.get()),
+                "partner": str(self.swn.get()),
+                "partner_mellicode": str(self.smcw.get()),
+                "partner_phone": str(self.swphno.get()),
+                "child": int(self.scn.get())
+                }
+        data3 = {
+            "fname1": str(self.sf1.get()),
+            "phon1": str(self.sfph1.get()),
+            "fname2": str(self.sf2.get()),
+            "phon2": str(self.sfph2.get()),
+            "fname3": str(self.sf3.get()),
+            "phon3": str(self.sfph3.get())
+        }
+        data = {"table": "stewardess",
+                "key": "num_stewardess",
+                "value": self.scono.get(),
+                "columns": data2
+                }
+        data1 = json.dumps(data)
+        data4 = {
+            "table":"acquaintances_stewardess",
+            "key":"code_personel",
+            "value":self.scono.get(),
+            "columns":data3
+        }
+        data5=json.dumps(data4)
+        r = requests.post(url, data=data1)
+        r = requests.post(url, data=data5)
+        print(r.text)
+        print(data1)
+        self.sabteStewardPageRoot.destroy()
+        self.StewardsRoot.destroy()
+        self.StewardsRootFunc()
 
     def deleteStewardss(self):
         self.listBoxStewartss.bind('<Button-1>', self.listBoxStewartss)
@@ -1087,7 +1222,7 @@ class all() :
         sabt.config(height=1, width=18)
         delete = Button(self.FlightsRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteFlight)
         delete.config(height=1, width=18)
-        edit = Button(self.FlightsRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit = Button(self.FlightsRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editFlight)
         edit.config(height=1, width=18)
         space.pack()
         title.pack()
@@ -1098,6 +1233,96 @@ class all() :
         edit.pack()
         delete.pack()
         space3.pack()
+
+    def editFlight(self):
+        self.listBoxFlight.bind('<Button-1>', self.listBoxFlight)
+        curItem = self.listBoxFlight.focus()
+        k = self.listBoxFlight.item(curItem)
+        self.sabteFlightPageRoot = Tk()
+        self.sabteFlightPageRoot.title("ویرایش پرواز")
+        self.sabteFlightPageRoot.configure(bg='orange')
+        title = Label(self.sabteFlightPageRoot, text="ویرایش پرواز", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
+        self.q1 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.q1.insert(0, k['values'][10])
+        self.q1.config(state=DISABLED)
+        self.q2 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.q2.insert(0, k['values'][9])
+        self.q3 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.q3.insert(0, k['values'][8])
+        self.q4 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.q4.insert(0, k['values'][7])
+        self.q5 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.q5.insert(0, k['values'][6])
+        self.q6 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.q6.insert(0, k['values'][5])
+        self.q7 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.q7.insert(0, k['values'][4])
+        self.q8 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.q8.insert(0, k['values'][3])
+        self.q9 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.q9.insert(0, k['values'][2])
+        self.q10 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.q10.insert(0, k['values'][1])
+        self.q11 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.q11.insert(0, k['values'][0])
+        sabt = Button(self.sabteFlightPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+                      command=self.editFlight2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        self.q1.pack()
+        self.q2.pack()
+        self.q3.pack()
+        self.q4.pack()
+        self.q5.pack()
+        self.q6.pack()
+        self.q7.pack()
+        self.q8.pack()
+        self.q9.pack()
+        self.q10.pack()
+        self.q11.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
+    def editFlight2(self):
+        if self.q11.get() == 'داخلی':
+            x = 1
+        else:
+            x = 0
+        url = 'http://www.rownaghsh.ir/upd.php'
+        data2 = {"num_flight": str(self.q1.get()),
+                "num_pilot": str(self.q2.get()),
+                "num_copilot": str(self.q3.get()),
+                "num_flight_engineer": str(self.q4.get()),
+                "num_group": str(self.q5.get()),
+                "normal_passenger": int(self.q8.get()),
+                "bisness_passenger": int(self.q7.get()),
+                "first_class_passenger": int(self.q6.get()),
+                "all_weight_bar": int(self.q9.get()),
+                "Flight_status": str(self.q10.get()),
+                "internal": x
+                }
+        data = {"table": "flight",
+                "key": "num_flight",
+                "value": self.q1.get(),
+                "columns": data2
+                }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        print(r.text)
+        print(data1)
+        self.sabteFlightPageRoot.destroy()
+        self.FlightsRoot.destroy()
+        self.FlightsRootFunc()
 
     def deleteFlight(self):
         self.listBoxFlight.bind('<Button-1>', self.listBoxFlight)
@@ -1241,7 +1466,7 @@ class all() :
         sabt.config(height=1, width=18)
         delete = Button(self.FlightSkechuleRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteFlightSkedule)
         delete.config(height=1, width=18)
-        edit = Button(self.FlightSkechuleRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit = Button(self.FlightSkechuleRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editFS)
         edit.config(height=1, width=18)
         space.pack()
         title.pack()
@@ -1254,10 +1479,79 @@ class all() :
         space3.pack()
 
     def editFS(self):
-        pass
-    
+        self.listBoxFS.bind('<Button-1>', self.listBoxFS)
+        curItem = self.listBoxFS.focus()
+        k = self.listBoxFS.item(curItem)
+        self.sabteFSPageRoot = Tk()
+        self.sabteFSPageRoot.title("ویرایش برنامه پروازی")
+        self.sabteFSPageRoot.configure(bg='orange')
+        title = Label(self.sabteFSPageRoot, text="ویرایش برنامه پروازی", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteFSPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
+        self.APNum = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.APNum.insert(0, k['values'][7])
+        self.orig = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.orig.insert(0, k['values'][6])
+        self.dest = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.dest.insert(0, k['values'][5])
+        self.fnum = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.fnum.insert(0, k['values'][4])
+        self.fnum.config(state=DISABLED)
+        self.jt = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.jt.insert(0, k['values'][3])
+        self.lt = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.lt.insert(0, k['values'][2])
+        self.jd = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.jd.insert(0, k['values'][1])
+        self.ld = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.ld.insert(0, k['values'][0])
+        sabt = Button(self.sabteFSPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+                      command=self.editFS2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        # space2.pack()
+        self.APNum.pack()
+        self.orig.pack()
+        self.dest.pack()
+        self.fnum.pack()
+        self.jt.pack()
+        self.lt.pack()
+        self.jd.pack()
+        self.ld.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
+
     def editFS2(self):
-        pass
+        url = 'http://www.rownaghsh.ir/upd.php'
+        data2 = {"num_airplane": int(self.APNum.get()),
+                "origin": str(self.orig.get()),
+                "destination": str(self.dest.get()),
+                "num_flight": str(self.fnum.get()),
+                "timer_up": str(self.jt.get()),
+                "timer_down": str(self.lt.get()),
+                "date_up": str(self.jd.get()),
+                "date_down": str(self.ld.get())
+                }
+        data = {"table": "flight_schedule",
+                "key": "num_flight",
+                "value": self.fnum.get(),
+                "columns": data2
+                }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        print(r.text)
+        print(data1)
+        self.sabteFSPageRoot.destroy()
+        self.FlightSkechuleRoot.destroy()
+        self.FlightSkechuleRootFunc()
 
     def deleteFlightSkedule(self):
         self.listBoxFS.bind('<Button-1>', self.listBoxFS)
@@ -1267,7 +1561,7 @@ class all() :
         data = {
             "table": "flight",
             "key": "num_flight",
-            "value": str(k['values'][7])
+            "value": str(k['values'][4])
         }
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
@@ -1292,8 +1586,6 @@ class all() :
         self.orig.insert(0, "مبدأ")
         self.dest = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.dest.insert(0, "مقصد")
-        self.countr = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
-        self.countr.insert(0, "کشور")
         self.fnum = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.fnum.insert(0, "شماره پرواز")
         self.jt = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
@@ -1314,7 +1606,6 @@ class all() :
         self.APNum.pack()
         self.orig.pack()
         self.dest.pack()
-        self.countr.pack()
         self.fnum.pack()
         self.jt.pack()
         self.lt.pack()
@@ -1471,7 +1762,6 @@ class all() :
                 "addresses": str(self.address.get()),
                 "internal": x
                 }
-        data3 = json.dumps(data2)
         data = {"table": "origin_destination",
                 "key": "num_airport",
                 "value": self.APNO.get(),
@@ -1917,7 +2207,6 @@ class all() :
                 "Advantages": str(self.benef.get()),
                 "descript": str(self.tozi.get())
                 }
-        data3= json.dumps(data2)
         data = {"table": "wages",
                 "key": "job",
                 "value": self.jobn.get(),
