@@ -37,25 +37,35 @@ class all() :
         self.listBoxUser.config(height=20)
         for col in cols:
             self.listBoxUser.heading(col, text=col)
-        # url = 'http://www.rownaghsh.ir/req_airplanes.php'
-        # data = {'table': 'airplane'}
-        # data1 = json.dumps(data)
-        # r = requests.post(url, data=data1)
-        # l = json.loads(r.text)
-        # for i in range(0, len(l)):
-        #     self.listBoxUser.insert("", "end", values=(
-        #         str(l[i]['bar']),
-        #         str(l[i]['economi']),
-        #         str(l[i]['bisness']),
-        #         str(l[i]['first_class']),
-        #         str(l[i]['model']),
-        #         str(l[i]['num_airplane'])
-        #     ))
+        url = 'http://www.rownaghsh.ir/req.php'
+        data = {'table': 'users',
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+        }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        l = json.loads(r.text)
+        print(r.text)
+        print(data)
+        for i in range(0, len(l)):
+            if l[i]['levele']=='0':
+                x='مدیر اصلی'
+            elif l[i]['levele']=='1':
+                x='مدیر'
+            elif l[i]['levele']=='2':
+                x='مشاهده کننده'
+            else:
+                x='سرویس جدید'
+            self.listBoxUser.insert("", "end", values=(
+                str(x),
+                str(l[i]['pass']),
+                str(l[i]['name'])
+            ))
         sabt = Button(self.usersRoot, text="ثبت کاربر", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabtUser)
         sabt.config(height=1, width=20)
-        delete = Button(self.usersRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue')
+        delete = Button(self.usersRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteUser)
         delete.config(height=1, width=20)
-        edit = Button(self.usersRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        edit = Button(self.usersRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editUser)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -63,18 +73,96 @@ class all() :
         self.listBoxUser.pack()
         space2.pack()
         sabt.pack()
-        edit.pack()
         delete.pack()
+        edit.pack()
         space3.pack()
 
     def editUser(self):
-        pass
+        self.listBoxUser.bind('<Button-1>', self.listBoxUser)
+        curItem = self.listBoxUser.focus()
+        k = self.listBoxUser.item(curItem)
+        self.sabteUserPageRoot = Tk()
+        self.sabteUserPageRoot.title("ویرایش هواپیما")
+        self.sabteUserPageRoot.configure(bg='orange')
+        title = Label(self.sabteUserPageRoot, text="ویرایش هواپیما", font=('IRANSans', '22'), bg='orange')
+        space = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space1 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space2 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space3 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space4 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space5 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        space6 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        self.usern = Entry(self.sabteUserPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.usern.insert(0, k['values'][2])
+        self.usern.config(state=DISABLED)
+        self.passwd = Entry(self.sabteUserPageRoot, width=70, justify='right', font=('IRANSans', 16))
+        self.passwd.insert(0, k['values'][1])
+        sabt = Button(self.sabteUserPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '20'),
+                      command=self.editUser2)
+        self.userclass = ttk.Combobox(self.sabteUserPageRoot, width=69, justify='right', font=('IRANSans', 16))
+        self.userclass['values'] = ('مدریت اصلی',
+                                    'مدریت',
+                                    'مشاهده کننده',
+                                    'دسترسی جدید')
+        self.userclass.current(2)
+        sabt.config(height=1, width=20)
+        space.pack()
+        title.pack()
+        space1.pack()
+        space2.pack()
+        self.usern.pack()
+        self.passwd.pack()
+        self.userclass.pack()
+        space3.pack()
+        sabt.pack()
+        space4.pack()
 
     def editUser2(self):
-        pass
+        if self.userclass.get() == 'مدریت اصلی':
+            x = 0
+        elif self.userclass.get() == 'مدریت':
+            x = 1
+        elif self.userclass.get() == 'مشاهده کننده':
+            x = 2
+        else:
+            x = 3
+        url = 'http://www.rownaghsh.ir/upd.php'
+        data2 = {
+            "add_users": self.usern.get(),
+            "add_pass": self.passwd.get(),
+            "levele": x
+        }
+        data = {"table": "users",
+                "key": "name",
+                "value": self.usern.get(),
+                "columns": data2,
+                "name_for_user": MyUsername,
+                "password_for_user": MyPassword
+                }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        print(r.text)
+        self.sabteUserPageRoot.destroy()
+        self.usersRoot.destroy()
+        self.users()
 
     def deleteUser(self):
-        pass
+        self.listBoxUser.bind('<Button-1>', self.listBoxUser)
+        curItem = self.listBoxUser.focus()
+        k = self.listBoxUser.item(curItem)
+        url = 'http://www.rownaghsh.ir/del.php'
+        data = {
+            "table": "users",
+            "key": "name",
+            "value": str(k['values'][2]),
+            "name_for_user": MyUsername,
+            "password_for_user": MyPassword
+        }
+        data1 = json.dumps(data)
+        r = requests.post(url, data=data1)
+        print(r.text)
+        self.usersRoot.destroy()
+        self.users()
 
     def sabtUser(self):
         self.sabteUserPageRoot = Tk()
@@ -1455,42 +1543,42 @@ class all() :
         space4 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
         space5 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
         space6 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        self.sname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sname.insert(0, k['values'][17])
-        self.slname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.slname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.slname.insert(0, k['values'][16])
-        self.sgender = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sgender = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sgender.insert(0, k['values'][15])
-        self.smellicode = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.smellicode = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.smellicode.insert(0, k['values'][14])
-        self.scono = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.scono = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.scono.insert(0, k['values'][13])
         self.scono.config(state=DISABLED)
-        self.sphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sphno.insert(0, k['values'][12])
-        self.sbd = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sbd = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sbd.insert(0, k['values'][11])
-        self.swn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.swn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.swn.insert(0, k['values'][10])
-        self.smcw = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.smcw = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.smcw.insert(0, k['values'][9])
-        self.swphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.swphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.swphno.insert(0, k['values'][8])
-        self.scn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.scn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.scn.insert(0, k['values'][7])
-        self.s = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.s = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.s.insert(0, k['values'][6])
-        self.sf1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sf1.insert(0, k['values'][5])
-        self.sfph1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sfph1.insert(0, k['values'][4])
-        self.sf2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sf2.insert(0, k['values'][3])
-        self.sfph2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sfph2.insert(0, k['values'][2])
-        self.sf3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sf3.insert(0, k['values'][1])
-        self.sfph3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sfph3.insert(0, k['values'][0])
         sabt = Button(self.sabteStewardPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
                       command=self.editStewardss2)
@@ -1606,41 +1694,41 @@ class all() :
         space4 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
         space5 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
         space6 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        self.sname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sname.insert(0, "نام")
-        self.slname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.slname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.slname.insert(0, "نام خانوادگی")
-        self.sgender = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sgender = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sgender.insert(0, "جنسیت")
-        self.smellicode = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.smellicode = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.smellicode.insert(0, "کدملی")
-        self.scono = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.scono = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.scono.insert(0, "شماره مهماندار")
-        self.sphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sphno.insert(0, "شماره تلفن")
-        self.sbd = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sbd = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sbd.insert(0, "تاریخ تولد")
-        self.swn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.swn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.swn.insert(0, "نام همسر")
-        self.smcw = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.smcw = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.smcw.insert(0, "کد ملی همسر")
-        self.swphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.swphno = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.swphno.insert(0, "شماره تلفن همسر")
-        self.scn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.scn = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.scn.insert(0, "تعداد فرزندان")
-        self.s = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.s = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.s.insert(0, "وضعیت")
-        self.sf1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sf1.insert(0, "نام آشنا 1")
-        self.sfph1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph1 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sfph1.insert(0, "تلفن 1")
-        self.sf2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sf2.insert(0, "نام آشنا 2")
-        self.sfph2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph2 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sfph2.insert(0, "تلفن 2")
-        self.sf3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sf3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sf3.insert(0, "نام آشنا 3")
-        self.sfph3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 13))
+        self.sfph3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sfph3.insert(0, "تلفن 3")
         sabt = Button(self.sabteStewardPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
                       command=self.sabteSteward2)
@@ -3084,6 +3172,72 @@ def MENU():
     prices.pack()
     space1.pack()
 
+def MENUForOrdineriUsers():
+    Menu = Tk()
+    Menu.state('zoomed')
+    Menu.title("شرکت هواپیمایی")
+    Menu['bg'] = 'orange'
+    space = Label(Menu, text=" ", bg='orange')
+    space1 = Label(Menu, text=" ", bg='orange')
+    space2 = Label(Menu, text=" ", bg='orange')
+    space3 = Label(Menu, text=" ", bg='orange')
+    title = Label(Menu, text="شرکت هواپیمایی", font=('IRANSans', '22', 'bold'), bg='orange')
+
+    # users = Button(Menu, text="کاربر ها", font=('IRANSans', '13'), bg='Blue', fg='white', command=ALLPAGES.users)
+    airplans = Button(Menu, text="هواپیما ها", font=('IRANSans', '13'), command=ALLPAGES.airplansRootFunc, bg='Blue',
+                      fg='white')
+    pilots = Button(Menu, text="خلبان ها", font=('IRANSans', '13'), command=ALLPAGES.PilotRootFunc, bg='Blue',
+                    fg='white')
+    co_pilots = Button(Menu, text="کمک خلبان ها", font=('IRANSans', '13'), command=ALLPAGES.CoPilotRootFunc, bg='Blue',
+                       fg='white')
+    flight_engineers = Button(Menu, text="مهندسین پرواز", font=('IRANSans', '13'),
+                              command=ALLPAGES.FlightEngineerRootFunc, bg='Blue', fg='white')
+    stewardess = Button(Menu, text="مهمانداران", font=('IRANSans', '13'), command=ALLPAGES.StewardsRootFunc, bg='Blue',
+                        fg='white')
+    flight_schedule = Button(Menu, text="برنامه ‌پرواز ها", font=('IRANSans', '13'),
+                             command=ALLPAGES.FlightSkechuleRootFunc, bg='Blue',
+                             fg='white')  # show 2 airports and airplane flight
+    flights = Button(Menu, text="پرواز ها", font=('IRANSans', '13'), command=ALLPAGES.FlightsRootFunc, bg='Blue',
+                     fg='white')  # show 2 airports and airplane flight passengers
+    airports = Button(Menu, text="فرودگاه ها", font=('IRANSans', '13'), command=ALLPAGES.AirportsRootFunc, bg='Blue',
+                      fg='white')
+    stewardess_group = Button(Menu, text="گروه های مهمانداری", font=('IRANSans', '13'),
+                              command=ALLPAGES.stewartsGroupRootFunc, bg='Blue', fg='white')  # etelaate mehmandaran
+    wages = Button(Menu, text="سمت ها و شغل ها", font=('IRANSans', '13'), command=ALLPAGES.WagesGroupRootFunc,
+                   bg='Blue', fg='white')
+    prices = Button(Menu, text="قیمت ها", font=('IRANSans', '13'), command=ALLPAGES.pricesRootFunc, bg='Blue',
+                    fg='white')
+
+    # users.config(height=1, width=80)
+    airplans.config(height=1, width=80)
+    pilots.config(height=1, width=80)
+    co_pilots.config(height=1, width=80)
+    flight_engineers.config(height=1, width=80)
+    stewardess.config(height=1, width=80)
+    flight_schedule.config(height=1, width=80)
+    airports.config(height=1, width=80)
+    stewardess_group.config(height=1, width=80)
+    wages.config(height=1, width=80)
+    flights.config(height=1, width=80)
+    prices.config(height=1, width=80)
+
+    space.pack()
+    title.pack()
+    space2.pack()
+    # users.pack()
+    airplans.pack()
+    pilots.pack()
+    co_pilots.pack()
+    flight_engineers.pack()
+    stewardess.pack()
+    flights.pack()
+    flight_schedule.pack()
+    airports.pack()
+    stewardess_group.pack()
+    wages.pack()
+    prices.pack()
+    space1.pack()
+
 def checkuser():
     url='http://www.rownaghsh.ir/login.php'
     data={
@@ -3098,7 +3252,10 @@ def checkuser():
         MyUsername = username.get()
         global MyPassword
         MyPassword = password.get()
-        MENU()
+        if username.get()=='masterr' and password.get()=='1234':
+            MENU()
+        else:
+            MENUForOrdineriUsers()
         root.destroy()
     else:
         warning.config(text="!نام کاربری و یا رمز عبور اشتباه است")
