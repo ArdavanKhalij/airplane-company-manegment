@@ -19,14 +19,14 @@ class all() :
     def users(self):
         self.usersRoot = Tk()
         self.usersRoot.title("کاربر ها")
-        self.usersRoot['bg'] = 'orange'
-        space = Label(self.usersRoot, text=" ", bg='orange')
-        space1 = Label(self.usersRoot, text=" ", bg='orange')
-        space2 = Label(self.usersRoot, text=" ", bg='orange')
-        space3 = Label(self.usersRoot, text=" ", bg='orange')
-        space4 = Label(self.usersRoot, text=" ", bg='orange')
-        space5 = Label(self.usersRoot, text=" ", bg='orange')
-        title = Label(self.usersRoot, text="کاربر ها", font=('IRANSans', '22'), fg="black", bg='orange')
+        self.usersRoot['bg'] = '#FF8000'
+        space = Label(self.usersRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.usersRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.usersRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.usersRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.usersRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.usersRoot, text=" ", bg='#FF8000')
+        title = Label(self.usersRoot, text="کاربر ها", font=('IRANSans', '22'), fg="black", bg='#FF8000')
         cols = ('سطح دسترسی', 'رمز عبور', 'نام کاربری')
         self.listBoxUser = ttk.Treeview(self.usersRoot, columns=cols, show='headings')
         vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxUser.yview)
@@ -61,11 +61,11 @@ class all() :
                 str(l[i]['pass']),
                 str(l[i]['name'])
             ))
-        sabt = Button(self.usersRoot, text="ثبت کاربر", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabtUser)
+        sabt = Button(self.usersRoot, text="ثبت کاربر", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.sabtUser)
         sabt.config(height=1, width=20)
-        delete = Button(self.usersRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteUser)
+        delete = Button(self.usersRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.deleteUser)
         delete.config(height=1, width=20)
-        edit = Button(self.usersRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editUser)
+        edit = Button(self.usersRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.editUser)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -83,21 +83,21 @@ class all() :
         k = self.listBoxUser.item(curItem)
         self.sabteUserPageRoot = Tk()
         self.sabteUserPageRoot.title("ویرایش هواپیما")
-        self.sabteUserPageRoot.configure(bg='orange')
-        title = Label(self.sabteUserPageRoot, text="ویرایش هواپیما", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        self.sabteUserPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteUserPageRoot, text="ویرایش هواپیما", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
         self.usern = Entry(self.sabteUserPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.usern.insert(0, k['values'][2])
         self.usern.config(state=DISABLED)
         self.passwd = Entry(self.sabteUserPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.passwd.insert(0, k['values'][1])
-        sabt = Button(self.sabteUserPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '20'),
+        sabt = Button(self.sabteUserPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '20'),
                       command=self.editUser2)
         self.userclass = ttk.Combobox(self.sabteUserPageRoot, width=69, justify='right', font=('IRANSans', 16))
         self.userclass['values'] = ('مدریت اصلی',
@@ -128,8 +128,7 @@ class all() :
             x = 3
         url = 'http://www.rownaghsh.ir/upd.php'
         data2 = {
-            "add_users": self.usern.get(),
-            "add_pass": self.passwd.get(),
+            "pass": self.passwd.get(),
             "levele": x
         }
         data = {"table": "users",
@@ -167,20 +166,20 @@ class all() :
     def sabtUser(self):
         self.sabteUserPageRoot = Tk()
         self.sabteUserPageRoot.title("ثبت هواپیما")
-        self.sabteUserPageRoot.configure(bg='orange')
-        title = Label(self.sabteUserPageRoot, text="ثبت هواپیما", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteUserPageRoot, text=" ", bg='orange')
+        self.sabteUserPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteUserPageRoot, text="ثبت هواپیما", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteUserPageRoot, text=" ", bg='#FF8000')
         self.usern = Entry(self.sabteUserPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.usern.insert(0, "نام کاربری")
         self.passwd = Entry(self.sabteUserPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.passwd.insert(0, "رمز عبور")
-        sabt = Button(self.sabteUserPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '20'),
+        sabt = Button(self.sabteUserPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '20'),
                       command=self.sabtUser2)
         self.userclass = ttk.Combobox(self.sabteUserPageRoot, width=69, justify='right', font=('IRANSans', 16))
         self.userclass['values'] = ('مدریت اصلی',
@@ -229,14 +228,14 @@ class all() :
     def airplansRootFunc(self):
         self.airplansRoot = Tk()
         self.airplansRoot.title("هواپیما ها")
-        self.airplansRoot['bg'] = 'orange'
-        space = Label(self.airplansRoot, text=" ", bg='orange')
-        space1 = Label(self.airplansRoot, text=" ", bg='orange')
-        space2 = Label(self.airplansRoot, text=" ", bg='orange')
-        space3 = Label(self.airplansRoot, text=" ", bg='orange')
-        space4 = Label(self.airplansRoot, text=" ", bg='orange')
-        space5 = Label(self.airplansRoot, text=" ", bg='orange')
-        title = Label(self.airplansRoot, text="هواپیما ها", font=('IRANSans', '22'), fg="black", bg='orange')
+        self.airplansRoot['bg'] = '#FF8000'
+        space = Label(self.airplansRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.airplansRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.airplansRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.airplansRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.airplansRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.airplansRoot, text=" ", bg='#FF8000')
+        title = Label(self.airplansRoot, text="هواپیما ها", font=('IRANSans', '22'), fg="black", bg='#FF8000')
         cols = ('ظرفیت بار' ,'تعداد Economy class','تعداد Business class', 'تعداد First class', 'مدل', 'شماره هواپیما')
         self.listBoxAirplane = ttk.Treeview(self.airplansRoot, columns=cols, show='headings')
         vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxAirplane.yview)
@@ -265,11 +264,11 @@ class all() :
                 str(l[i]['model']),
                 str(l[i]['num_airplane'])
             ))
-        sabt = Button(self.airplansRoot, text="ثبت هواپیما", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteAirplane)
+        sabt = Button(self.airplansRoot, text="ثبت هواپیما", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.sabteAirplane)
         sabt.config(height=1, width=20)
-        delete = Button(self.airplansRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteAirplane)
+        delete = Button(self.airplansRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.deleteAirplane)
         delete.config(height=1, width=20)
-        edit = Button(self.airplansRoot, text="ثبت هواپیما از مدل موجود", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteAirplane3)
+        edit = Button(self.airplansRoot, text="ثبت هواپیما از مدل موجود", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.sabteAirplane3)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -310,15 +309,15 @@ class all() :
     def sabteAirplane(self):
         self.sabteAirplanePageRoot = Tk()
         self.sabteAirplanePageRoot.title("ثبت هواپیما")
-        self.sabteAirplanePageRoot.configure(bg='orange')
-        title = Label(self.sabteAirplanePageRoot, text="ثبت هواپیما", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteAirplanePageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteAirplanePageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteAirplanePageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteAirplanePageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteAirplanePageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteAirplanePageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteAirplanePageRoot, text=" ", bg='orange')
+        self.sabteAirplanePageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteAirplanePageRoot, text="ثبت هواپیما", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteAirplanePageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteAirplanePageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteAirplanePageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteAirplanePageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteAirplanePageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteAirplanePageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteAirplanePageRoot, text=" ", bg='#FF8000')
         self.number = Entry(self.sabteAirplanePageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.number.insert(0, "شماره هوایما")
         self.model = Entry(self.sabteAirplanePageRoot, width=70, justify='right', font=('IRANSans', 16))
@@ -337,7 +336,7 @@ class all() :
         self.priceBusinessClass.insert(0, "قیمت Business class")
         self.priceEconomyClass = Entry(self.sabteAirplanePageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.priceEconomyClass.insert(0, "قیمت Economy class")
-        sabt = Button(self.sabteAirplanePageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '20'), command=self.sabteAirplane2)
+        sabt = Button(self.sabteAirplanePageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '20'), command=self.sabteAirplane2)
         sabt.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -376,20 +375,20 @@ class all() :
     def sabteAirplane3(self):
         self.sabteAirplane3PageRoot = Tk()
         self.sabteAirplane3PageRoot.title("ثبت هواپیما")
-        self.sabteAirplane3PageRoot.configure(bg='orange')
-        title = Label(self.sabteAirplane3PageRoot, text="ثبت هواپیما", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteAirplane3PageRoot, text=" ", bg='orange')
+        self.sabteAirplane3PageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteAirplane3PageRoot, text="ثبت هواپیما", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteAirplane3PageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteAirplane3PageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteAirplane3PageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteAirplane3PageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteAirplane3PageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteAirplane3PageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteAirplane3PageRoot, text=" ", bg='#FF8000')
         self.number2 = Entry(self.sabteAirplane3PageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.number2.insert(0, "شماره هوایما")
         self.model2 = Entry(self.sabteAirplane3PageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.model2.insert(0, "مدل هواپیما")
-        sabt = Button(self.sabteAirplane3PageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '20'),
+        sabt = Button(self.sabteAirplane3PageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '20'),
                       command=self.sabteAirplane4)
         sabt.config(height=1, width=20)
         space.pack()
@@ -418,14 +417,14 @@ class all() :
     def PilotRootFunc(self):
         self.PilotRoot = Tk()
         self.PilotRoot.title("خلبان ها")
-        self.PilotRoot['bg'] = 'orange'
-        space = Label(self.PilotRoot, text=" ", bg='orange')
-        space1 = Label(self.PilotRoot, text=" ", bg='orange')
-        space2 = Label(self.PilotRoot, text=" ", bg='orange')
-        space3 = Label(self.PilotRoot, text=" ", bg='orange')
-        space4 = Label(self.PilotRoot, text=" ", bg='orange')
-        space5 = Label(self.PilotRoot, text=" ", bg='orange')
-        title = Label(self.PilotRoot, text="خلبان ها", font=('IRANSans', '22'), bg='orange')
+        self.PilotRoot['bg'] = '#FF8000'
+        space = Label(self.PilotRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.PilotRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.PilotRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.PilotRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.PilotRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.PilotRoot, text=" ", bg='#FF8000')
+        title = Label(self.PilotRoot, text="خلبان ها", font=('IRANSans', '22'), bg='#FF8000')
         cols = (
         'تلفن 3', 'نام آشنا 3', 'تلفن 2', 'نام آشنا 2', 'تلفن 1', 'نام آشنا1', 'تعداد فرزندان', 'شماره تلفن همسر',
         'کد ملی همسر', 'نام همسر', 'تاریخ تولد', 'شماره تلفن', 'شماره خلبان', 'کد ملی', 'جنسیت', 'نام خانوادگی',
@@ -485,12 +484,12 @@ class all() :
                 str(l[i]['lname']),
                 str(l[i]['fname'])
             ))
-        sabt = Button(self.PilotRoot, text="ثبت خلبان", font=('IRANSans', '13'), fg='white', bg='blue',
+        sabt = Button(self.PilotRoot, text="ثبت خلبان", font=('IRANSans', '13'), fg='white', bg='#000080',
                       command=self.sabtePilot)
         sabt.config(height=1, width=20)
-        delete = Button(self.PilotRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deletePilot)
+        delete = Button(self.PilotRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.deletePilot)
         delete.config(height=1, width=20)
-        edit = Button(self.PilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editPilot)
+        edit = Button(self.PilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.editPilot)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -508,15 +507,15 @@ class all() :
         k = self.listBoxPilot.item(curItem)
         self.sabtepilotPageRoot = Tk()
         self.sabtepilotPageRoot.title("ویرایش خلبان")
-        self.sabtepilotPageRoot.configure(bg='orange')
-        title = Label(self.sabtepilotPageRoot, text="ویرایش خلبان", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        self.sabtepilotPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabtepilotPageRoot, text="ویرایش خلبان", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
         self.pname = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.pname.insert(0, k['values'][16])
         self.plname = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
@@ -552,7 +551,7 @@ class all() :
         self.pf3.insert(0, k['values'][1])
         self.pfph3 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.pfph3.insert(0, k['values'][0])
-        sabt = Button(self.sabtepilotPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabtepilotPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.editPilot2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -650,15 +649,15 @@ class all() :
     def sabtePilot(self):
         self.sabtepilotPageRoot = Tk()
         self.sabtepilotPageRoot.title("ثبت خلبان")
-        self.sabtepilotPageRoot.configure(bg='orange')
-        title = Label(self.sabtepilotPageRoot, text="ثبت خلبان", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabtepilotPageRoot, text=" ", bg='orange')
+        self.sabtepilotPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabtepilotPageRoot, text="ثبت خلبان", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabtepilotPageRoot, text=" ", bg='#FF8000')
         self.pname = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.pname.insert(0, "نام")
         self.plname = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
@@ -693,7 +692,7 @@ class all() :
         self.pf3.insert(0, "نام آشنا 3")
         self.pfph3 = Entry(self.sabtepilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.pfph3.insert(0, "تلفن 3")
-        sabt = Button(self.sabtepilotPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabtepilotPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.sabtePilot2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -758,14 +757,14 @@ class all() :
     def CoPilotRootFunc(self):
         self.CoPilotRoot = Tk()
         self.CoPilotRoot.title("کمک خلبان ها")
-        self.CoPilotRoot['bg'] = 'orange'
-        space = Label(self.CoPilotRoot, text=" ", bg='orange')
-        space1 = Label(self.CoPilotRoot, text=" ", bg='orange')
-        space2 = Label(self.CoPilotRoot, text=" ", bg='orange')
-        space3 = Label(self.CoPilotRoot, text=" ", bg='orange')
-        space4 = Label(self.CoPilotRoot, text=" ", bg='orange')
-        space5 = Label(self.CoPilotRoot, text=" ", bg='orange')
-        title = Label(self.CoPilotRoot, text="کمک خلبان ها", font=('IRANSans', '22'), bg='orange')
+        self.CoPilotRoot['bg'] = '#FF8000'
+        space = Label(self.CoPilotRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.CoPilotRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.CoPilotRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.CoPilotRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.CoPilotRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.CoPilotRoot, text=" ", bg='#FF8000')
+        title = Label(self.CoPilotRoot, text="کمک خلبان ها", font=('IRANSans', '22'), bg='#FF8000')
         cols = ('تلفن 3','نام آشنا 3','تلفن 2','نام آشنا 2','تلفن 1','نام آشنا1','تعداد فرزندان','شماره تلفن همسر','کد ملی همسر','نام همسر','تاریخ تولد','شماره تلفن' ,'شماره کمک خلبان','کد ملی', 'جنسیت', 'نام خانوادگی', 'نام')
         self.listBoxCopilot = ttk.Treeview(self.CoPilotRoot, columns=cols, show='headings')
         vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxCopilot.yview)
@@ -822,11 +821,11 @@ class all() :
                 str(l[i]['lname']),
                 str(l[i]['fname'])
             ))
-        sabt = Button(self.CoPilotRoot, text="ثبت کمک خلبان", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteCopilot)
+        sabt = Button(self.CoPilotRoot, text="ثبت کمک خلبان", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.sabteCopilot)
         sabt.config(height=1, width=20)
-        delete = Button(self.CoPilotRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteCopilot)
+        delete = Button(self.CoPilotRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.deleteCopilot)
         delete.config(height=1, width=20)
-        edit = Button(self.CoPilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editCopilot)
+        edit = Button(self.CoPilotRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.editCopilot)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -844,15 +843,15 @@ class all() :
         k = self.listBoxCopilot.item(curItem)
         self.sabteCopilotPageRoot = Tk()
         self.sabteCopilotPageRoot.title("ویرایش کمک خلبان")
-        self.sabteCopilotPageRoot.configure(bg='orange')
-        title = Label(self.sabteCopilotPageRoot, text="ویرایش کمک خلبان", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
+        self.sabteCopilotPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteCopilotPageRoot, text="ویرایش کمک خلبان", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
         self.name = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.name.insert(0, k['values'][16])
         self.lname = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
@@ -888,7 +887,7 @@ class all() :
         self.f3.insert(0, k['values'][1])
         self.fph3 = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.fph3.insert(0, k['values'][0])
-        sabt = Button(self.sabteCopilotPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteCopilotPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.editCopilot2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -986,15 +985,15 @@ class all() :
     def sabteCopilot(self):
         self.sabteCopilotPageRoot = Tk()
         self.sabteCopilotPageRoot.title("ثبت کمک خلبان")
-        self.sabteCopilotPageRoot.configure(bg='orange')
-        title = Label(self.sabteCopilotPageRoot, text="ثبت کمک خلبان", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteCopilotPageRoot, text=" ", bg='orange')
+        self.sabteCopilotPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteCopilotPageRoot, text="ثبت کمک خلبان", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteCopilotPageRoot, text=" ", bg='#FF8000')
         self.name = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.name.insert(0, "نام")
         self.lname = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
@@ -1029,7 +1028,7 @@ class all() :
         self.f3.insert(0, "نام آشنا 3")
         self.fph3 = Entry(self.sabteCopilotPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.fph3.insert(0, "تلفن 3")
-        sabt = Button(self.sabteCopilotPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteCopilotPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.sabteCopilot2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -1094,14 +1093,14 @@ class all() :
     def FlightEngineerRootFunc(self):
         self.FlightEngineerRoot = Tk()
         self.FlightEngineerRoot.title("مهندسین پرواز")
-        self.FlightEngineerRoot['bg'] = 'orange'
-        space = Label(self.FlightEngineerRoot, text=" ", bg='orange')
-        space1 = Label(self.FlightEngineerRoot, text=" ", bg='orange')
-        space2 = Label(self.FlightEngineerRoot, text=" ", bg='orange')
-        space3 = Label(self.FlightEngineerRoot, text=" ", bg='orange')
-        space4 = Label(self.FlightEngineerRoot, text=" ", bg='orange')
-        space5 = Label(self.FlightEngineerRoot, text=" ", bg='orange')
-        title = Label(self.FlightEngineerRoot, text="مهندسین پرواز", font=('IRANSans', '22'), bg='orange')
+        self.FlightEngineerRoot['bg'] = '#FF8000'
+        space = Label(self.FlightEngineerRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.FlightEngineerRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.FlightEngineerRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.FlightEngineerRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.FlightEngineerRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.FlightEngineerRoot, text=" ", bg='#FF8000')
+        title = Label(self.FlightEngineerRoot, text="مهندسین پرواز", font=('IRANSans', '22'), bg='#FF8000')
         cols = (
             'تلفن 3', 'نام آشنا 3', 'تلفن 2', 'نام آشنا 2', 'تلفن 1', 'نام آشنا1', 'تعداد فرزندان', 'شماره تلفن همسر',
             'کد ملی همسر', 'نام همسر', 'تاریخ تولد', 'شماره تلفن', 'شماره مهندس پرواز', 'کد ملی', 'جنسیت', 'نام خانوادگی',
@@ -1161,13 +1160,13 @@ class all() :
                 str(l[i]['lname']),
                 str(l[i]['fname'])
             ))
-        sabt = Button(self.FlightEngineerRoot, text="ثبت مهندس پرواز", font=('IRANSans', '13'), fg='white', bg='blue',
+        sabt = Button(self.FlightEngineerRoot, text="ثبت مهندس پرواز", font=('IRANSans', '13'), fg='white', bg='#000080',
                       command=self.sabteFlightEngineer)
         sabt.config(height=1, width=20)
-        delete = Button(self.FlightEngineerRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue',
+        delete = Button(self.FlightEngineerRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='#000080',
                         command=self.deleteFlightEngineer)
         delete.config(height=1, width=20)
-        edit = Button(self.FlightEngineerRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editFlightEngineer)
+        edit = Button(self.FlightEngineerRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.editFlightEngineer)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -1185,15 +1184,15 @@ class all() :
         k = self.listBoxFlightEngineer.item(curItem)
         self.sabteّFlightEngineerPageRoot = Tk()
         self.sabteّFlightEngineerPageRoot.title("ویرایش مهندس پرواز")
-        self.sabteّFlightEngineerPageRoot.configure(bg='orange')
-        title = Label(self.sabteّFlightEngineerPageRoot, text="ویرایش مهندس پرواز", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        self.sabteّFlightEngineerPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteّFlightEngineerPageRoot, text="ویرایش مهندس پرواز", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
         self.fename = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.fename.insert(0, k['values'][16])
         self.felname = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
@@ -1229,7 +1228,7 @@ class all() :
         self.fef3.insert(0, k['values'][1])
         self.fefph3 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.fefph3.insert(0, k['values'][0])
-        sabt = Button(self.sabteّFlightEngineerPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteّFlightEngineerPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.editFlightEngineer2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -1328,15 +1327,15 @@ class all() :
     def sabteFlightEngineer(self):
         self.sabteّFlightEngineerPageRoot = Tk()
         self.sabteّFlightEngineerPageRoot.title("ثبت مهندس پرواز")
-        self.sabteّFlightEngineerPageRoot.configure(bg='orange')
-        title = Label(self.sabteّFlightEngineerPageRoot, text="ثبت مهندس پرواز", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='orange')
+        self.sabteّFlightEngineerPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteّFlightEngineerPageRoot, text="ثبت مهندس پرواز", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteّFlightEngineerPageRoot, text=" ", bg='#FF8000')
         self.fename = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.fename.insert(0, "نام")
         self.felname = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
@@ -1371,7 +1370,7 @@ class all() :
         self.fef3.insert(0, "نام آشنا 3")
         self.fefph3 = Entry(self.sabteّFlightEngineerPageRoot, width=110, justify='right', font=('IRANSans', 13))
         self.fefph3.insert(0, "تلفن 3")
-        sabt = Button(self.sabteّFlightEngineerPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteّFlightEngineerPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.sabteFlightEngineer2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -1436,14 +1435,14 @@ class all() :
     def StewardsRootFunc(self):
         self.StewardsRoot = Tk()
         self.StewardsRoot.title("مهمانداران")
-        self.StewardsRoot['bg'] = 'orange'
-        space = Label(self.StewardsRoot, text=" ", bg='orange')
-        space1 = Label(self.StewardsRoot, text=" ", bg='orange')
-        space2 = Label(self.StewardsRoot, text=" ", bg='orange')
-        space3 = Label(self.StewardsRoot, text=" ", bg='orange')
-        space4 = Label(self.StewardsRoot, text=" ", bg='orange')
-        space5 = Label(self.StewardsRoot, text=" ", bg='orange')
-        title = Label(self.StewardsRoot, text="مهمانداران", font=('IRANSans', '22'), bg='orange')
+        self.StewardsRoot['bg'] = '#FF8000'
+        space = Label(self.StewardsRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.StewardsRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.StewardsRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.StewardsRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.StewardsRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.StewardsRoot, text=" ", bg='#FF8000')
+        title = Label(self.StewardsRoot, text="مهمانداران", font=('IRANSans', '22'), bg='#FF8000')
         cols = (
         'تلفن 3', 'نام آشنا 3', 'تلفن 2', 'نام آشنا 2', 'تلفن 1', 'نام آشنا1','وضعیت', 'تعداد فرزندان', 'شماره تلفن همسر',
         'کد ملی همسر', 'نام همسر', 'تاریخ تولد', 'شماره تلفن', 'شماره کمک خلبان', 'کد ملی', 'جنسیت', 'نام خانوادگی',
@@ -1509,13 +1508,13 @@ class all() :
                 str(l[i]['lname']),
                 str(l[i]['fname'])
             ))
-        sabt = Button(self.StewardsRoot, text="ثبت مهماندار", font=('IRANSans', '13'), fg='white', bg='blue',
+        sabt = Button(self.StewardsRoot, text="ثبت مهماندار", font=('IRANSans', '13'), fg='white', bg='#000080',
                       command=self.sabteSteward)
         sabt.config(height=1, width=20)
-        delete = Button(self.StewardsRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue',
+        delete = Button(self.StewardsRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='#000080',
                       command=self.deleteStewardss)
         delete.config(height=1, width=20)
-        edit = Button(self.StewardsRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue',
+        edit = Button(self.StewardsRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='#000080',
                       command=self.editStewardss)
         edit.config(height=1, width=20)
         space.pack()
@@ -1534,15 +1533,15 @@ class all() :
         k = self.listBoxStewartss.item(curItem)
         self.sabteStewardPageRoot = Tk()
         self.sabteStewardPageRoot.title("ویرایش مهماندار")
-        self.sabteStewardPageRoot.configure(bg='orange')
-        title = Label(self.sabteStewardPageRoot, text="ویرایش مهماندار", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        self.sabteStewardPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteStewardPageRoot, text="ویرایش مهماندار", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
         self.sname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sname.insert(0, k['values'][17])
         self.slname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
@@ -1580,7 +1579,7 @@ class all() :
         self.sf3.insert(0, k['values'][1])
         self.sfph3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sfph3.insert(0, k['values'][0])
-        sabt = Button(self.sabteStewardPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteStewardPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.editStewardss2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -1685,15 +1684,15 @@ class all() :
     def sabteSteward(self):
         self.sabteStewardPageRoot = Tk()
         self.sabteStewardPageRoot.title("ثبت مهماندار")
-        self.sabteStewardPageRoot.configure(bg='orange')
-        title = Label(self.sabteStewardPageRoot, text="ثبت مهماندار", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteStewardPageRoot, text=" ", bg='orange')
+        self.sabteStewardPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteStewardPageRoot, text="ثبت مهماندار", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteStewardPageRoot, text=" ", bg='#FF8000')
         self.sname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sname.insert(0, "نام")
         self.slname = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
@@ -1730,7 +1729,7 @@ class all() :
         self.sf3.insert(0, "نام آشنا 3")
         self.sfph3 = Entry(self.sabteStewardPageRoot, width=110, justify='right', font=('IRANSans', 10))
         self.sfph3.insert(0, "تلفن 3")
-        sabt = Button(self.sabteStewardPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteStewardPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.sabteSteward2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -1801,14 +1800,14 @@ class all() :
     def FlightsRootFunc(self):
         self.FlightsRoot = Tk()
         self.FlightsRoot.title("پرواز ها")
-        self.FlightsRoot['bg'] = 'orange'
-        space = Label(self.FlightsRoot, text=" ", bg='orange')
-        space1 = Label(self.FlightsRoot, text=" ", bg='orange')
-        space2 = Label(self.FlightsRoot, text=" ", bg='orange')
-        space3 = Label(self.FlightsRoot, text=" ", bg='orange')
-        space4 = Label(self.FlightsRoot, text=" ", bg='orange')
-        space5 = Label(self.FlightsRoot, text=" ", bg='orange')
-        title = Label(self.FlightsRoot, text="برنامه پرواز ها", font=('IRANSans', '22'), fg="Blue", bg='orange')
+        self.FlightsRoot['bg'] = '#FF8000'
+        space = Label(self.FlightsRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.FlightsRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.FlightsRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.FlightsRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.FlightsRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.FlightsRoot, text=" ", bg='#FF8000')
+        title = Label(self.FlightsRoot, text="برنامه پرواز ها", font=('IRANSans', '22'), fg="#000080", bg='#FF8000')
         cols = ('داخلی یا خارجی', 'وضعیت پرواز', 'وزن کل بار', 'مسافران First class', 'مسافران business class', 'مسافران Economy class',
                 'شماره گروه مهمانداری', 'شماره مهندس پرواز', 'شماره کمک خلبان', 'شماره خلبان', 'شماره پروار')
         self.listBoxFlight = ttk.Treeview(self.FlightsRoot, columns=cols, show='headings')
@@ -1854,11 +1853,11 @@ class all() :
                 str(l[i]['num_pilot']),
                 str(l[i]['num_flight'])
             ))
-        sabt = Button(self.FlightsRoot, text="ثبت پرواز", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteFlight)
+        sabt = Button(self.FlightsRoot, text="ثبت پرواز", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.sabteFlight)
         sabt.config(height=1, width=18)
-        delete = Button(self.FlightsRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteFlight)
+        delete = Button(self.FlightsRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.deleteFlight)
         delete.config(height=1, width=18)
-        edit = Button(self.FlightsRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editFlight)
+        edit = Button(self.FlightsRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.editFlight)
         edit.config(height=1, width=18)
         space.pack()
         title.pack()
@@ -1876,15 +1875,15 @@ class all() :
         k = self.listBoxFlight.item(curItem)
         self.sabteFlightPageRoot = Tk()
         self.sabteFlightPageRoot.title("ویرایش پرواز")
-        self.sabteFlightPageRoot.configure(bg='orange')
-        title = Label(self.sabteFlightPageRoot, text="ویرایش پرواز", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
+        self.sabteFlightPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteFlightPageRoot, text="ویرایش پرواز", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
         self.q1 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.q1.insert(0, k['values'][10])
         self.q1.config(state=DISABLED)
@@ -1908,7 +1907,7 @@ class all() :
         self.q10.insert(0, k['values'][1])
         self.q11 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.q11.insert(0, k['values'][0])
-        sabt = Button(self.sabteFlightPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteFlightPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.editFlight2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -1982,15 +1981,15 @@ class all() :
     def sabteFlight(self):
         self.sabteFlightPageRoot = Tk()
         self.sabteFlightPageRoot.title("ثبت پرواز")
-        self.sabteFlightPageRoot.configure(bg='orange')
-        title = Label(self.sabteFlightPageRoot, text="ثبت پرواز", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteFlightPageRoot, text=" ", bg='orange')
+        self.sabteFlightPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteFlightPageRoot, text="ثبت پرواز", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteFlightPageRoot, text=" ", bg='#FF8000')
         self.q1 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.q1.insert(0, "شماره پروار")
         self.q2 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
@@ -2013,7 +2012,7 @@ class all() :
         self.q10.insert(0, "وضعیت پرواز")
         self.q11 = Entry(self.sabteFlightPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.q11.insert(0, "داخلی یا خارجی")
-        sabt = Button(self.sabteFlightPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteFlightPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.sabteFlight2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -2065,14 +2064,14 @@ class all() :
     def FlightSkechuleRootFunc(self):
         self.FlightSkechuleRoot = Tk()
         self.FlightSkechuleRoot.title("برنامه پرواز ها")
-        self.FlightSkechuleRoot['bg'] = 'orange'
-        space = Label(self.FlightSkechuleRoot, text=" ", bg='orange')
-        space1 = Label(self.FlightSkechuleRoot, text=" ", bg='orange')
-        space2 = Label(self.FlightSkechuleRoot, text=" ", bg='orange')
-        space3 = Label(self.FlightSkechuleRoot, text=" ", bg='orange')
-        space4 = Label(self.FlightSkechuleRoot, text=" ", bg='orange')
-        space5 = Label(self.FlightSkechuleRoot, text=" ", bg='orange')
-        title = Label(self.FlightSkechuleRoot, text="برنامه پرواز های آخرین هفته", font=('IRANSans', '22'), bg='orange')
+        self.FlightSkechuleRoot['bg'] = '#FF8000'
+        space = Label(self.FlightSkechuleRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.FlightSkechuleRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.FlightSkechuleRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.FlightSkechuleRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.FlightSkechuleRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.FlightSkechuleRoot, text=" ", bg='#FF8000')
+        title = Label(self.FlightSkechuleRoot, text="برنامه پرواز های آخرین هفته", font=('IRANSans', '22'), bg='#FF8000')
         cols = ('تاریخ فرود','تاریخ پرواز','زمان نشستن', 'زمان پرواز', 'شماره پرواز', 'مقصد', 'مبدأ', 'شماره هواپیما')
         self.listBoxFS = ttk.Treeview(self.FlightSkechuleRoot, columns=cols, show='headings')
         vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxFS.yview)
@@ -2107,11 +2106,11 @@ class all() :
                 str(l[i]['origin']),
                 str(l[i]['num_airplane'])
             ))
-        sabt = Button(self.FlightSkechuleRoot, text="ثبت پرواز", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteFS)
+        sabt = Button(self.FlightSkechuleRoot, text="ثبت پرواز", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.sabteFS)
         sabt.config(height=1, width=18)
-        delete = Button(self.FlightSkechuleRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteFlightSkedule)
+        delete = Button(self.FlightSkechuleRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.deleteFlightSkedule)
         delete.config(height=1, width=18)
-        edit = Button(self.FlightSkechuleRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue', command=self.editFS)
+        edit = Button(self.FlightSkechuleRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.editFS)
         edit.config(height=1, width=18)
         space.pack()
         title.pack()
@@ -2129,15 +2128,15 @@ class all() :
         k = self.listBoxFS.item(curItem)
         self.sabteFSPageRoot = Tk()
         self.sabteFSPageRoot.title("ویرایش برنامه پروازی")
-        self.sabteFSPageRoot.configure(bg='orange')
-        title = Label(self.sabteFSPageRoot, text="ویرایش برنامه پروازی", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
+        self.sabteFSPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteFSPageRoot, text="ویرایش برنامه پروازی", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
         self.APNum = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.APNum.insert(0, k['values'][7])
         self.orig = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
@@ -2155,7 +2154,7 @@ class all() :
         self.jd.insert(0, k['values'][1])
         self.ld = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.ld.insert(0, k['values'][0])
-        sabt = Button(self.sabteFSPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteFSPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.editFS2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -2220,15 +2219,15 @@ class all() :
     def sabteFS(self):
         self.sabteFSPageRoot = Tk()
         self.sabteFSPageRoot.title("ثبت برنامه پروازی")
-        self.sabteFSPageRoot.configure(bg='orange')
-        title = Label(self.sabteFSPageRoot, text="ثبت برنامه پروازی", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteFSPageRoot, text=" ", bg='orange')
+        self.sabteFSPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteFSPageRoot, text="ثبت برنامه پروازی", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteFSPageRoot, text=" ", bg='#FF8000')
         self.APNum = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.APNum.insert(0, "شماره هواپیما")
         self.orig = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
@@ -2245,7 +2244,7 @@ class all() :
         self.jd.insert(0, "تاریخ پرواز")
         self.ld = Entry(self.sabteFSPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.ld.insert(0, "تاریخ نشستن")
-        sabt = Button(self.sabteFSPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteFSPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.sabteFS2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -2288,14 +2287,14 @@ class all() :
     def AirportsRootFunc(self):
         self.AirportsRoot = Tk()
         self.AirportsRoot.title("فرودگاه ها")
-        self.AirportsRoot['bg'] = 'orange'
-        space = Label(self.AirportsRoot, text=" ", bg='orange')
-        space1 = Label(self.AirportsRoot, text=" ", bg='orange')
-        space2 = Label(self.AirportsRoot, text=" ", bg='orange')
-        space3 = Label(self.AirportsRoot, text=" ", bg='orange')
-        space4 = Label(self.AirportsRoot, text=" ", bg='orange')
-        space5 = Label(self.AirportsRoot, text=" ", bg='orange')
-        title = Label(self.AirportsRoot, text="فرودگاه ها", font=('IRANSans', '22'), bg='orange')
+        self.AirportsRoot['bg'] = '#FF8000'
+        space = Label(self.AirportsRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.AirportsRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.AirportsRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.AirportsRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.AirportsRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.AirportsRoot, text=" ", bg='#FF8000')
+        title = Label(self.AirportsRoot, text="فرودگاه ها", font=('IRANSans', '22'), bg='#FF8000')
         cols = ('داخلی یا خارجی','آدرس','عرض جغرافیایی', 'طول جغرافیایی', 'کشور', 'شهر', 'شماره فرودگاه', 'نام فرودگاه')
         self.listBoxAirport = ttk.Treeview(self.AirportsRoot, columns=cols, show='headings')
         vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxAirport.yview)
@@ -2334,11 +2333,11 @@ class all() :
                 str(l[i]['num_airport']),
                 str(l[i]['name_airport'])
             ))
-        sabt = Button(self.AirportsRoot, text="ثبت فرودگاه", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteAirport)
+        sabt = Button(self.AirportsRoot, text="ثبت فرودگاه", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.sabteAirport)
         sabt.config(height=1, width=20)
-        delete = Button(self.AirportsRoot, text="حذف", font=('IRANSans', '13'),fg='white', bg='blue', command=self.deleteAirport)
+        delete = Button(self.AirportsRoot, text="حذف", font=('IRANSans', '13'),fg='white', bg='#000080', command=self.deleteAirport)
         delete.config(height=1, width=20)
-        edit = Button(self.AirportsRoot, text="ویرایش", font=('IRANSans', '13'),fg='white', bg='blue', command=self.editAirport)
+        edit = Button(self.AirportsRoot, text="ویرایش", font=('IRANSans', '13'),fg='white', bg='#000080', command=self.editAirport)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -2356,15 +2355,15 @@ class all() :
         k = self.listBoxAirport.item(curItem)
         self.sabteAirportPageRoot = Tk()
         self.sabteAirportPageRoot.title("ویرایش فرودگاه")
-        self.sabteAirportPageRoot.configure(bg='orange')
-        title = Label(self.sabteAirportPageRoot, text="ویرایش فرودگاه", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
+        self.sabteAirportPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteAirportPageRoot, text="ویرایش فرودگاه", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
         self.APN = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.APN.insert(0, k['values'][7])
         self.APNO = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
@@ -2382,7 +2381,7 @@ class all() :
         self.address.insert(0, k['values'][1])
         self.inorout = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.inorout.insert(0, k['values'][0])
-        sabt = Button(self.sabteAirportPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteAirportPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.editAirport2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -2451,15 +2450,15 @@ class all() :
     def sabteAirport(self):
         self.sabteAirportPageRoot = Tk()
         self.sabteAirportPageRoot.title("ثبت فرودگاه")
-        self.sabteAirportPageRoot.configure(bg='orange')
-        title = Label(self.sabteAirportPageRoot, text="ثبت فرودگاه", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteAirportPageRoot, text=" ", bg='orange')
+        self.sabteAirportPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteAirportPageRoot, text="ثبت فرودگاه", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteAirportPageRoot, text=" ", bg='#FF8000')
         self.APN = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.APN.insert(0, "نام فرودگاه")
         self.APNO = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
@@ -2476,7 +2475,7 @@ class all() :
         self.address.insert(0, "آدرس")
         self.inorout = Entry(self.sabteAirportPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.inorout.insert(0, "داخلی یا خارجی")
-        sabt = Button(self.sabteAirportPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteAirportPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.sabteAirport2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -2523,14 +2522,14 @@ class all() :
     def stewartsGroupRootFunc(self):
         self.stewartsGroupRoot = Tk()
         self.stewartsGroupRoot.title("گروه های مهمانداری")
-        self.stewartsGroupRoot['bg'] = 'orange'
-        space = Label(self.stewartsGroupRoot, text=" ", bg='orange')
-        space1 = Label(self.stewartsGroupRoot, text=" ", bg='orange')
-        space2 = Label(self.stewartsGroupRoot, text=" ", bg='orange')
-        space3 = Label(self.stewartsGroupRoot, text=" ", bg='orange')
-        space4 = Label(self.stewartsGroupRoot, text=" ", bg='orange')
-        space5 = Label(self.stewartsGroupRoot, text=" ", bg='orange')
-        title = Label(self.stewartsGroupRoot, text="گروه های مهمانداری", font=('IRANSans', '22'), bg='orange')
+        self.stewartsGroupRoot['bg'] = '#FF8000'
+        space = Label(self.stewartsGroupRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.stewartsGroupRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.stewartsGroupRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.stewartsGroupRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.stewartsGroupRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.stewartsGroupRoot, text=" ", bg='#FF8000')
+        title = Label(self.stewartsGroupRoot, text="گروه های مهمانداری", font=('IRANSans', '22'), bg='#FF8000')
         cols = ('شماره مهماندار 6','شماره مهماندار 5','شماره مهماندار 4','شماره مهماندار 3','شماره مهماندار 2','شماره مهماندار 1','مدل هواپیما', 'تعداد مهمانداران Economy class',
                 'تعداد مهمانداران Business class', 'تعداد مهمانداران First class', 'شماره گروه')
         self.listBoxSTG = ttk.Treeview(self.stewartsGroupRoot, columns=cols, show='headings')
@@ -2558,7 +2557,6 @@ class all() :
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
-        print(l[1]['7'])
         for i in range(0, len(l)):
             if(len(l[i]['7'])==0):
                 self.listBoxSTG.insert("", "end", values=(
@@ -2644,11 +2642,11 @@ class all() :
                     str(l[i]['stewardess_first_class']),
                     str(l[i]['num_group'])
                 ))
-        sabt = Button(self.stewartsGroupRoot, text="ثبت گروه مهمانداری", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabteStG)
+        sabt = Button(self.stewartsGroupRoot, text="ثبت گروه مهمانداری", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.sabteStG)
         sabt.config(height=1, width=18)
-        delete = Button(self.stewartsGroupRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deleteSTG)
+        delete = Button(self.stewartsGroupRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.deleteSTG)
         delete.config(height=1, width=18)
-        # edit = Button(self.stewartsGroupRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='blue')
+        # edit = Button(self.stewartsGroupRoot, text="ویرایش", font=('IRANSans', '13'), fg='white', bg='#000080')
         # edit.config(height=1, width=18)
         space.pack()
         title.pack()
@@ -2680,15 +2678,15 @@ class all() :
     def sabteStG(self):
         self.sabteSTGPageRoot = Tk()
         self.sabteSTGPageRoot.title("ثبت گروه مهمانداری")
-        self.sabteSTGPageRoot.configure(bg='orange')
-        title = Label(self.sabteSTGPageRoot, text="ثبت گروه مهمانداری", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteSTGPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteSTGPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteSTGPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteSTGPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteSTGPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteSTGPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteSTGPageRoot, text=" ", bg='orange')
+        self.sabteSTGPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteSTGPageRoot, text="ثبت گروه مهمانداری", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteSTGPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteSTGPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteSTGPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteSTGPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteSTGPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteSTGPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteSTGPageRoot, text=" ", bg='#FF8000')
         self.gnofst = Entry(self.sabteSTGPageRoot, width=70, justify='right', font=('IRANSans', 13))
         self.gnofst.insert(0, "شماره گروه")
         self.nostffa = Entry(self.sabteSTGPageRoot, width=70, justify='right', font=('IRANSans', 13))
@@ -2711,7 +2709,7 @@ class all() :
         self.name5.insert(0, "شماره مهماندار 5")
         self.name6 = Entry(self.sabteSTGPageRoot, width=70, justify='right', font=('IRANSans', 13))
         self.name6.insert(0, "شماره مهماندار 6")
-        sabt = Button(self.sabteSTGPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '13'),
+        sabt = Button(self.sabteSTGPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '13'),
                       command=self.sabteSTG2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -2781,14 +2779,14 @@ class all() :
     def WagesGroupRootFunc(self):
         self.WagesGroupRoot = Tk()
         self.WagesGroupRoot.title("سمت ها و شغل ها")
-        self.WagesGroupRoot['bg'] = 'orange'
-        space = Label(self.WagesGroupRoot, text=" ", bg='orange')
-        space1 = Label(self.WagesGroupRoot, text=" ", bg='orange')
-        space2 = Label(self.WagesGroupRoot, text=" ", bg='orange')
-        space3 = Label(self.WagesGroupRoot, text=" ", bg='orange')
-        space4 = Label(self.WagesGroupRoot, text=" ", bg='orange')
-        space5 = Label(self.WagesGroupRoot, text=" ", bg='orange')
-        title = Label(self.WagesGroupRoot, text="سمت ها و شغل ها", font=('IRANSans', '22'), bg='orange')
+        self.WagesGroupRoot['bg'] = '#FF8000'
+        space = Label(self.WagesGroupRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.WagesGroupRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.WagesGroupRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.WagesGroupRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.WagesGroupRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.WagesGroupRoot, text=" ", bg='#FF8000')
+        title = Label(self.WagesGroupRoot, text="سمت ها و شغل ها", font=('IRANSans', '22'), bg='#FF8000')
         cols = ('توضیحات', 'مزایا', 'حقوق', 'نام شغل')
         self.listBoxWage = ttk.Treeview(self.WagesGroupRoot, columns=cols, show='headings')
         vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxWage.yview)
@@ -2815,11 +2813,11 @@ class all() :
                 str(l[i]['wage']),
                 str(l[i]['job'])
             ))
-        sabt = Button(self.WagesGroupRoot, text="ثبت شغل", font=('IRANSans', '13'), bg='blue', fg='white', command=self.sabteWage)
+        sabt = Button(self.WagesGroupRoot, text="ثبت شغل", font=('IRANSans', '13'), bg='#000080', fg='white', command=self.sabteWage)
         sabt.config(height=1, width=20)
-        delete = Button(self.WagesGroupRoot, text="حذف", font=('IRANSans', '13'), bg='blue', fg='white', command=self.deleteWage)
+        delete = Button(self.WagesGroupRoot, text="حذف", font=('IRANSans', '13'), bg='#000080', fg='white', command=self.deleteWage)
         delete.config(height=1, width=20)
-        edit = Button(self.WagesGroupRoot, text="ویرایش", font=('IRANSans', '13'), bg='blue', fg='white', command=self.editWage)
+        edit = Button(self.WagesGroupRoot, text="ویرایش", font=('IRANSans', '13'), bg='#000080', fg='white', command=self.editWage)
         edit.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -2837,15 +2835,15 @@ class all() :
         k = self.listBoxWage.item(curItem)
         self.sabteWagesPageRoot = Tk()
         self.sabteWagesPageRoot.title("ویرایش شفل")
-        self.sabteWagesPageRoot.configure(bg='orange')
-        title = Label(self.sabteWagesPageRoot, text="ویرایش شغل", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
+        self.sabteWagesPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteWagesPageRoot, text="ویرایش شغل", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
         self.jobn = Entry(self.sabteWagesPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.jobn.insert(0, k['values'][3])
         self.jobn.config(state=DISABLED)
@@ -2855,7 +2853,7 @@ class all() :
         self.benef.insert(0, k['values'][1])
         self.tozi = Entry(self.sabteWagesPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.tozi.insert(0, k['values'][0])
-        sabt = Button(self.sabteWagesPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteWagesPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.editWage2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -2912,15 +2910,15 @@ class all() :
     def sabteWage(self):
         self.sabteWagesPageRoot = Tk()
         self.sabteWagesPageRoot.title("ثبت شفل")
-        self.sabteWagesPageRoot.configure(bg='orange')
-        title = Label(self.sabteWagesPageRoot, text="ثبت شغل", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabteWagesPageRoot, text=" ", bg='orange')
+        self.sabteWagesPageRoot.configure(bg='#FF8000')
+        title = Label(self.sabteWagesPageRoot, text="ثبت شغل", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabteWagesPageRoot, text=" ", bg='#FF8000')
         self.jobn = Entry(self.sabteWagesPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.jobn.insert(0, "نام شغل")
         self.salary = Entry(self.sabteWagesPageRoot, width=70, justify='right', font=('IRANSans', 16))
@@ -2929,7 +2927,7 @@ class all() :
         self.benef.insert(0, "مزایا")
         self.tozi = Entry(self.sabteWagesPageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.tozi.insert(0, "توضیحات")
-        sabt = Button(self.sabteWagesPageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabteWagesPageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.sabteWage2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -2964,14 +2962,14 @@ class all() :
     def pricesRootFunc(self):
         self.pricesRoot = Tk()
         self.pricesRoot.title("قیمت ها")
-        self.pricesRoot['bg'] = 'orange'
-        space = Label(self.pricesRoot, text=" ", bg='orange')
-        space1 = Label(self.pricesRoot, text=" ", bg='orange')
-        space2 = Label(self.pricesRoot, text=" ", bg='orange')
-        space3 = Label(self.pricesRoot, text=" ", bg='orange')
-        space4 = Label(self.pricesRoot, text=" ", bg='orange')
-        space5 = Label(self.pricesRoot, text=" ", bg='orange')
-        title = Label(self.pricesRoot, text="قیمت ها", font=('IRANSans', '22'), bg='orange')
+        self.pricesRoot['bg'] = '#FF8000'
+        space = Label(self.pricesRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.pricesRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.pricesRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.pricesRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.pricesRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.pricesRoot, text=" ", bg='#FF8000')
+        title = Label(self.pricesRoot, text="قیمت ها", font=('IRANSans', '22'), bg='#FF8000')
         cols = ('تاریخ ثبت','قیمت Economy class','قیمت Business class','قیمت First class', 'مدل هواپیما', 'کد فرودگاه مقصد', 'کد فرودگاه مبدأ')
         self.listBoxPrice = ttk.Treeview(self.pricesRoot, columns=cols, show='headings')
         vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxPrice.yview)
@@ -3004,9 +3002,9 @@ class all() :
                 str(l[i]['num_airport_destination']),
                 str(l[i]['num_airport_origin'])
             ))
-        sabt = Button(self.pricesRoot, text="ثبت قیمت", font=('IRANSans', '13'), fg='white', bg='blue', command=self.sabtePrice)
+        sabt = Button(self.pricesRoot, text="ثبت قیمت", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.sabtePrice)
         sabt.config(height=1, width=20)
-        delete = Button(self.pricesRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='blue', command=self.deletePrice)
+        delete = Button(self.pricesRoot, text="حذف", font=('IRANSans', '13'), fg='white', bg='#000080', command=self.deletePrice)
         delete.config(height=1, width=20)
         space.pack()
         title.pack()
@@ -3038,15 +3036,15 @@ class all() :
     def sabtePrice(self):
         self.sabtePricePageRoot = Tk()
         self.sabtePricePageRoot.title("ثبت قیمت")
-        self.sabtePricePageRoot.configure(bg='orange')
-        title = Label(self.sabtePricePageRoot, text="ثبت قیمت", font=('IRANSans', '22'), bg='orange')
-        space = Label(self.sabtePricePageRoot, text=" ", bg='orange')
-        space1 = Label(self.sabtePricePageRoot, text=" ", bg='orange')
-        space2 = Label(self.sabtePricePageRoot, text=" ", bg='orange')
-        space3 = Label(self.sabtePricePageRoot, text=" ", bg='orange')
-        space4 = Label(self.sabtePricePageRoot, text=" ", bg='orange')
-        space5 = Label(self.sabtePricePageRoot, text=" ", bg='orange')
-        space6 = Label(self.sabtePricePageRoot, text=" ", bg='orange')
+        self.sabtePricePageRoot.configure(bg='#FF8000')
+        title = Label(self.sabtePricePageRoot, text="ثبت قیمت", font=('IRANSans', '22'), bg='#FF8000')
+        space = Label(self.sabtePricePageRoot, text=" ", bg='#FF8000')
+        space1 = Label(self.sabtePricePageRoot, text=" ", bg='#FF8000')
+        space2 = Label(self.sabtePricePageRoot, text=" ", bg='#FF8000')
+        space3 = Label(self.sabtePricePageRoot, text=" ", bg='#FF8000')
+        space4 = Label(self.sabtePricePageRoot, text=" ", bg='#FF8000')
+        space5 = Label(self.sabtePricePageRoot, text=" ", bg='#FF8000')
+        space6 = Label(self.sabtePricePageRoot, text=" ", bg='#FF8000')
         self.apnoor = Entry(self.sabtePricePageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.apnoor.insert(0, "شماره فرودگاه مبدا")
         self.apnode = Entry(self.sabtePricePageRoot, width=70, justify='right', font=('IRANSans', 16))
@@ -3061,7 +3059,7 @@ class all() :
         self.ecp.insert(0, "قیمت Economy class")
         self.dateop = Entry(self.sabtePricePageRoot, width=70, justify='right', font=('IRANSans', 16))
         self.dateop.insert(0, "تاریخ ثبت")
-        sabt = Button(self.sabtePricePageRoot, text="ثبت", bg='blue', fg='white', font=('IRANSans', '15'),
+        sabt = Button(self.sabtePricePageRoot, text="ثبت", bg='#000080', fg='white', font=('IRANSans', '15'),
                       command=self.sabtePrice2)
         sabt.config(height=1, width=20)
         space.pack()
@@ -3110,36 +3108,36 @@ def MENU():
     Menu = Tk()
     Menu.state('zoomed')
     Menu.title("شرکت هواپیمایی")
-    Menu['bg'] = 'orange'
-    space = Label(Menu, text=" ", bg='orange')
-    space1 = Label(Menu, text=" ", bg='orange')
-    space2 = Label(Menu, text=" ", bg='orange')
-    space3 = Label(Menu, text=" ", bg='orange')
-    title = Label(Menu, text="شرکت هواپیمایی", font=('IRANSans', '22', 'bold'), bg='orange')
+    Menu['bg'] = '#FF8000'
+    space = Label(Menu, text=" ", bg='#FF8000')
+    space1 = Label(Menu, text=" ", bg='#FF8000')
+    space2 = Label(Menu, text=" ", bg='#FF8000')
+    space3 = Label(Menu, text=" ", bg='#FF8000')
+    title = Label(Menu, text="شرکت هواپیمایی", font=('IRANSans', '22', 'bold'), bg='#FF8000')
 
-    users = Button(Menu, text="کاربر ها", font=('IRANSans', '13'), bg='Blue', fg='white', command=ALLPAGES.users)
-    airplans = Button(Menu, text="هواپیما ها", font=('IRANSans', '13'), command=ALLPAGES.airplansRootFunc, bg='Blue',
+    users = Button(Menu, text="کاربر ها", font=('IRANSans', '13', 'bold'), bg='#000080', fg='white', command=ALLPAGES.users)
+    airplans = Button(Menu, text="هواپیما ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.airplansRootFunc, bg='#000080',
                       fg='white')
-    pilots = Button(Menu, text="خلبان ها", font=('IRANSans', '13'), command=ALLPAGES.PilotRootFunc, bg='Blue',
+    pilots = Button(Menu, text="خلبان ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.PilotRootFunc, bg='#000080',
                     fg='white')
-    co_pilots = Button(Menu, text="کمک خلبان ها", font=('IRANSans', '13'), command=ALLPAGES.CoPilotRootFunc, bg='Blue',
+    co_pilots = Button(Menu, text="کمک خلبان ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.CoPilotRootFunc, bg='#000080',
                        fg='white')
-    flight_engineers = Button(Menu, text="مهندسین پرواز", font=('IRANSans', '13'),
-                              command=ALLPAGES.FlightEngineerRootFunc, bg='Blue', fg='white')
-    stewardess = Button(Menu, text="مهمانداران", font=('IRANSans', '13'), command=ALLPAGES.StewardsRootFunc, bg='Blue',
+    flight_engineers = Button(Menu, text="مهندسین پرواز", font=('IRANSans', '13', 'bold'),
+                              command=ALLPAGES.FlightEngineerRootFunc, bg='#000080', fg='white')
+    stewardess = Button(Menu, text="مهمانداران", font=('IRANSans', '13', 'bold'), command=ALLPAGES.StewardsRootFunc, bg='#000080',
                         fg='white')
-    flight_schedule = Button(Menu, text="برنامه ‌پرواز ها", font=('IRANSans', '13'),
-                             command=ALLPAGES.FlightSkechuleRootFunc, bg='Blue',
+    flight_schedule = Button(Menu, text="برنامه ‌پرواز ها", font=('IRANSans', '13', 'bold'),
+                             command=ALLPAGES.FlightSkechuleRootFunc, bg='#000080',
                              fg='white')  # show 2 airports and airplane flight
-    flights = Button(Menu, text="پرواز ها", font=('IRANSans', '13'), command=ALLPAGES.FlightsRootFunc, bg='Blue',
+    flights = Button(Menu, text="پرواز ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.FlightsRootFunc, bg='#000080',
                      fg='white')  # show 2 airports and airplane flight passengers
-    airports = Button(Menu, text="فرودگاه ها", font=('IRANSans', '13'), command=ALLPAGES.AirportsRootFunc, bg='Blue',
+    airports = Button(Menu, text="فرودگاه ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.AirportsRootFunc, bg='#000080',
                       fg='white')
-    stewardess_group = Button(Menu, text="گروه های مهمانداری", font=('IRANSans', '13'),
-                              command=ALLPAGES.stewartsGroupRootFunc, bg='Blue', fg='white')  # etelaate mehmandaran
-    wages = Button(Menu, text="سمت ها و شغل ها", font=('IRANSans', '13'), command=ALLPAGES.WagesGroupRootFunc,
-                   bg='Blue', fg='white')
-    prices = Button(Menu, text="قیمت ها", font=('IRANSans', '13'), command=ALLPAGES.pricesRootFunc, bg='Blue',
+    stewardess_group = Button(Menu, text="گروه های مهمانداری", font=('IRANSans', '13', 'bold'),
+                              command=ALLPAGES.stewartsGroupRootFunc, bg='#000080', fg='white')  # etelaate mehmandaran
+    wages = Button(Menu, text="سمت ها و شغل ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.WagesGroupRootFunc,
+                   bg='#000080', fg='white')
+    prices = Button(Menu, text="قیمت ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.pricesRootFunc, bg='#000080',
                     fg='white')
 
     users.config(height=1, width=80)
@@ -3176,36 +3174,36 @@ def MENUForOrdineriUsers():
     Menu = Tk()
     Menu.state('zoomed')
     Menu.title("شرکت هواپیمایی")
-    Menu['bg'] = 'orange'
-    space = Label(Menu, text=" ", bg='orange')
-    space1 = Label(Menu, text=" ", bg='orange')
-    space2 = Label(Menu, text=" ", bg='orange')
-    space3 = Label(Menu, text=" ", bg='orange')
-    title = Label(Menu, text="شرکت هواپیمایی", font=('IRANSans', '22', 'bold'), bg='orange')
+    Menu['bg'] = '#FF8000'
+    space = Label(Menu, text=" ", bg='#FF8000')
+    space1 = Label(Menu, text=" ", bg='#FF8000')
+    space2 = Label(Menu, text=" ", bg='#FF8000')
+    space3 = Label(Menu, text=" ", bg='#FF8000')
+    title = Label(Menu, text="شرکت هواپیمایی", font=('IRANSans', '22', 'bold'), bg='#FF8000')
 
-    # users = Button(Menu, text="کاربر ها", font=('IRANSans', '13'), bg='Blue', fg='white', command=ALLPAGES.users)
-    airplans = Button(Menu, text="هواپیما ها", font=('IRANSans', '13'), command=ALLPAGES.airplansRootFunc, bg='Blue',
+    # users = Button(Menu, text="کاربر ها", font=('IRANSans', '13'), bg='#000080', fg='white', command=ALLPAGES.users)
+    airplans = Button(Menu, text="هواپیما ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.airplansRootFunc, bg='#000080',
                       fg='white')
-    pilots = Button(Menu, text="خلبان ها", font=('IRANSans', '13'), command=ALLPAGES.PilotRootFunc, bg='Blue',
+    pilots = Button(Menu, text="خلبان ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.PilotRootFunc, bg='#000080',
                     fg='white')
-    co_pilots = Button(Menu, text="کمک خلبان ها", font=('IRANSans', '13'), command=ALLPAGES.CoPilotRootFunc, bg='Blue',
+    co_pilots = Button(Menu, text="کمک خلبان ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.CoPilotRootFunc, bg='#000080',
                        fg='white')
-    flight_engineers = Button(Menu, text="مهندسین پرواز", font=('IRANSans', '13'),
-                              command=ALLPAGES.FlightEngineerRootFunc, bg='Blue', fg='white')
-    stewardess = Button(Menu, text="مهمانداران", font=('IRANSans', '13'), command=ALLPAGES.StewardsRootFunc, bg='Blue',
+    flight_engineers = Button(Menu, text="مهندسین پرواز", font=('IRANSans', '13', 'bold'),
+                              command=ALLPAGES.FlightEngineerRootFunc, bg='#000080', fg='white')
+    stewardess = Button(Menu, text="مهمانداران", font=('IRANSans', '13', 'bold'), command=ALLPAGES.StewardsRootFunc, bg='#000080',
                         fg='white')
-    flight_schedule = Button(Menu, text="برنامه ‌پرواز ها", font=('IRANSans', '13'),
-                             command=ALLPAGES.FlightSkechuleRootFunc, bg='Blue',
+    flight_schedule = Button(Menu, text="برنامه ‌پرواز ها", font=('IRANSans', '13', 'bold'),
+                             command=ALLPAGES.FlightSkechuleRootFunc, bg='#000080',
                              fg='white')  # show 2 airports and airplane flight
-    flights = Button(Menu, text="پرواز ها", font=('IRANSans', '13'), command=ALLPAGES.FlightsRootFunc, bg='Blue',
+    flights = Button(Menu, text="پرواز ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.FlightsRootFunc, bg='#000080',
                      fg='white')  # show 2 airports and airplane flight passengers
-    airports = Button(Menu, text="فرودگاه ها", font=('IRANSans', '13'), command=ALLPAGES.AirportsRootFunc, bg='Blue',
+    airports = Button(Menu, text="فرودگاه ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.AirportsRootFunc, bg='#000080',
                       fg='white')
-    stewardess_group = Button(Menu, text="گروه های مهمانداری", font=('IRANSans', '13'),
-                              command=ALLPAGES.stewartsGroupRootFunc, bg='Blue', fg='white')  # etelaate mehmandaran
-    wages = Button(Menu, text="سمت ها و شغل ها", font=('IRANSans', '13'), command=ALLPAGES.WagesGroupRootFunc,
-                   bg='Blue', fg='white')
-    prices = Button(Menu, text="قیمت ها", font=('IRANSans', '13'), command=ALLPAGES.pricesRootFunc, bg='Blue',
+    stewardess_group = Button(Menu, text="گروه های مهمانداری", font=('IRANSans', '13', 'bold'),
+                              command=ALLPAGES.stewartsGroupRootFunc, bg='#000080', fg='white')  # etelaate mehmandaran
+    wages = Button(Menu, text="سمت ها و شغل ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.WagesGroupRootFunc,
+                   bg='#000080', fg='white')
+    prices = Button(Menu, text="قیمت ها", font=('IRANSans', '13', 'bold'), command=ALLPAGES.pricesRootFunc, bg='#000080',
                     fg='white')
 
     # users.config(height=1, width=80)
@@ -3262,32 +3260,32 @@ def checkuser():
 
 root = Tk()
 root.state('zoomed')
-root['bg'] = 'orange'
+root['bg'] = '#FF8000'
 root.title(" شرکت هواپیمایی")
-space = Label(root, text=" ", bg='orange')
-space1 = Label(root, text=" ", bg='orange')
-space2 = Label(root, text=" ", bg='orange')
-space3 = Label(root, text=" ", bg='orange')
-space4 = Label(root, text=" ", bg='orange')
-space5 = Label(root, text=" ", bg='orange')
-space6 = Label(root, text=" ", bg='orange')
-space7 = Label(root, text=" ", bg='orange')
-space8 = Label(root, text=" ", bg='orange')
-space9 = Label(root, text=" ", bg='orange')
-space10 = Label(root, text=" ", bg='orange')
-space11 = Label(root, text=" ", bg='orange')
-space12 = Label(root, text=" ", bg='orange')
-space13 = Label(root, text=" ", bg='orange')
-space14 = Label(root, text=" ", bg='orange')
-title = Label(root, text=".سلام، خوش آمدید", font=('IRANSans', '20', 'bold'), bg='orange')
-title1 = Label(root, text=".لطفاً نام کاربری و رمز عبور خود را وارد کنید", font=('IRANSans', '18'), bg='Orange')
-warning = Label(root, font=('IRANSans', '18'), bg='Orange', fg='red')
+space = Label(root, text=" ", bg='#FF8000')
+space1 = Label(root, text=" ", bg='#FF8000')
+space2 = Label(root, text=" ", bg='#FF8000')
+space3 = Label(root, text=" ", bg='#FF8000')
+space4 = Label(root, text=" ", bg='#FF8000')
+space5 = Label(root, text=" ", bg='#FF8000')
+space6 = Label(root, text=" ", bg='#FF8000')
+space7 = Label(root, text=" ", bg='#FF8000')
+space8 = Label(root, text=" ", bg='#FF8000')
+space9 = Label(root, text=" ", bg='#FF8000')
+space10 = Label(root, text=" ", bg='#FF8000')
+space11 = Label(root, text=" ", bg='#FF8000')
+space12 = Label(root, text=" ", bg='#FF8000')
+space13 = Label(root, text=" ", bg='#FF8000')
+space14 = Label(root, text=" ", bg='#FF8000')
+title = Label(root, text=".سلام، خوش آمدید", font=('IRANSans', '20', 'bold'), bg='#FF8000')
+title1 = Label(root, text=".لطفاً نام کاربری و رمز عبور خود را وارد کنید", font=('IRANSans', '18'), bg='#FF8000')
+warning = Label(root, font=('IRANSans', '18', 'bold'), bg='#FF8000', fg='#C20000')
 username = Entry(root, width=60, justify='right', font=('IRANSans', 12))
 username.insert(0, "نام کاربری")
 password = Entry(root, width=60, justify='right', font=('IRANSans', 12))
 password.insert(0, "رمزعبور")
 
-sabtname = Button(root, text="ورود", bg='blue', fg='white', font=('IRANSans', '14'), command=checkuser)
+sabtname = Button(root, text="ورود", bg='#000080', fg='white', font=('IRANSans', '14'), command=checkuser)
 sabtname.config(height=1, width=20)
 space.pack()
 title.pack()
