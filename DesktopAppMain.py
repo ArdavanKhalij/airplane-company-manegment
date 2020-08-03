@@ -1445,7 +1445,7 @@ class all() :
         title = Label(self.StewardsRoot, text="مهمانداران", font=('IRANSans', '22'), bg='#FF8000')
         cols = (
         'تلفن 3', 'نام آشنا 3', 'تلفن 2', 'نام آشنا 2', 'تلفن 1', 'نام آشنا1','وضعیت', 'تعداد فرزندان', 'شماره تلفن همسر',
-        'کد ملی همسر', 'نام همسر', 'تاریخ تولد', 'شماره تلفن', 'شماره کمک خلبان', 'کد ملی', 'جنسیت', 'نام خانوادگی',
+        'کد ملی همسر', 'نام همسر', 'تاریخ تولد', 'شماره تلفن', 'شماره مهماندار', 'کد ملی', 'جنسیت', 'نام خانوادگی',
         'نام')
         self.listBoxStewartss = ttk.Treeview(self.StewardsRoot, columns=cols, show='headings')
         vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxStewartss.yview)
@@ -1480,11 +1480,11 @@ class all() :
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
         for i in range(0, len(l)):
-            if l[i]['gender'] == '1':
+            if int(l[i]['gender']) == 1:
                 x = 'مرد'
             else:
                 x = 'زن'
-            if l[i]['active'] == '1':
+            if int(l[i]['active']) == 1:
                 y = 'فعال'
             else:
                 y = 'آزاد'
@@ -1807,7 +1807,7 @@ class all() :
         space3 = Label(self.FlightsRoot, text=" ", bg='#FF8000')
         space4 = Label(self.FlightsRoot, text=" ", bg='#FF8000')
         space5 = Label(self.FlightsRoot, text=" ", bg='#FF8000')
-        title = Label(self.FlightsRoot, text="برنامه پرواز ها", font=('IRANSans', '22'), fg="#000080", bg='#FF8000')
+        title = Label(self.FlightsRoot, text="پرواز ها", font=('IRANSans', '22'), bg='#FF8000')
         cols = ('داخلی یا خارجی', 'وضعیت پرواز', 'وزن کل بار', 'مسافران First class', 'مسافران business class', 'مسافران Economy class',
                 'شماره گروه مهمانداری', 'شماره مهندس پرواز', 'شماره کمک خلبان', 'شماره خلبان', 'شماره پروار')
         self.listBoxFlight = ttk.Treeview(self.FlightsRoot, columns=cols, show='headings')
@@ -1836,7 +1836,7 @@ class all() :
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
         for i in range(0, len(l)):
-            if l[i]['internal']=='1':
+            if int(l[i]['internal'])==1:
                 x='داخلی'
             else:
                 x='خارجی'
@@ -2071,7 +2071,7 @@ class all() :
         space3 = Label(self.FlightSkechuleRoot, text=" ", bg='#FF8000')
         space4 = Label(self.FlightSkechuleRoot, text=" ", bg='#FF8000')
         space5 = Label(self.FlightSkechuleRoot, text=" ", bg='#FF8000')
-        title = Label(self.FlightSkechuleRoot, text="برنامه پرواز های آخرین هفته", font=('IRANSans', '22'), bg='#FF8000')
+        title = Label(self.FlightSkechuleRoot, text="برنامه پرواز ها", font=('IRANSans', '22'), bg='#FF8000')
         cols = ('تاریخ فرود','تاریخ پرواز','زمان نشستن', 'زمان پرواز', 'شماره پرواز', 'مقصد', 'مبدأ', 'شماره هواپیما')
         self.listBoxFS = ttk.Treeview(self.FlightSkechuleRoot, columns=cols, show='headings')
         vsb = ttk.Scrollbar(orient="vertical", command=self.listBoxFS.yview)
@@ -2319,7 +2319,7 @@ class all() :
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
         for i in range(0, len(l)):
-            if l[i]['internal']==1:
+            if int(l[i]['internal'])==1:
                 x='داخلی'
             else:
                 x='خارجی'
@@ -2496,7 +2496,7 @@ class all() :
 
     def sabteAirport2(self):
         url = 'http://www.rownaghsh.ir/origin_destination.php'
-        if self.inorout.get()=='داخلی':
+        if self.inorout.get()=="داخلی":
             x=1
         else:
             x=0
@@ -2557,6 +2557,7 @@ class all() :
         data1 = json.dumps(data)
         r = requests.post(url, data=data1)
         l = json.loads(r.text)
+        print(l[0])
         for i in range(0, len(l)):
             if(len(l[i]['7'])==0):
                 self.listBoxSTG.insert("", "end", values=(
@@ -2565,7 +2566,7 @@ class all() :
                     '',
                     '',
                     '',
-                    str(l[i]['1']),
+                    str(l[i]['0']),
                     str(l[i]['model']),
                     str(l[i]['stewardess_first_normal']),
                     str(l[i]['stewardess_first_bisness']),
@@ -2579,7 +2580,7 @@ class all() :
                     '',
                     '',
                     str(l[i]['7'][0]),
-                    str(l[i]['1']),
+                    str(l[i]['0']),
                     str(l[i]['model']),
                     str(l[i]['stewardess_first_normal']),
                     str(l[i]['stewardess_first_bisness']),
@@ -2593,7 +2594,7 @@ class all() :
                     '',
                     str(l[i]['7'][1]),
                     str(l[i]['7'][0]),
-                    str(l[i]['1']),
+                    str(l[i]['0']),
                     str(l[i]['model']),
                     str(l[i]['stewardess_first_normal']),
                     str(l[i]['stewardess_first_bisness']),
@@ -2607,7 +2608,7 @@ class all() :
                     str(l[i]['7'][2]),
                     str(l[i]['7'][1]),
                     str(l[i]['7'][0]),
-                    str(l[i]['1']),
+                    str(l[i]['0']),
                     str(l[i]['model']),
                     str(l[i]['stewardess_first_normal']),
                     str(l[i]['stewardess_first_bisness']),
@@ -2621,7 +2622,7 @@ class all() :
                     str(l[i]['7'][2]),
                     str(l[i]['7'][1]),
                     str(l[i]['7'][0]),
-                    str(l[i]['1']),
+                    str(l[i]['0']),
                     str(l[i]['model']),
                     str(l[i]['stewardess_first_normal']),
                     str(l[i]['stewardess_first_bisness']),
@@ -2635,7 +2636,7 @@ class all() :
                     str(l[i]['7'][2]),
                     str(l[i]['7'][1]),
                     str(l[i]['7'][0]),
-                    str(l[i]['1']),
+                    str(l[i]['0']),
                     str(l[i]['model']),
                     str(l[i]['stewardess_first_normal']),
                     str(l[i]['stewardess_first_bisness']),
@@ -2762,9 +2763,9 @@ class all() :
                 "stewardess_first_bisness": int(self.nostfba.get()),
                 "stewardess_first_normal": int(self.nostfea.get()),
                 "model": str(self.apmost.get()),
-                "stewardess": [str(x1), str(x2),
-                               str(x3), str(x4),
-                               str(x5), str(x6)],
+                "stewardess": [x1, x2,
+                               x3, x4,
+                               x5, x6],
                 "name_for_user": MyUsername,
                 "password_for_user": MyPassword
                 }
@@ -3282,7 +3283,7 @@ title1 = Label(root, text=".لطفاً نام کاربری و رمز عبور خ
 warning = Label(root, font=('IRANSans', '18', 'bold'), bg='#FF8000', fg='#C20000')
 username = Entry(root, width=60, justify='right', font=('IRANSans', 12))
 username.insert(0, "نام کاربری")
-password = Entry(root, width=60, justify='right', font=('IRANSans', 12))
+password = Entry(root, width=60, justify='right', font=('IRANSans', 12), show='*')
 password.insert(0, "رمزعبور")
 
 sabtname = Button(root, text="ورود", bg='#000080', fg='white', font=('IRANSans', '14'), command=checkuser)
